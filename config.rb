@@ -9,6 +9,9 @@ page '/*.xml', layout: false
 page '/*.json', layout: false
 page '/*.txt', layout: false
 
+set :js_dir, 'assets/javascripts'
+set :images_dir, 'assets/images'
+set :css_dir, 'assets/stylesheets'
 # With alternative layout
 # page "/path/to/file.html", layout: :otherlayout
 
