@@ -5,10 +5,9 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 
-    <!-- Use title if it's in the page YAML frontmatter -->
-    <title><%= current_page.data.title || "Andy Stabler" %></title>
-
-    <%= stylesheet_link_tag :site %>
+    <%= title_tag %>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,900italic' rel='stylesheet' type='text/css'>
+    <%= stylesheet_link_tag :main %>
     <%= javascript_include_tag :all %>
   </head>
 
