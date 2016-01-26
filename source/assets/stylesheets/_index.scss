@@ -1,0 +1,86 @@
+@mixin social-logo($image-link) {
+  content: "";
+  display: block;
+  background: image_url($image-link) no-repeat;
+  background-size: 16px;
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin: 0 6px 0 0;
+}
+
+
+.layer {
+  background: image_url('brothers_water.jpg') no-repeat center fixed;
+  background-size: cover;
+  background-position: right;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Add a filter over the brothers water image */
+.layer::after {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(18, 29, 51, 0.7);
+}
+
+/* The filter makes things a bit grey, so we need light text */
+.index {
+  color: white;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  h1 {
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
+.index-info {
+  width: 30%;
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -35%);
+
+  p {
+    font-weight: 200;
+  }
+
+  .social li {
+    list-style: none;
+    margin: 0.2em 0;
+
+    a {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .github::before {
+      @include social-logo('GitHub-Mark-Light-64px.png');
+    }
+
+    .twitter::before {
+      @include social-logo('TwitterLogo_white.png');
+    }
+
+    .email::before {
+      @include social-logo('GitHub-Mark-Light-64px.png');
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .index-info {
+    width: 95%;
+  }
+}
