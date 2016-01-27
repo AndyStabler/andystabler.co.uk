@@ -1,9 +1,5 @@
-###
-# Page options, layouts, aliases and proxies
-###
+require "./lib/blog"
 
-# Per-page layout changes:
-#
 # With no layout
 page '/*.xml', layout: false
 page '/*.json', layout: false
@@ -14,6 +10,8 @@ set :images_dir, 'assets/images'
 set :css_dir, 'assets/stylesheets'
 
 # General configuration
+
+activate :blog
 
 # Reload the browser automatically whenever files change
 configure :development do
