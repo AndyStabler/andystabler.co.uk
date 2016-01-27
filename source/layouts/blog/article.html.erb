@@ -1,0 +1,9 @@
+<% wrap_layout :layout do %>
+    <section class="blog-post">
+        <section class="blog-post-navigation">
+            <p>Previous post: <%= link_to_previous_post %></p>
+            <p>Next post: <%= link_to_next_post %></p>
+        </section>
+        <%= yield %>
+    </section>
+<% end %>

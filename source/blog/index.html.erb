@@ -1,0 +1,5 @@
+<h1>THIS IS THE BLOG INDEX</h1>
+
+<% articles do |article| %>
+  <p>Article: <%= link_to article.data.title, article.url %>
+<% end %>
