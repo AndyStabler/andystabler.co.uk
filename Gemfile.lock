@@ -127,6 +127,7 @@ DEPENDENCIES
   middleman (>= 4.0.0)
   middleman-livereload
   middleman-sprockets (~> 4.0.0.rc)
+  nokogiri
 
 BUNDLED WITH
    1.11.2
