@@ -1,14 +1,3 @@
-@mixin social-logo($image-link) {
-  content: "";
-  display: block;
-  background: image_url($image-link) no-repeat;
-  background-size: 16px;
-  width: 16px;
-  height: 16px;
-  float: left;
-  margin: 0 6px 0 0;
-}
-
 
 .layer {
   background: image_url('brothers_water.jpg') no-repeat center fixed;
@@ -35,16 +24,15 @@
 /* The filter makes things a bit grey, so we need light text */
 .index {
   color: white;
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+
   h1 {
-    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    font-size: 3em;
+
   }
 }
 
-.index-info {
+.info {
   width: 30%;
   position: absolute;
   left: 50%;
@@ -53,34 +41,39 @@
 
   p {
     font-weight: 200;
+    text-align: justify;
+    a {
+      color: #969AA2;
+    }
+    a:hover {
+      color: #A1ACC7;
+    }
+
+  }
+
+  .social {
+    padding: 0;
+    height:20px;
+    text-align:center;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 
   .social li {
-    list-style: none;
-    margin: 0.2em 0;
+    display:inline-block;
 
     a {
-      display: block;
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .github::before {
-      @include social-logo('GitHub-Mark-Light-64px.png');
-    }
-
-    .twitter::before {
-      @include social-logo('TwitterLogo_white.png');
-    }
-
-    .email::before {
-      @include social-logo('GitHub-Mark-Light-64px.png');
+      font-size: 24px;
+      margin: 0 0.5em;
     }
   }
 }
 
 @media (max-width: 800px) {
-  .index-info {
+  .info {
+    height: 100%;
     width: 95%;
   }
 }
