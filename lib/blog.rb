@@ -21,6 +21,14 @@ class Blog < ::Middleman::Extension
       .sort_by { |article| article.data.published_on }
       .each &block
     end
+
+    def snippet(article)
+      file = File.open(article.source_file)
+      html = file.read().split("---")[2]
+      first_paragraph = Nokogiri::HTML(html).xpath("//p").first.text
+      first_paragraph[0..256] << "..."
+    end
+
   end
 
 end
