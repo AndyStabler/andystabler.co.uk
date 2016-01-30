@@ -7,3 +7,4 @@ gem 'middleman', '>= 4.0.0'
 gem 'middleman-livereload'
 gem "middleman-sprockets", "~> 4.0.0.rc"
 gem "byebug"
+gem 'font-awesome-middleman'
