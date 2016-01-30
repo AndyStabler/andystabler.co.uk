@@ -1,6 +1,8 @@
-$font-stack: Helvetica, sans-serif;
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 
 body {
-  font-family: 100% $font-stack;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 100%;
+  background-color: #121E2C;
   font-weight: 200;
 }
