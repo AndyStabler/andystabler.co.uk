@@ -1,9 +1,17 @@
 <% wrap_layout :layout do %>
     <section class="blog-post">
         <section class="blog-post-navigation">
-            <p>Previous post: <%= link_to_previous_post %></p>
-            <p>Next post: <%= link_to_next_post %></p>
+          <% if previous_post %>
+            <p class="prev-post">Previous post: <%= link_to_previous_post %></p>
+          <% end %>
+          <% if next_post %>
+            <p class="next-post">Next post: <%= link_to_next_post %></p>
+          <% end %>
         </section>
-        <%= yield %>
+        <section class="blog-post-content">
+          <h1><%= current_page.data.title %></h1>
+          <p><%= current_page.data.published_on.strftime("%d %b %Y") %></p>
+          <%= yield %>
+        </section>
     </section>
 <% end %>
