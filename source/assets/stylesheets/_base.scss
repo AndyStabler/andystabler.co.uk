@@ -1,8 +1,54 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300);
+
+html, body {
+  height: 100%;
+}
 
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;
   background-color: #121E2C;
   font-weight: 200;
+  color: #555;
+  line-height: 1.75;
 }
+
+nav {
+  position: relative;
+  font-family: 'Ubuntu', sans-serif;
+  background: image_url('brothers-water-filter.jpg') no-repeat center;
+  background-size: cover;
+  background-position: 50% 55%;
+
+  h1 {
+    margin: 0 0.5em;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    font-weight: 200;
+    vertical-align: middle;
+  }
+
+}
+
+#home-link {
+  position: absolute;
+  bottom: 0.5em;
+}
+
+#section-link {
+  font-size: 3em;
+  text-align: center;
+  color: white;
+}
+
+.content {
+  clear: both;
+  background-color: #F3F3F5;
+  padding-top: 3em;//0.5em;
+  overflow-y: scroll;
+  padding-bottom: 15em;
+}
+
