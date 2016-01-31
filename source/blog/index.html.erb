@@ -1,5 +1,10 @@
-<h1>THIS IS THE BLOG INDEX</h1>
-
-<% articles do |article| %>
-  <p>Article: <%= link_to article.data.title, article.url %>
+---
+pageable: true
+---
+<% wrap_layout "blog/index" do %>
+  <% page_articles.each do |article| %>
+    <%= partial "layouts/blog/snippet", :locals => { :article => article } %>
+  <% end %>
+  <%= link_to "Older", next_page if !next_page.nil? %>
+  <%= link_to "Newer", prev_page if !prev_page.nil? %>
 <% end %>
