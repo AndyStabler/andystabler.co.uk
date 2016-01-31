@@ -6,13 +6,23 @@ module PageHelpers
     content_tag :title, title
   end
 
-  def link_to_previous_post
-    article = previous_post
-    link_to(article.data.title, article.url) if !article.nil?
-  end
-
-  def link_to_next_post
-    article = next_post
-    link_to(article.data.title, article.url) if !article.nil?
+  # Public: Determine the section the current page belongs to. Right now
+  # I just care about upper level sections (Blog).
+  #
+  #
+  # Examples
+  #
+  #   # current url = www.andystabler.co.uk/blog/number-theory-part-1
+  #   section()
+  #   # => 'Blog'
+  #
+  #   # current url = www.andystabler.co.uk
+  #   section()
+  #   # => nil
+  #
+  # Returns the section the current page belongs to.
+  def section
+    pages = current_page.path.split("/")
+    pages.first.capitalize if pages.count > 1
   end
 end

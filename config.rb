@@ -1,5 +1,3 @@
-require "./lib/blog"
-
 # With no layout
 page '/*.xml', layout: false
 page '/*.json', layout: false
@@ -11,7 +9,15 @@ set :css_dir, 'assets/stylesheets'
 
 # General configuration
 
-activate :blog
+activate :blog do |blog|
+  # ignore "blog/index.html"
+  blog.layout = "blog/article"
+  blog.sources = "blog/articles/{title}.html"
+  blog.permalink = "blog/{title}"
+  blog.paginate = true
+  blog.page_link = "page/{num}"
+  blog.per_page = 2
+end
 
 # Reload the browser automatically whenever files change
 configure :development do
@@ -26,3 +32,5 @@ configure :build do
   # Minify Javascript on build
   # activate :minify_javascript
 end
+
+
