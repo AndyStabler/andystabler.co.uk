@@ -1,4 +1,10 @@
 <nav>
-  <a href="/">Andy Stabler</a>
+  <h1 id="home-link"><a href="/">Andy Stabler</a></h1>
+  <%= partial "layouts/section_header" %>
 </nav>
-<%= yield %>
+<section class="content">
+  <%= yield %>
+</section>
+<footer>
+  <%= yield_content :footer %>
+</footer>
