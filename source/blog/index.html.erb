@@ -5,6 +5,8 @@ pageable: true
   <% page_articles.each do |article| %>
     <%= partial "layouts/blog/snippet", :locals => { :article => article } %>
   <% end %>
-  <%= link_to "Older", next_page if !next_page.nil? %>
-  <%= link_to "Newer", prev_page if !prev_page.nil? %>
+  <div class="pagination">
+    <%= link_to "Older", next_page, :class => "older" if !next_page.nil? %>
+    <%= link_to "Newer", prev_page, :class => "newer" if !prev_page.nil? %>
+  </div>
 <% end %>
