@@ -49,6 +49,12 @@ nav {
   bottom: 0.5em;
 }
 
+#home-link-mobile {
+  position: absolute;
+  bottom: 0.5em;
+  display: none;
+}
+
 #section-link {
   font-size: 3em;
   text-align: center;
@@ -77,3 +83,11 @@ nav {
   }
 }
 
+@media (max-width: 800px) {
+  #home-link {
+    display: none;
+  }
+  #home-link-mobile {
+    display: block;
+  }
+}
