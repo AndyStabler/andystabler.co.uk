@@ -16,7 +16,7 @@ activate :blog do |blog|
   blog.permalink = "blog/{title}"
   blog.paginate = true
   blog.page_link = "page/{num}"
-  blog.per_page = 2
+  blog.per_page = 5
 end
 
 # Reload the browser automatically whenever files change
