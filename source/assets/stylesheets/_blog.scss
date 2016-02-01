@@ -20,16 +20,7 @@
 .article-header {
   margin-bottom: 0;
   font-weight: 400;
-
-  a {
-    color: #428bca;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #2a6496;
-    text-decoration: underline;
-  }
+  @include blue-links;
 }
 
 .article-published-on {
