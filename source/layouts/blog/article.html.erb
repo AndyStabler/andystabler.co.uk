@@ -1,17 +1,25 @@
 <% wrap_layout :main do %>
-    <section class="blog-post">
-        <section class="blog-post-navigation">
-          <% if current_article.previous_article %>
-            <p class="prev-post">Previous post: <%= link_to current_article.previous_article.title, current_article.previous_article.url %></p>
-          <% end %>
-          <% if current_article.next_article %>
-            <p class="next-post">Next post: <%= link_to current_article.next_article.title, current_article.next_article.url %></p>
-          <% end %>
-        </section>
-        <section class="blog-post-content">
-          <h1><%= current_article.title %></h1>
-          <p><%= current_article.date.strftime("%d %b %Y") %></p>
-          <%= yield %>
-        </section>
+  <div class="blog-post-container">
+    <section class="blog-post-navigation">
+      <% if current_article.previous_article %>
+        <p class="prev-post">
+          Previous post: <%= link_to current_article.previous_article.title, current_article.previous_article.url %>
+        </p>
+      <% end %>
+      <% if current_article.next_article %>
+        <p class="next-post">
+          Next post: <%= link_to current_article.next_article.title, current_article.next_article.url %>
+        </p>
+      <% end %>
     </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1><%= current_article.title %></h1>
+        <p><%= current_article.date.strftime("%d %b %Y") %></p>
+      </div>
+      <div class="blog-post-content">
+        <%= yield %>
+      </div>
+    </section>
+  </div>
 <% end %>
