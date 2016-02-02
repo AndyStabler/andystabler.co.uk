@@ -20,17 +20,12 @@
 .article-header {
   margin-bottom: 0;
   font-weight: 400;
-  @include blue-links;
 }
 
 .article-published-on {
   margin-top: 0;
   color: gray;
   font-style: italic;
-}
-
-.article-snippet {
-
 }
 
 .index-article {
