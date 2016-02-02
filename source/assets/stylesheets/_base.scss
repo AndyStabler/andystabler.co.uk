@@ -1,18 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300);
 
-@mixin blue-links {
-  a {
-    color: #428bca;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #2a6496;
-    text-decoration: underline;
-  }
-}
-
 html, body {
   height: 100%;
 }
@@ -72,15 +60,25 @@ nav {
 .pagination {
   padding: 0 1em;
 
-  @include blue-links;
-
+  a {
+    @extend .blue-link;
+  }
   .older {
     float: left;
   }
-
   .newer {
     float: right;
   }
+}
+
+.blue-link {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.blue-link:hover {
+  color: #2a6496;
+  text-decoration: underline;
 }
 
 @media (max-width: 800px) {
