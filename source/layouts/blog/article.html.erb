@@ -1,3 +1,16 @@
+<% content_for :css do %>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+<% end %>
+<% content_for :js do %>
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<% end %>
+<% content_for :footer_js do %>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+<% end %>
 <% wrap_layout :main do %>
   <div class="blog-post-container">
     <section class="blog-post-navigation">
@@ -20,6 +33,9 @@
       <div class="blog-post-content">
         <%= yield %>
       </div>
+    </section>
+    <section class="comments">
+      <%= partial "layouts/blog/disqus" %>
     </section>
   </div>
 <% end %>
