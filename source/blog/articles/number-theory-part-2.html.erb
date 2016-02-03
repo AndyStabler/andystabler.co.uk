@@ -1,6 +1,96 @@
 ---
 layout: blog/article
 title: Number Theory Part 2
-date: 2016-01-28
+date: 2014-11-17
 ---
-<p>This is number theory part 2</p>
+<p>This post covers more of the number theory I found useful for understanding the basics of public key cryptography. I've covered Fermat's little Theorem, Euler's Theorem, e<sup>th</sup> roots, and discrete logarithms. Once this stuff is covered you should be able to learn how encryption systems like RSA and ElGamal work, and be able to understand key exchange protocols like Diffie-Hellman.</p>
+
+<h2 id="fermats-little-theorem">Fermat's Little Theorem</h2>
+<p>Don't get this confused with Fermat's <strong>Last</strong> Theorem, which states that there are no positive integers <em>a</em>, <em>b</em>, and <em>c</em>, such that <em>a<sup>n</sup>+b<sup>n</sup> = c<sup>n</sup></em> for any <em>n</em> value greater than 2.</p>
+<p>Fermat's <strong>Little</strong> Theorem is used in RSA and states that if <em>p</em> is a prime number and <em>a</em> is any integer, then the result of <em>a<sup>p</sup>-a </em> will be congruent to the value of <em>p</em>. It is therefore a useful method of checking for primality (<a href=http://en.wikipedia.org/wiki/Necessity_and_sufficiency target="_blank">it's necessary, but not sufficient</a>). </p>
+
+<p>It can be shown in modulo arithmetic as: </p>
+
+<p>a<sup>p</sup> = a (mod p)</p>
+
+<pre>
+Using the values a = 3, p = 5
+
+3<sup>5</sup> = 243
+ = 243 (mod 5)  = 3
+ = 3<sup>5</sup> = 3 (mod 5)
+</pre>
+
+<p>Fermat's Little Theorem can also be used to calculate the modular multiplicative inverse. <a target="_blank" href="/blog/number-theory-part-1#multiplicative-modular-inverse">Remember</a> that the inverse of a value <em>x</em> is represented as <em>x<sup>-1</sup></em> and that multiplying it by <em>x</em> results in 1. If <em>a</em> isn't divisible by <em>p</em>, then the theorem is equivalent to:</p>
+
+<p>a<sup>p-1</sup> = 1 (mod p)</p>
+<pre>
+Using the values a = 3, p = 5
+
+3<sup>5-1</sup>
+ = 3<sup>4</sup> = 81
+ = 81 mod 5 = 1
+</pre>
+<p>Because <em>a<sup>p-1</sup> = 1 (mod p)</em>, we can determine the inverse of <em>a</em> (or <em>a<sup>-1</sup></em> if you like) to be <em>a<sup>p-2</sup> (mod p)</em>, because <em>a<sup>p-2</sup> (mod p)*a<sup>p</sup> (mod p)</em> results in <em>a<sup>p-1</sup> (mod p)</em> which is <em>1 mod p</em>. Although this is a viable method of calculating the modular multiplicative inverse, the GCD approach is used more commonly because it's faster and doesn't require information about the group order.</p>
+
+<p>Here's an example:</p>
+
+<pre>
+a*a<sup>p-2</sup> = 1 (mod p)
+
+using values a = 3, p = 7
+
+3*(3<sup>7-2</sup>)
+ = 3*(3<sup>5</sup>)  = 729
+ = 729 (mod 7) = 1
+
+So the inverse of 3 modulo 7 (3<sup>-1</sup> mod 7) is: 3<sup>5</sup> (mod 7) = <strong>5</strong>
+a*a<sup>-1</sup> (mod p) → 3*5 = 15 (mod 7) = 1
+3<sup>-1</sup> (mod 7) = 5
+</pre>
+
+
+<h2 id="eulers-theorem">Euler's Theorem</h2>
+<p>Fermat's Little Theorem is great, but it only applies to prime numbers. This is where Euler's Theorem comes in (or the Fermat-Euler Theorem).
+ Euler developed Fermat's Little Theorem further so it would apply to all integers, not just primes. The result is a more general theorem and one that is an important part of RSA.</p>
+
+<p>The theorem states:</p>
+
+<pre><em>If a and n are co-prime then the result of a<sup>ϕ(n)</sup> = 1 (mod n)</em></pre>
+
+<p>Here, ϕ represents the Phi function (or Euler's totient Function). This function returns the number of invertible elements in the set of <em>Zn</em>. From <a href="/blog/number-theory-part-1#Zn*" target="_blank">number theory part 1</a>, we know that the set of invertible elements contains all values in <em>Zn</em> that are co-prime to <em>n</em>, and is represented as <em>Zn*</em>. So we could have said <em>ϕ(n)</em> returns the cardinality of the set <em>Zn*</em>. </p>
+<p> The value returned by this function is the <a href="http://en.wikipedia.org/wiki/Order_(group_theory)" target="_blank">group order</a> of <em>Zn*</em>. Knowing the group order is important because it allows us to calculate the private key in RSA. Note, since the value <em>n</em> in RSA is equal to the product of two primes <em>p</em> and <em>q</em>, the group order is equal to <em>p-1*q-1</em> since Zp* = Zp \ {0} and |Zp*| = p-1.</p>
+
+<h2 id="eth-root">Eth root</h2>
+<p>Calculating the e<sup>th</sup> root for some value <em>c</em>, is the process of finding a value <em>x</em> in <em>Zp*</em> such that <em>x<sup>e</sup> = c (mod p)</em>. It's usually shown as <em>c<sup>1/e</sup></em>.</p>
+<p>Since we raise the plaintext message <em>m</em> to the public exponent <em>e</em> modulo <em>n</em> in the RSA cryptosystem, an adversary could calculate the plain text by performing the e<sup>th</sup> roots on some arbitrary number modulo <em>n</em>. However, no efficient solution exists to calculate the e<sup>th</sup> root for keys greater than 1024 bits. This is the reason the RSA cryptosystem is considered secure, and is the reason that most of our encrypted packets sent over the internet would be vulnerable if an efficient solution did exist (<a href=" http://en.wikipedia.org/wiki/RSA_problem" target="_blank">the Wikipedia article has more to say on it</a>).</p>
+
+<pre>
+7<sup>1/3</sup> = 6 in Z11
+
+Let's break it down. We want to find some value x, such that x<sup>3</sup> = 7 (mod 11).
+
+ 6<sup>3</sup> = 216
+ 216 mod 11 = 7
+
+So the e<sup>th</sup> root of 7 (mod 11) is <strong>6</strong>.
+</pre>
+
+<h2 id="discrete-logarithm">Discrete Logarithm</h2>
+
+<p>The discrete logarithm assumption is the reason the Diffie-Hellman key exchange is successful at keeping secret keys secret over an unsecured network. Without this important security feature, it would be possible for an adversary to calculate the secret keys by listening to the packets sent during key exchange.
+<a href=http://mathworld.wolfram.com/DiscreteLogarithm.html target="_blank">Wolfram explain this nicely</a>.</p>
+<pre>
+Here’s the gist of it:
+The discrete logarithm is some value <em>x</em> such that <em>b<sup>x</sup> (mod n) = a</em>
+</pre>
+<p>In the Diffie-Hellman key exchange, two parties, Alice and Bob, have the private keys a and b, respectively. They raise some integer g to their private key modulo p (g<sup>secret key</sup> (mod p)), and then send the result over an <strong>unsecured network</strong> to the other party. After both parties have sent this value, they then can compute a shared secret key ((g<sup>b</sup>)<sup>a</sup> (mod p) for Alice, and (g<sup>a</sup>)<sup>b</sup> (mod p) for Bob, both resulting in the same value). </p>
+<p>Because we know that computing the discrete logarithm for large numbers is too difficult (it's a computationally intractable problem) we can say that, even though an adversary has access to <em>g<sup>a</sup> (mod p)</em> and <em>g<sup>b</sup> (mod p)</em> they will be unable to calculate <em>g<sup>ab</sup> (mod p)</em>.</p>
+
+<h2>Further Reading</h2>
+<p><em>Page 34 of "A Computational Introduction to Number Theory and Algebra - Victor Shoup" for more information on  Euler's and Fermat's Theorems - (<a href="http://shoup.net/ntb/ntb-v2.pdf" target="_blank">Free PDF here</a>)
+</em></p>
+<p><em><a href=http://mathworld.wolfram.com/DiscreteLogarithm.html target="_blank">Wolfram</a> have a concise definition of the discrete logarithm</em></p>
+<p><em>Wikipedia's articles on the <a href=http://en.wikipedia.org/wiki/RSA_problem target="_blank">RSA problem</a> and the <a href=http://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_problem target="_blank">Diffie-Hellman problem</a> are useful</p>
+<p><em>The original RSA paper can be found <a href=http://people.csail.mit.edu/rivest/Rsapaper.pdf target="_blank">here</a></em></p>
+
