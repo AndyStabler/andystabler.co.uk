@@ -59,16 +59,36 @@
   }
 }
 
+.blog-post-content {
+  h2 {
+    font-family: 'Ubuntu', sans-serif;
+    color: #428bca;
+    font-weight: 200;
+  }
+
+  h3 {
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: 200;
+    font-size: 1.5em;
+    margin-left: .5em;
+  }
+}
+
+.maths {
+  text-align: center;
+  overflow: hidden;
+}
+
 @media (max-width: 800px) {
   .articles {
     width: 100%;
   }
   .prev-post {
     width: 100%;
+    margin-bottom: 0;
   }
   .next-post {
     float: left;
-    margin-top: 0;
   }
   .blog-post-container {
     width: 100%;
