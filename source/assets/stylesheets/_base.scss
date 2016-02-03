@@ -55,14 +55,15 @@ nav {
   padding-top: 3em;
   overflow-y: scroll;
   min-height: 100%;
+
+  a {
+    @extend .blue-link;
+  }
 }
 
 .pagination {
   padding: 0 1em;
 
-  a {
-    @extend .blue-link;
-  }
   .older {
     float: left;
   }
@@ -79,6 +80,18 @@ nav {
 .blue-link:hover {
   color: #2a6496;
   text-decoration: underline;
+}
+
+pre {
+    clear: both;
+    line-height: 1;
+    font-family: monospace;
+    background: #F0F0F0;
+    padding: 6px;
+    margin: 10px 0;
+    overflow: auto;
+    word-wrap: normal;
+    white-space: pre;
 }
 
 @media (max-width: 800px) {
