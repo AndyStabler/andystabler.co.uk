@@ -29,30 +29,35 @@
   p {
     font-weight: 200;
     text-align: justify;
+
     a {
       color: #969AA2;
       text-decoration: none;
+      @include link-transition;
     }
     a:hover {
-      color: #A1ACC7;
+      color: black;
     }
   }
-
   .social {
     padding: 0;
     height:20px;
+
     a {
       text-decoration: none;
       color: inherit;
     }
   }
-
   .social li {
     display:inline-block;
 
     a {
-      font-size: 24px;
+      font-size: 1.5em;
       margin: 0 0.5em;
+      @include link-transition;
+    }
+    a:hover {
+      color: black;
     }
   }
 }

@@ -1,22 +1,53 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300);
 @import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300);
 
+// Fonts
+
+$site-font: 'Open Sans', sans-serif;
+$header-font: 'Ubuntu', sans-serif;
+
+
+// Colours
+
+// Anchor text colour
+$blue1: #428bca;
+// Anchor text hover colour
+$blue2: #2a6496;
+
+// Dark grey- default for text
+$grey1: #555;
+// Lighter grey- used on pre tag backgrounds
+$grey2: #F0F0F0;
+// Light grey- used for blog post date
+$grey3: #C7C7C7;
+// Very light grey- background colour for most sections of site
+$grey4: #F3F3F5;
+
+@mixin link-transition {
+  -o-transition: .2s;
+  -ms-transition: .2s;
+  -moz-transition: .2s;
+  -webkit-transition: .2s;
+  transition: .2s;
+}
+
+
 html, body {
   height: 100%;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $site-font;
   font-size: 100%;
   background-color: #121E2C;
   font-weight: 200;
-  color: #555;
+  color: $grey1;
   line-height: 1.75;
 }
 
 nav {
   position: relative;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: $header-font;
   background: image_url('brothers-water-filter.jpg') no-repeat center;
   background-size: cover;
   background-position: 50% 55%;
@@ -51,7 +82,7 @@ nav {
 
 .content {
   clear: both;
-  background-color: #F3F3F5;
+  background-color: $grey4;
   padding-top: 3em;
   overflow-y: scroll;
   min-height: 100%;
@@ -73,12 +104,12 @@ nav {
 }
 
 .blue-link {
-  color: #428bca;
+  color: $blue1;
   text-decoration: none;
 }
 
 .blue-link:hover {
-  color: #2a6496;
+  color: $blue2;
   text-decoration: underline;
 }
 
@@ -86,7 +117,7 @@ pre {
     clear: both;
     line-height: 1.25;
     font-family: monospace;
-    background: #F0F0F0;
+    background: $grey2;
     padding: 6px;
     margin: 10px 0;
     overflow: auto;
