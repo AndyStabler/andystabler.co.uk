@@ -21,7 +21,7 @@
 
 .article-published-on {
   margin-top: 0;
-  color: gray;
+  color: $grey3;
   font-style: italic;
 }
 
@@ -52,11 +52,6 @@
     font-family: $header-font;
     font-weight: 400;
     margin-bottom: 0;
-  }
-  p {
-    margin-top: 0;
-    color: $grey3;
-    font-style: italic;
   }
 }
 
