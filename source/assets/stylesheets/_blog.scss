@@ -7,7 +7,7 @@
 }
 
 .articles {
-  width: 50%;
+  width: $content-width;
   left: 0;
   right: 0;
   margin: auto;
@@ -36,7 +36,7 @@
 }
 
 .blog-post-container {
-  width: 75%;
+  width: $content-width;
   left: 0;
   right: 0;
   margin: auto;
