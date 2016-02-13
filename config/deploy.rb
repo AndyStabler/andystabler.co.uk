@@ -13,6 +13,13 @@ before 'deploy', 'rvm1:install:rvm'  # install/update RVM
 
 namespace :deploy do
 
+  desc 'Show the deployed SHA'
+  task :sha do
+    on roles(:all) do
+      execute :cat, "#{current_path}/REVISION"
+    end
+  end
+
   desc "Build the website"
   task :build do
     on roles(:all) do
