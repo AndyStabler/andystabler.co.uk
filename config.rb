@@ -6,6 +6,7 @@ page '/*.txt', layout: false
 set :js_dir, 'assets/javascripts'
 set :images_dir, 'assets/images'
 set :css_dir, 'assets/stylesheets'
+set :domain, "http://www.andystabler.co.uk"
 
 # General configuration
 
