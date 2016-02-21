@@ -1,3 +1,6 @@
+<% content_for :custom_social do %>
+  <%= social_meta_tags :description => strip_tags(current_article.summary) %>
+<% end %>
 <% content_for :css do %>
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
 <% end %>
