@@ -11,6 +11,7 @@
     <%= yield_content :css %>
     <%= javascript_include_tag :all %>
     <%= yield_content :js %>
+    <%= partial "layouts/analytics" %>
   </head>
 
   <body class="<%= page_classes %>">
