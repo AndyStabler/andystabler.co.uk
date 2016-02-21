@@ -8,13 +8,15 @@ set :images_dir, 'assets/images'
 set :css_dir, 'assets/stylesheets'
 set :domain, "http://www.andystabler.co.uk"
 
+activate :directory_indexes
 # General configuration
 
 activate :blog do |blog|
   # ignore "blog/index.html"
+  blog.prefix = "blog"
   blog.layout = "blog/article"
-  blog.sources = "blog/articles/{title}.html"
-  blog.permalink = "blog/{title}"
+  blog.sources = "articles/{title}.html"
+  blog.permalink = "{title}"
   blog.paginate = true
   blog.page_link = "page/{num}"
   blog.per_page = 5
