@@ -50,7 +50,7 @@ body {
 nav {
   position: relative;
   font-family: $header-font;
-  background: image_url('brothers-water-filter.jpg') no-repeat center;
+  background: url(image_path("brothers-water-filter.jpg")) no-repeat center;
   background-size: cover;
   background-position: 50% 55%;
 
