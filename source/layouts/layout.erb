@@ -9,13 +9,13 @@
     <%= yield_content :custom_social || social_meta_tags %>
     <%= stylesheet_link_tag :main unless current_page.data.ignore_main_styles %>
     <%= yield_content :css %>
-    <%= javascript_include_tag :all %>
     <%= yield_content :js %>
     <%= partial "layouts/analytics" %>
   </head>
 
   <body class="<%= page_classes %>">
     <%= yield %>
+    <%= javascript_include_tag :all %>
     <%= yield_content :footer_js %>
   </body>
 </html>
