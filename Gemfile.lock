@@ -84,6 +84,8 @@ GEM
       sass (>= 3.4)
       tilt (~> 1.4.1)
       uglifier (~> 2.6)
+    middleman-gh-pages (0.3.0)
+      rake (> 0.9.3)
     middleman-livereload (3.4.6)
       em-websocket (~> 0.5.1)
       middleman-core (>= 3.3)
@@ -145,6 +147,7 @@ DEPENDENCIES
   font-awesome-middleman
   middleman (>= 4.0.0)
   middleman-blog
+  middleman-gh-pages
   middleman-livereload
   middleman-sprockets (~> 4.0.0.rc)
   nokogiri
