@@ -47,24 +47,6 @@ body {
   line-height: 1.75;
 }
 
-nav {
-  position: relative;
-  font-family: $header-font;
-  background: url(image_path("brothers-water-filter.jpg")) no-repeat center;
-  background-size: cover;
-  background-position: 50% 55%;
-
-  h1 {
-    margin: 0 0.5em;
-  }
-  a {
-    color: white;
-    text-decoration: none;
-    font-weight: 200;
-  }
-
-}
-
 #home-link {
   position: absolute;
   font-size: 1.25em;
@@ -81,6 +63,72 @@ nav {
   font-size: 3em;
   text-align: center;
   color: white;
+}
+
+.left-column {
+  float: left;
+  position: fixed;
+  width: 320px;
+  height: 100%;
+  background: url(image_path("brothers-water-filter.jpg")) no-repeat center;
+  background-size: cover;
+  background-position: right;
+  color: white;
+  text-align: right;
+  overflow-y: scroll;
+  transition: .2s;
+  a {
+    transition: .2s;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 200;
+  }
+  a:hover {
+    color: #000000;
+  }
+  header {
+    padding: 2em 1em;
+  }
+}
+
+#site-title {
+  font-weight: 200;
+}
+
+#main-nav {
+  ul {
+    font-size: 1.5em;
+    margin-bottom: .15em;
+    li {
+      display: block;
+      text-transform: uppercase;
+      line-height: 2em;
+    }
+  }
+}
+
+#sub-nav {
+  ul {
+    font-size: 1.5em;
+    li {
+      margin: .5em;
+      display: inline-block;
+    }
+  }
+}
+
+.mid-column {
+  float: left;
+  margin-left: 320px;
+  width: calc(100% - 320px);
+  overflow: auto;
+  background-color: white;
+}
+
+.mid-column-container {
+  width: 100%;
+  max-width: 800px;
+  padding: .5em;
 }
 
 .content {
@@ -134,5 +182,57 @@ pre {
   }
   #home-link-mobile {
     display: block;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .left-column {
+    position: relative;
+    float: none;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    header {
+      padding-top: 1em;
+      padding-bottom: 0;
+    }
+  }
+
+  #main-nav {
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        display: inline-block;
+        padding-right: .25em;
+      }
+    }
+  }
+
+  #site-title {
+    margin: 0;
+  }
+
+  #sub-nav {
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .mid-column {
+    margin-left: 0;
+    float: none;
+    width: 100%;
+  }
+
+  .mid-column-container {
+    left: 0;
+    right: 0;
+    margin: auto;
   }
 }
