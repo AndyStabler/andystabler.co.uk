@@ -1,23 +1,5 @@
 ---
-title: Welcome to my website
+pageable: true
 layout: main_column
 ---
-<div class="layer"></div>
-<div class="info">
-  <h1>Hello</h1>
-  <p>I'm a software engineer living in Edinburgh. I like animals, cake, and the countryside.</p>
-  <p>Read my <%= link_to "blog", "blog" %> to find out more about me and my interests.</p>
-  <ul class="social">
-    <li>
-      <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
-    </li>
-    <li>
-      <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
-    </li>
-    <li>
-      <a class="email" href="mailto:me@andystabler.co.uk?Subject=Website%20Feedback"
-      target="_blank"><i class="fa fa-envelope-o"></i></a>
-    </li>
-  </ul>
-</div>
-
+<%= partial "layouts/blog/articles", :locals => { :prev_page => prev_page, :next_page => next_page } %>
