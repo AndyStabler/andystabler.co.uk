@@ -38,4 +38,4 @@ configure :build do
   activate :asset_hash
 end
 
-
+redirect "blog/index.html", to: "/index.html"
