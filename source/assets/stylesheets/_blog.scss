@@ -7,7 +7,6 @@
 }
 
 .articles {
-  width: $content-width;
   left: 0;
   right: 0;
   margin: auto;
@@ -36,12 +35,11 @@
 }
 
 .blog-post-container {
-  width: $content-width;
   left: 0;
   right: 0;
   margin: auto;
   background-color: white;
-  padding: 2em;
+  padding: .5em;
 }
 
 .blog-post-header {
