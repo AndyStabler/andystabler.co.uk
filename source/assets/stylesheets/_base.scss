@@ -121,8 +121,10 @@ body {
   float: left;
   margin-left: 320px;
   width: calc(100% - 320px);
+  height: 100%;
   overflow: auto;
   background-color: white;
+  color: $grey1;
 }
 
 .mid-column-container {
