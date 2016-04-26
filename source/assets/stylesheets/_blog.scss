@@ -14,8 +14,16 @@
 }
 
 .article-header {
-  margin-bottom: 0;
+  margin: 0;
   font-weight: 400;
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $blue2;
+    text-decoration: none;
+  }
 }
 
 .article-published-on {
