@@ -2,20 +2,15 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 
 // Fonts
-
 $site-font: 'Open Sans', sans-serif;
 $header-font: 'Raleway', sans-serif;
 
-
 // Colours
-
 $background: #121E2C;
-
 // Anchor text colour
 $blue1: #428bca;
 // Anchor text hover colour
 $blue2: #2a6496;
-
 // Dark grey- default for text
 $grey1: #555;
 // Lighter grey- used on pre tag backgrounds
@@ -32,7 +27,6 @@ $grey4: #F3F3F5;
   -webkit-transition: .2s;
   transition: .2s;
 }
-
 
 html, body {
   height: 100%;
