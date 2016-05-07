@@ -9,6 +9,8 @@ $header-font: 'Raleway', sans-serif;
 
 // Colours
 
+$background: #121E2C;
+
 // Anchor text colour
 $blue1: #428bca;
 // Anchor text hover colour
@@ -39,7 +41,7 @@ html, body {
 body {
   font-family: $site-font;
   font-size: 100%;
-  background-color: #121E2C;
+  background-color: $background;
   font-weight: 200;
   color: $grey1;
   line-height: 1.75;
