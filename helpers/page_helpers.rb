@@ -6,7 +6,7 @@ module PageHelpers
   end
 
   def title_tag(opts = {})
-    content_tag :title, title_content
+    content_tag :title, (opts[:title] || title_content)
   end
 
   # Public: Determine the section the current page belongs to. Right now
