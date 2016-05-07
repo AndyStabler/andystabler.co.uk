@@ -25,8 +25,8 @@ module PageHelpers
   #
   # Returns the section the current page belongs to.
   def section
-    pages = current_page.path.split("/")
-    pages.first.capitalize if pages.count > 1
+    pages = current_page.url.split("/").reject(&:empty?)
+    pages.first.capitalize if pages.any?
   end
 
   def social_meta_tags(options = {})
