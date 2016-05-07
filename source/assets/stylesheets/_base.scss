@@ -121,6 +121,13 @@ body {
   }
 }
 
+#acknowledgements {
+  position: absolute;
+  bottom: 0;
+  right: 1em;
+  font-size: .8em;
+}
+
 .mid-column {
   float: left;
   margin-left: 320px;
@@ -230,6 +237,10 @@ pre {
         margin-bottom: 0;
       }
     }
+  }
+
+  #acknowledgements {
+    display: none;
   }
 
   .mid-column {
