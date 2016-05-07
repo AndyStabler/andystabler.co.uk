@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
 
-    <%= title_tag %>
-    <%= yield_content :custom_social || social_meta_tags %>
+    <%= (yield_content :title) || title_tag %>
+    <%= (yield_content :custom_social) || social_meta_tags %>
     <%= stylesheet_link_tag :main unless current_page.data.ignore_main_styles %>
     <%= yield_content :css %>
     <%= yield_content :js %>
