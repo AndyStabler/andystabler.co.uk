@@ -47,18 +47,6 @@ body {
   line-height: 1.75;
 }
 
-#home-link {
-  position: absolute;
-  font-size: 1.25em;
-  bottom: 1.25em;
-}
-
-#home-link-mobile {
-  position: absolute;
-  bottom: 0.5em;
-  display: none;
-}
-
 #section-link {
   font-size: 3em;
   text-align: center;
@@ -191,15 +179,6 @@ pre {
     overflow: auto;
     word-wrap: normal;
     white-space: pre;
-}
-
-@media (max-width: 800px) {
-  #home-link {
-    display: none;
-  }
-  #home-link-mobile {
-    display: block;
-  }
 }
 
 @media screen and (max-width: 1024px) {
