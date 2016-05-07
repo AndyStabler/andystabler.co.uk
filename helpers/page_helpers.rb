@@ -1,8 +1,8 @@
 module PageHelpers
 
+  # "Andy Stabler - Blog - A blog post"
   def title_content
-    # connect the title, subsections, and "Andy Stabler" to get a title like "A blog post - Blog - Andy Stabler"
-    [current_page.data.title, section, "Andy Stabler"].flatten.compact.join(" - ")
+    ["Andy Stabler", section, current_page.data.title].flatten.compact.join(" - ")
   end
 
   def title_tag(opts = {})
