@@ -1,13 +1,38 @@
 <% wrap_layout :layout do %>
-  <nav>
-    <h1 id="home-link"><a href="/">Andy Stabler</a></h1>
-    <h1 id="home-link-mobile"><a href="/"><i class="fa fa-home"></i></a></h1>
-    <%= partial "layouts/section_header" %>
-  </nav>
-  <section class="content">
-    <%= yield %>
+  <section class="left-column">
+    <header>
+      <div>
+        <% link_to "/" do %>
+          <%= image_tag "me-cow-green-reservoir.jpg", :width => 128, :height => 128, :class => "profile-pic" %>
+        <% end %>
+      </div>
+      <h1 id="site-title"><%= link_to "Andy Stabler", "/" %></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><%= link_to "About", "/about" %></li>
+          <li><%= link_to "Blog", "/" %></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:me@andystabler.co.uk?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <%= link_to "Middleman", "https://middlemanapp.com/" %> and hosted by <%= link_to "GitHub", "https://github.com/AndyStabler/andystabler.co.uk" %></p>
+    </header>
   </section>
-  <footer>
-    <%= yield_content :footer %>
-  </footer>
+  <section class="mid-column">
+    <section class="mid-column-container">
+      <%= yield %>
+    </section>
+  </section>
 <% end %>
