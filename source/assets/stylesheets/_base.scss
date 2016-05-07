@@ -156,15 +156,15 @@ body {
 }
 
 pre {
-    clear: both;
-    line-height: 1.25;
-    font-family: monospace;
-    background: $grey2;
-    padding: 6px;
-    margin: 10px 0;
-    overflow: auto;
-    word-wrap: normal;
-    white-space: pre;
+  clear: both;
+  line-height: 1.25;
+  font-family: monospace;
+  background: $grey2;
+  padding: 6px;
+  margin: 10px 0;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
 }
 
 @media screen and (max-width: 1024px) {
