@@ -2,4 +2,7 @@
 pageable: true
 layout: main
 ---
+<% content_for :custom_social do %>
+  <%= social_meta_tags :description => "Hello, I'm a software engineer living in Edinburgh. I like animals, cake, and the countryside." %>
+<% end %>
 <%= partial "layouts/blog/articles", :locals => { :prev_page => prev_page, :next_page => next_page } %>
