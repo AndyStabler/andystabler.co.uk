@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <title>Andy Stabler - Blog - A JSON rabbit hole</title>
+      <meta content="Andy Stabler - Blog - A JSON rabbit hole" property="title"></meta><meta content="
+I fell down a really curious rabbit hole the other day and thought I'd share
+  the adventure. I was using a gem that handles a response from an API (pretty
+  standard, right?).
+The response was handled inside the gem like so:
+
+def get(path, options..." property="description"></meta><link href="http://i.giphy.com/swtiK9jRfE0zS.gif" property="image_src"></link><meta content="Andy Stabler - Blog - A JSON rabbit hole" itemprop="name"></meta><meta content="
+I fell down a really curious rabbit hole the other day and thought I'd share
+  the adventure. I was using a gem that handles a response from an API (pretty
+  standard, right?).
+The response was handled inside the gem like so:
+
+def get(path, options..." itemprop="description"></meta><meta content="http://i.giphy.com/swtiK9jRfE0zS.gif" itemprop="image"></meta><meta content="Andy Stabler - Blog - A JSON rabbit hole" property="og:title"></meta><meta content="
+I fell down a really curious rabbit hole the other day and thought I'd share
+  the adventure. I was using a gem that handles a response from an API (pretty
+  standard, right?).
+The response was handled inside the gem like so:
+
+def get(path, options..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/json-rabbit-hole/" property="og:url"></meta><meta content="http://i.giphy.com/swtiK9jRfE0zS.gif" property="og:image"></meta><meta content="twitter summary" name="twitter:card"></meta><meta content="Andy Stabler - Blog - A JSON rabbit hole" name="twitter:title"></meta><meta content="
+I fell down a really curious rabbit hole the other day and thought I'd share
+  the adventure. I was using a gem that handles a response from an API (pretty
+  standard, right?).
+The response was handled inside the gem like so:
+
+def get(path, options..." name="twitter:description"></meta><meta content="http://i.giphy.com/swtiK9jRfE0zS.gif" name="twitter:image"></meta>
+
+    <link href="/assets/stylesheets/main-cce8221f.css" rel="stylesheet" />
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
+
+      <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+
+  <body class="blog blog_json-rabbit-hole blog_json-rabbit-hole_index">
+      <section class="left-column">
+    <header>
+      <div>
+<a href="/">          <img width="128" height="128" class="profile-pic" src="/assets/images/me-cow-green-reservoir-36592f3b.jpg" />
+</a>      </div>
+      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
+    </header>
+  </section>
+  <section class="mid-column">
+    <section class="mid-column-container">
+        <div class="blog-post-container">
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/cryptanalysis-vigenere-cipher/">Cryptanalysis - Vigenère Cipher</a>
+        </p>
+    </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1>A JSON rabbit hole</h1>
+        <p class="article-published-on">07 Jul 2016</p>
+      </div>
+      <div class="blog-post-content">
+        <img src="http://i.giphy.com/swtiK9jRfE0zS.gif" width="480" height="360" />
+<p>I fell down a really curious rabbit hole the other day and thought I'd share
+  the adventure. I was using a gem that handles a response from an API (pretty
+  standard, right?).</p>
+<p>The response was handled inside the gem like so:</p>
+<pre><code class="ruby">
+def get(path, options = {})
+  response = request(path, options)
+  JSON.parse(response.body, :symbolize_names => true)
+end
+</code></pre>
+<p>The <span class="code">:symbolize_names => true</span> argument here is
+  crucial. The response from the API would look something like
+  <span class="code">"{\"princess\": \"bubblegum\"}"</span>, and when parsed
+  using the <span class="code">:symbolize_names => true</span> option, the keys
+  in the returned hash would be symbols:
+<pre><code class="ruby">{ :princess => "bubblegum" }</code></pre>
+<p>All throughout the gem, symbols were used when accessing this response hash.
+</p>
+<h3>JSON vs Yajl-ruby</h3>
+<p>Long story short, a legacy version of <a href="https://github.com/brianmario/yajl-ruby">Yajl-ruby</a>
+  (1.1.0) doesn't look for <span class="code">:symbolize_names</span> in the
+  opts hash of the <span class="code">parse</span> method. Instead, it looks for
+  <span class="code">:symbolize_keys</span>. So passing along
+  <span class="code">:symbolize_names => true</span> has no effect.</p>
+<p>Here's a nice example taken from an <a href="https://github.com/brianmario/yajl-ruby/issues/94">issue</a>
+  raised against Yajl-ruby for this release:</p>
+<pre><code class="ruby">
+string = '{"bla": "blub"}'
+
+require 'json'
+JSON.parse string, :symbolize_names => true # => {:bla=>"blub"}
+JSON.parse string, :symbolize_keys => true  # => {"bla"=>"blub"}
+
+require 'yajl/json_gem'
+JSON.parse string, :symbolize_names => true # => {"bla"=>"blub"}
+JSON.parse string, :symbolize_keys => true  # => {:bla=>"blub"}
+</code></pre>
+<p>And <i>obviously</i> our project was using this legacy version of Yajl-ruby.
+  When the <span class="code">parse</span> method was called inside the gem, it
+  did not symbolise the keys, and so <span class="code">nil</span> was returned
+  everywhere the hash was accessed.</p>
+<pre><code class="ruby">
+  require 'yajl/json_gem'
+  json_string = "{\"princess\":\"bubblegum\"}"
+  hash = JSON.parse(json_string, :symbolize_names => true)
+  # => {"princess"=>"bubblegum"}
+  hash[:princess]
+  # => nil
+</code></pre>
+<p>It looked like the gem was not working at all. So I dove into it, I ran the
+  tests, I used it in the console; everything worked fine. Yet when I used the
+  gem in our project no joy was had.</p>
+<img src="http://i.giphy.com/sIE0hveuiwCNG.gif" width="480" height="269" />
+<p>Eventually, (with the help of another pair of eyes) it was clear that the
+  <span class="code">parse</span> method was being handled differently in the
+  legacy version of Yajl-ruby. Our fix was to patch the gem to send both
+  <span class="code">:symbolize_names => true</span> <i>and</i>
+  <span class="code">:symbolize_keys => true</span>, which seemed to do the
+  trick for both Yajl-ruby 1.1.0 and the standard json gem.</p>
+<pre><code class="ruby">
+def get(path, options = {})
+  response = request(path, options)
+  JSON.parse(response.body, :symbolize_names => true, :symbolize_keys => true)
+end
+</code></pre>
+<p>Morning well spent? ✅</p>
+
+      </div>
+    </section>
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/json-rabbit-hole/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </div>
+
+    </section>
+  </section>
+
+    <script src="/assets/javascripts/all-da39a3ee.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+
+  </body>
+</html>
