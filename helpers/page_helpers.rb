@@ -32,7 +32,7 @@ module PageHelpers
   def social_meta_tags(options = {})
     title = options[:title] || title_content
     description = options[:description] || current_page.data.description
-    image = options[:image] || current_page.data.image
+    image = options[:image] || File.join(config[:domain], config[:images_dir], current_page.data.image)
     path = config.domain + current_page.url
 
     standard_tags(title, description, image) +
