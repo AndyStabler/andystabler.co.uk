@@ -1,0 +1,63 @@
+---
+title: A JSON rabbit hole
+date: 2016-07-07
+---
+<img src="http://i.giphy.com/swtiK9jRfE0zS.gif" width="480" height="360" />
+<p>I fell down a really curious rabbit hole the other day and thought I'd share the adventure. I was
+  using a gem that handles a response from an API (pretty standard, right?).</p>
+<p>The response was handled inside the gem like so:</p>
+<pre><code class="ruby">
+def get(path, options = {})
+  response = request(path, options)
+  JSON.parse(response.body, :symbolize_names => true)
+end
+</code></pre>
+<p>The <span class="code">:symbolize_names => true</span> argument here is crucial. The
+response from the API would look something like <span class="code">"{\"princess\": \"bubblegum\"}"</span>,
+and when parsed using the <span class="code">:symbolize_names => true</span> option, the keys in the
+returned hash would be symbols:
+<pre><code class="ruby">{ :princess => "bubblegum" }</code></pre>
+<p>All throughout the gem, symbols were used when accessing this response hash.</p>
+<h3>JSON vs Yajl-ruby</h3>
+<p>Long story short, a legacy version of <a href="https://github.com/brianmario/yajl-ruby">Yajl-ruby</a>
+  (1.1.0) doesn't look for <span class="code">:symbolize_names</span> in the opts hash of the
+  <span class="code">parse</span> method. Instead, it looks for <span class="code">:symbolize_keys</span>.
+  So passing along <span class="code">:symbolize_names => true</span> has no effect.</p>
+<p>Here's a nice example taken from an <a href="https://github.com/brianmario/yajl-ruby/issues/94">issue</a>
+  raised against Yajl-ruby for this release:</p>
+<pre><code class="ruby">
+string = '{"bla": "blub"}'
+
+require 'json'
+JSON.parse string, :symbolize_names => true # => {:bla=>"blub"}
+JSON.parse string, :symbolize_keys => true  # => {"bla"=>"blub"}
+
+require 'yajl/json_gem'
+JSON.parse string, :symbolize_names => true # => {"bla"=>"blub"}
+JSON.parse string, :symbolize_keys => true  # => {:bla=>"blub"}
+</code></pre>
+<p>And <i>obviously</i> our project was using this legacy version of Yajl-ruby. When the
+  <span class="code">parse</span> method was called inside the gem, it did not symbolise the keys,
+  and so <span class="code">nil</span> was returned everywhere the hash was accessed.</p>
+<pre><code class="ruby">
+  require 'yajl/json_gem'
+  json_string = "{\"princess\":\"bubblegum\"}"
+  hash = JSON.parse(json_string, :symbolize_names => true)
+  # => {"princess"=>"bubblegum"}
+  hash[:princess]
+  # => nil
+</code></pre>
+<p>It looked like the gem was not working at all. So I dove in,
+  I ran the tests, I used it in the console; everything worked fine. Yet when I used the gem in our
+  project no joy was had.</p>
+<img src="http://i.giphy.com/sIE0hveuiwCNG.gif" width="480" height="269" />
+<p>Eventually, (with the help of another pair of eyes) it was clear that the <span class="code">parse</span> method was being handled differently in the legacy version of Yajl-ruby. We patched the gem to send both
+  <span class="code">:symbolize_names => true</span> and <span class="code">:symbolize_keys => true</span>,
+  which seemed to do the trick for both Yajl-ruby 1.1.0 and the standard json gem.</p>
+<pre><code class="ruby">
+def get(path, options = {})
+  response = request(path, options)
+  JSON.parse(response.body, :symbolize_names => true, :symbolize_keys => true)
+end
+</code></pre>
+<p>Morning well spent? ✅</p>
