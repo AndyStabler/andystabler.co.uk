@@ -158,6 +158,13 @@ pre {
   white-space: pre;
 }
 
+span.code {
+  font-family: monospace;
+  background: $grey2;
+  padding: .25em;
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 1024px) {
   .left-column {
     position: relative;
