@@ -32,7 +32,7 @@ The response was handled inside the gem like so:
 
 def get(path, options..." name="twitter:description"></meta><meta content="http://i.giphy.com/swtiK9jRfE0zS.gif" name="twitter:image"></meta>
 
-    <link href="/assets/stylesheets/main-cce8221f.css" rel="stylesheet" />
+    <link href="/assets/stylesheets/main-f36a1420.css" rel="stylesheet" />
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
 
       <script type="text/javascript" async
@@ -96,7 +96,7 @@ def get(path, options..." name="twitter:description"></meta><meta content="http:
         <p class="article-published-on">07 Jul 2016</p>
       </div>
       <div class="blog-post-content">
-        <img src="http://i.giphy.com/swtiK9jRfE0zS.gif" width="480" height="360" />
+        <img class="blog-post-image" src="http://i.giphy.com/swtiK9jRfE0zS.gif" />
 <p>I fell down a really curious rabbit hole the other day and thought I'd share
   the adventure. I was using a gem that handles a response from an API (pretty
   standard, right?).</p>
@@ -149,7 +149,7 @@ JSON.parse string, :symbolize_keys => true  # => {:bla=>"blub"}
 <p>It looked like the gem was not working at all. So I dove into it, I ran the
   tests, I used it in the console; everything worked fine. Yet when I used the
   gem in our project no joy was had.</p>
-<img src="http://i.giphy.com/sIE0hveuiwCNG.gif" width="480" height="269" />
+<img class="blog-post-image" src="http://i.giphy.com/sIE0hveuiwCNG.gif" />
 <p>Eventually, (with the help of another pair of eyes) it was clear that the
   <span class="code">parse</span> method was being handled differently in the
   legacy version of Yajl-ruby. Our fix was to patch the gem to send both
