@@ -1,0 +1,185 @@
+---
+title: Strategising your way to clean code
+date: 2016-09-22
+---
+<h2 id="strategy">The Strategy Design Pattern</h2>
+<p>
+  The Strategy design pattern is <em>neat</em>. It decouples algorithm implementations
+  (the how) from the objects that use them (the what). This separation means the cost
+  of changing either the algorithm or the code that uses it is nice and low
+  because we only need to change a small area of the code at a time.
+</p>
+<p>
+  I, like most reasonable people, enjoy cake. Here I have a Cake class that's going to
+  make me a cake. It even gives me the choice of baking it in a gas or electric oven.
+  How cool is that?
+</p>
+
+<pre><code class="ruby">
+  class Cake
+
+    def initialize(gas_oven: false)
+      @gas_oven = gas_oven
+    end
+
+    def make
+      puts "Mixing sugar and butter"
+      puts "Beating the eggs"
+      puts "Mixing sugar, butter, eggs, and flour"
+      if @gas_oven
+        bake_in_gas_oven
+      else
+        bake_in_electric_oven
+      end
+    end
+
+    private
+
+    def bake_in_gas_oven
+      puts "Heating oven to gas mark 4"
+      puts "Baking cake..."
+      puts [true, false].sample ? "Oh dear! You burned the cake! 😬" : "Golden brown! Perfect!"
+    end
+
+    def bake_in_electric_oven
+      puts "Heating oven to 180c"
+      puts "Baking cake..."
+      puts "Golden brown! Perfect!"
+    end
+
+  end
+
+  Cake.new.make
+  # => Mixing sugar and butter
+  # => Beating the eggs
+  # => Mixing sugar, butter, eggs, and flour
+  # => Heating oven to 180c
+  # => Baking cake...
+  # => Golden brown! Perfect!
+
+  Cake.new(gas_oven: true).make
+  # => Mixing sugar and butter
+  # => Beating the eggs
+  # => Mixing sugar, butter, eggs, and flour
+  # => Heating oven to gas mark 4
+  # => Baking cake...
+  # => Oh dear! You burned the cake! 😬
+</code>
+</pre>
+
+<h2>Why is this code good?</h2>
+<ul>
+  <li>As it stands, it's fairly simple and easy to understand. Someone coming into
+    this code base could get up to speed in no time. (How understandable will this be when we
+    have 10 different ovens though? The condition <span class="code">if @gas_oven ...</span>
+     is going to get lengthy!)</li>
+  <li>It (sometimes) makes me a delicious cake - it gets the job done, don't overlook this!</li>
+  <li>The logic of how each oven bakes cakes is encapsulated in the <span class="code">bake_in_gas_oven</span>
+and <span class="code">bake_in_electric_oven</span> methods. This means we can change how the
+  ovens bakes cakes without touching the <span class="code">make</span> method. If we
+  don't touch something we're less likely to break it.</li>
+</ul>
+
+<h2>Why is this code bad?</h2>
+<ul>
+  <li>
+    It breaks the <strong>Single Responsibilty Principle</strong> (a class should
+    have only one reason to change)
+  </li>
+    <ul>
+      <li>Should the Cake class really know the details of gas and electric ovens? Probably not. If we
+        were to decouple ovens from our Cake class we would be able to change the oven implementations
+        without touching the Cake class.
+      </li>
+      <li>What happens when we want to add a new type of oven? My friend Felicity just persuaded me
+        to buy a <em>totes amaze</em> AGA. Make the Cake class bake my cake in it, please. To do so
+        you would need to go into the Cake class and add a new <span class="code">bake_in_aga</span>
+        method and update the condition in the <span class="code">make</span> method.
+      </li>
+    </ul>
+  <li>Those <span class="code">bake_in_gas_oven</span> and <span class="code">bake_in_electric_oven</span>
+    methods share the <span class="code">bake</span> prefix. This is usually an indicator that they
+    belong in a separate class.
+  </li>
+  <li>The tests for the Cake class will need to cover the logic for ovens. I'd say that it
+    shouldn't really be the responsibility of the Cake tests to check that a gas oven
+    bakes cakes correctly.
+  </li>
+  <li>
+    We can't change the baking algorithm dynamically at run-time (we're limited to gas and
+    electric ovens). This might not be a problem, but it would be nice if the Cake class
+    didn't give two hoots about what kind of oven we used to bake the cake or how that oven
+    decided to go about it, just that it <em>could</em> bake a cake.
+  </li>
+</ul>
+
+<h2>How can we make it better?</h2>
+
+<p>
+  The main problem here is that there's too much going on inside the Cake class. We need to move
+the oven logic outta there.
+</p>
+
+<h3>A first pass - Inheritance</h3>
+<p>
+  An attractive solution at first might be to introduce some inheritance. This
+would mean having a Cake base class and several subclasses that encapsulated the baking
+logic. They could be called something like <span class="code">GasOvenCake</span> and
+<span class="code">ElectricOvenCake</span>. It reads a bit weird though and that's because it <em>is</em> a bit weird.
+</p>
+<%= image_tag "strategy-design-pattern/cake-inheritance.svg",
+:alt => "Cake inheritance class diagram", :class => "blog-post-image" %>
+<p>We've shoved the <em>IS-A</em> relationship where it doesn't really belong. Still, we're heading
+in the right direction, we've extracted out the oven implementations into separate classes. To add a new
+oven all we need to do is subclass Cake. This is nice because we don't need to touch any of
+the other oven implementations.</p>
+<p>A draw back here though is that each oven's baking algorithm is still tightly coupled to the Cake class.
+  We have a concrete Cake class knowing the details of the oven its going to get baked in.</p>
+<p>Also, what happens when we introduce a new type of cake? Say we want to make a fruit cake, this
+would subclass the Cake class (it <em>is-a</em> cake), but it should also be possible to bake it in
+any type of oven. Things get tricky at this point. What would the class diagram look like?</p>
+<%= image_tag "strategy-design-pattern/fruit-cake-inheritance.svg",
+:alt => "Fruit cake inheritance class diagram", :class => "blog-post-image" %>
+<p>It doesn't look like inheritance is the right thing to do here. Let's take a look
+  at another approach.</p>
+
+<h3>A second pass - Strategy Design Pattern</h3>
+<p>Let's try and tackle the coupling between the oven and the cake. There's an OOP principle that
+  states <em><%= link_to "favour composition over inheritance", "https://en.wikipedia.org/wiki/Composition_over_inheritance" %></em> - I think it would apply nicely here.
+</p>
+<p>Instead of having the cake subclasses implement the oven logic, let's extract it into its own class and use composition to store an Oven reference inside Cake. Here we have a Cake context class, and several
+  strategies that the context can use to get the job done:</p>
+  <%= image_tag "strategy-design-pattern/fruit-cake-composition.svg", :class => "blog-post-image", :alt => "Cake composition class diagram" %>
+<p>At this point our oven and cake have a much looser coupling. We're free to add new cakes
+  without touching any oven code, and we're free to add new ovens without touching cake code.
+  The cost of change in our codebase has just had a massive reduction. We can be fairly confident that if we break a cake we aren't breaking an oven while we're on. From a psychological point of view this
+  is fantastic- team members are going to be much more likely to fix bugs and add new functionality
+  if they know exactly what areas of the code they will be touching.</p>
+<p>By using composition we've also gained the advantage of being able to switch out the oven
+  implementation during run-time:</p>
+<pre><code class="ruby">
+  cake = Cake.new(oven: GasOven.new)
+  cake.make
+  # => Mixing sugar and butter
+  # => Beating the eggs
+  # => Mixing sugar, butter, eggs, and flour
+  # => Heating oven to gas mark 4
+  # => Baking cake...
+  # => Oh dear! You burned the cake! 😬
+  cake.oven = ElectricOven.new
+  cake.make
+  # => Mixing sugar and butter
+  # => Beating the eggs
+  # => Mixing sugar, butter, eggs, and flour
+  # => Heating oven to 180c
+  # => Baking cake...
+  # => Golden brown! Perfect!
+</code></pre>
+<p>If we need to, we can also pass the context into the strategies. This would be useful if
+  the bake method in the Oven classes required some information about what it was cooking- the size
+  of the cake could, for example, affect the temperature and time needed in the oven. However, it's
+  worth pointing out that by doing this we would be introducing a dependency that
+  didn't exist before (ovens didn't used to know about cakes). Keep an eye on the coupling to
+  make sure that cakes and ovens don't get muddled together again.</p>
+
+<%= image_tag "http://i.giphy.com/65os7odbIW6pa.gif", :class => "blog-post-image" %>
