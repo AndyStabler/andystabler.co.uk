@@ -1,6 +1,7 @@
 ---
 title: Strategising your way to clean code
 date: 2016-09-22
+image: http://i.giphy.com/65os7odbIW6pa.gif
 ---
 <p>
   The Strategy design pattern is <em>neat</em>. It decouples algorithm implementations
@@ -177,8 +178,8 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 <p>If we need to, we can also pass the context into the strategies. This would be useful if
   the bake method in the Oven classes required some information about what it was cooking- the size
   of the cake could, for example, affect the temperature and time needed in the oven. However, it's
-  worth pointing out that by doing this we would be introducing a dependency that
-  didn't exist before (ovens didn't used to know about cakes). Keep an eye on the coupling to
-  make sure that cakes and ovens don't get muddled together again.</p>
+  worth pointing out that by doing this we could be introducing a dependency that
+  didn't exist before. Keep an eye on the coupling to make sure that cakes and ovens
+  don't get muddled together again.</p>
 
 <%= image_tag "http://i.giphy.com/65os7odbIW6pa.gif", :class => "blog-post-image" %>
