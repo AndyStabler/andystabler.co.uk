@@ -2,7 +2,6 @@
 title: Strategising your way to clean code
 date: 2016-09-22
 ---
-<h2 id="strategy">The Strategy Design Pattern</h2>
 <p>
   The Strategy design pattern is <em>neat</em>. It decouples algorithm implementations
   (the how) from the objects that use them (the what). This separation means the cost
@@ -76,7 +75,7 @@ date: 2016-09-22
   <li>It (sometimes) makes me a delicious cake - it gets the job done, don't overlook this!</li>
   <li>The logic of how each oven bakes cakes is encapsulated in the <span class="code">bake_in_gas_oven</span>
 and <span class="code">bake_in_electric_oven</span> methods. This means we can change how the
-  ovens bakes cakes without touching the <span class="code">make</span> method. If we
+  ovens bake cakes without touching the <span class="code">make</span> method. If we
   don't touch something we're less likely to break it.</li>
 </ul>
 
@@ -91,7 +90,7 @@ and <span class="code">bake_in_electric_oven</span> methods. This means we can c
         were to decouple ovens from our Cake class we would be able to change the oven implementations
         without touching the Cake class.
       </li>
-      <li>What happens when we want to add a new type of oven? My friend Felicity just persuaded me
+      <li>What happens when we want to add a new type of oven? My friend Harriet just persuaded me
         to buy a <em>totes amaze</em> AGA. Make the Cake class bake my cake in it, please. To do so
         you would need to go into the Cake class and add a new <span class="code">bake_in_aga</span>
         method and update the condition in the <span class="code">make</span> method.
