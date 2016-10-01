@@ -60,7 +60,7 @@ module PageHelpers
 
   def twitter_tags(title, description, image)
     content_tag(:meta, nil, content: '@andy_staber', name: 'twitter:site') +
-    content_tag(:meta, nil, content: 'twitter summary', name: 'twitter:card') +
+    content_tag(:meta, nil, content: 'summary', name: 'twitter:card') +
     content_tag(:meta, nil, content: title, name: 'twitter:title') +
     (description ? content_tag(:meta, nil, content: description, name: 'twitter:description') : '') +
     (image ? content_tag(:meta, nil, content: image, name: 'twitter:image') : '')
