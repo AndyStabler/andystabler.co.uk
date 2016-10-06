@@ -1,8 +1,8 @@
 module PageHelpers
 
-  # "Andy Stabler - Blog - A blog post"
+  # "A blog post - Blog - Andy Stabler"
   def title_content
-    ["Andy Stabler", section, current_page.data.title].flatten.compact.join(" - ")
+    [current_page.data.title, section, "Andy Stabler"].flatten.compact.join(" - ")
   end
 
   def title_tag(opts = {})
