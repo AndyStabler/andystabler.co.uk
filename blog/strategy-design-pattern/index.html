@@ -24,7 +24,7 @@
   of changing either the algorithm or the code that uses it is nice and low
   because..." name="twitter:description"></meta><meta content="http://i.giphy.com/65os7odbIW6pa.gif" name="twitter:image"></meta>
 
-    <link href="/assets/stylesheets/main-b5245151.css" rel="stylesheet" />
+    <link href="/assets/stylesheets/main-401cd475.css" rel="stylesheet" />
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.1.0/styles/default.min.css">
 
       <script type="text/javascript" async
@@ -48,7 +48,7 @@
       <section class="left-column">
     <header>
       <div>
-<a href="/">          <img width="128" height="128" class="profile-pic" src="/assets/images/me-simonside-ridge-55dea1f6.jpg" />
+<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
 </a>      </div>
       <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
       <nav id="main-nav">
@@ -212,7 +212,7 @@ would mean having a Cake base class and several subclasses that encapsulated the
 logic. They could be called something like <span class="code">GasOvenCake</span> and
 <span class="code">ElectricOvenCake</span>. It reads a bit weird though and that's because it <em>is</em> a bit weird.
 </p>
-<img alt="Cake inheritance class diagram" class="blog-post-image" src="/assets/images/strategy-design-pattern/cake-inheritance-5fc6621d.svg" />
+<img src="/assets/images/strategy-design-pattern/cake-inheritance-5fc6621d.svg" alt="Cake inheritance class diagram" class="blog-post-image" />
 <p>We've shoved the <em>IS-A</em> relationship where it doesn't really belong. Still, we're heading
 in the right direction, we've extracted out the oven implementations into separate classes. To add a new
 oven all we need to do is subclass Cake. This is nice because we don't need to touch any of
@@ -222,7 +222,7 @@ the other oven implementations.</p>
 <p>Also, what happens when we introduce a new type of cake? Say we want to make a fruit cake, this
 would subclass the Cake class (it <em>is-a</em> cake), but it should also be possible to bake it in
 any type of oven. Things get tricky at this point. What would the class diagram look like?</p>
-<img alt="Fruit cake inheritance class diagram" class="blog-post-image" src="/assets/images/strategy-design-pattern/fruit-cake-inheritance-5edf4fb7.svg" />
+<img src="/assets/images/strategy-design-pattern/fruit-cake-inheritance-5edf4fb7.svg" alt="Fruit cake inheritance class diagram" class="blog-post-image" />
 <p>It doesn't look like inheritance is the right thing to do here. Let's take a look
   at another approach.</p>
 
@@ -232,7 +232,7 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 </p>
 <p>Instead of having the cake subclasses implement the oven logic, let's extract it into its own class and use composition to store an Oven reference inside Cake. Here we have a Cake context class, and several
   strategies that the context can use to get the job done:</p>
-  <img class="blog-post-image" alt="Cake composition class diagram" src="/assets/images/strategy-design-pattern/fruit-cake-composition-16e16a25.svg" />
+  <img src="/assets/images/strategy-design-pattern/fruit-cake-composition-16e16a25.svg" class="blog-post-image" alt="Cake composition class diagram" />
 <p>At this point our oven and cake have a much looser coupling. We're free to add new cakes
   without touching any oven code, and we're free to add new ovens without touching cake code.
   The cost of change in our codebase has just had a massive reduction. We can be fairly confident that if we break a cake we aren't breaking an oven while we're on. From a psychological point of view this
@@ -265,7 +265,7 @@ any type of oven. Things get tricky at this point. What would the class diagram 
   didn't exist before. Keep an eye on the coupling to make sure that cakes and ovens
   don't get muddled together again.</p>
 
-<img class="blog-post-image" src="http://i.giphy.com/65os7odbIW6pa.gif" />
+<img src="http://i.giphy.com/65os7odbIW6pa.gif" class="blog-post-image" alt="65os7odbiw6pa" />
 
       </div>
     </section>
