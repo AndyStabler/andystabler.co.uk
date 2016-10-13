@@ -11,6 +11,8 @@ set :domain, "http://www.andystabler.co.uk"
 activate :directory_indexes
 # General configuration
 
+activate :sprockets
+
 activate :blog do |blog|
   # ignore "blog/index.html"
   blog.prefix = "blog"
