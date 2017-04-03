@@ -40,6 +40,13 @@ module PageHelpers
     twitter_tags(title, description, image)
   end
 
+  def code_tag(language, &block)
+    tag = content_tag :pre do
+      content_tag :code, h(capture(&block)), class: language
+    end
+    concat tag
+  end
+
   private
 
   def standard_tags(title, description, image)
