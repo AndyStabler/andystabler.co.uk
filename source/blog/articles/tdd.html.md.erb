@@ -1447,3 +1447,64 @@ Finished in 0.01215 seconds (files took 0.99866 seconds to load)
 3 examples, 0 failures
 <% end %>
 
+While we're on removing unnecessary direct calls to instance variables, how about we replace `@weight += item.weight` with an accessor approach?
+
+<% code_tag "ruby" do %>
+class Container
+  attr_reader :items, :weight, :weight_limit
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  def add item
+    items << item unless item_too_heavy? item
+    self.weight += item.weight
+  end
+
+  def item_too_heavy? item
+    weight + item.weight > weight_limit
+  end
+
+  private
+
+  def weight=(value)
+    @weight = value
+  end
+end
+class Item
+  attr_reader :weight
+  def initialize(weight:)
+    @weight = weight
+  end
+end
+describe Container do
+  let(:container) { Container.new(weight_limit: 19) }
+  let(:pasta) { Item.new(weight: 5) }
+  let(:cake) { Item.new(weight: 5) }
+  let(:house) { Item.new(weight: 20) }
+
+  it "can add items" do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+
+  it "does not add items that would exceed the weight limit" do
+    container.add pasta
+    container.add house
+    expect(container.items).to include pasta
+    expect(container.items).to_not include house
+  end
+
+  it "updates the weight when an item is added" do
+    container.add pasta
+    expect(container.weight).to eq pasta.weight
+    container.add cake
+    expect(container.weight).to eq (pasta.weight + cake.weight)
+  end
+end
+<% end %>
