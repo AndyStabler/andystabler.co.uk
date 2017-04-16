@@ -1,8 +1,8 @@
 ---
 title: TDD
 date: 2017-03-18
+image: https://andystabler.co.uk/assets/images/tdd/tupperware.jpg
 ---
-
 Welcome to _Container Industries Ltd_. As the top engineer here you've been assigned the job of developing the company's container functionality.
 
 The following requirements have made there way over to your desk:
@@ -10,12 +10,12 @@ The following requirements have made there way over to your desk:
 1. Items can be added to a container
 2. Items are not added to a container if doing so would exceed the container's weight limit.
 
-Seems nice and simple. Let's use these requirements as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:
+Seems nice and simple. Let's use the requirements as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:
 
 1. Write the tests first (duh)
 2. Run the tests often
 3. Only start adding new functionality when the tests are passing
-4. When the tests are failing, you're sole intention should be to get them to a passing state. Sometimes this means fudging the code, but that's OK; it's all about taking tiny steps to meet the requirements
+4. When the tests are failing, you're sole intention should be to get them to a passing state. Sometimes this means fudging the code, but that's OK; it's all about taking tiny steps and iterating frequently to meet the requirements
 
 ## 1. Items can be added to a container
 
@@ -68,7 +68,7 @@ Finished in 0.00091 seconds (files took 0.66202 seconds to load)
 
 Our first passing test! _Yess_
 
-<img class="blog-post-image" src="https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif">
+<%= image_tag "https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif", class: "blog-post-image" %>
 
 It isn't actually asserting anything though, so let's start adding _real_ tests.
 
@@ -1653,4 +1653,4 @@ Finished in 0.00336 seconds (files took 0.22253 seconds to load)
 
 _Amazing_, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost brand new tupperware container.
 
-<%= image_tag "http://ecx.images-amazon.com/images/I/51DqunFT8YL._SL1137_.jpg", class: "blog-post-image" %>
+<%= image_tag "tdd/tupperware.jpg", class: "blog-post-image" %>
