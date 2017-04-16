@@ -10,7 +10,7 @@ The following requirements have made there way over to your desk:
 1. Items can be added to a container
 2. Items are not added to a container if doing so would exceed the container's weight limit.
 
-Seems nice and simple. Let's use the requirements as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:
+Seems nice and simple. Let's use this as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:
 
 1. Write the tests first (duh)
 2. Run the tests often
@@ -33,7 +33,7 @@ After running it we get:
 
 <% code_tag "sh" do %>
 $ rspec container_spec.rb
-/Users/andy/Documents/Programming/Ruby/tdd/container_spec.rb:1:in `&lt;top (required)&gt;': uninitialized constant Container (NameError)
+/Users/andy/dev/Ruby/tdd/container_spec.rb:2:in `<top (required)>': uninitialized constant Container (NameError)
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/configuration.rb:1435:in `load'
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/configuration.rb:1435:in `block in load_spec_files'
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/configuration.rb:1433:in `each'
@@ -42,9 +42,9 @@ $ rspec container_spec.rb
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/runner.rb:86:in `run'
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/runner.rb:71:in `run'
   from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/lib/rspec/core/runner.rb:45:in `invoke'
-  from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/exe/rspec:4:in `&lt;top (required)&gt;'
+  from /Users/andy/.gem/ruby/2.4.0/gems/rspec-core-3.5.4/exe/rspec:4:in `<top (required)>'
   from /Users/andy/.gem/ruby/2.4.0/bin/rspec:22:in `load'
-  from /Users/andy/.gem/ruby/2.4.0/bin/rspec:22:in `&lt;main&gt;'
+  from /Users/andy/.gem/ruby/2.4.0/bin/rspec:22:in `<main>'
 <% end %>
 
 Looks like we need to create the Container definition. We are going to be iterating frequently, so let's do the simplest thing we can right now to get the tests to pass. We'll add the Container definition right at the top of the spec file.
@@ -97,11 +97,11 @@ Failures:
      Failure/Error: container.add pasta
 
      NameError:
-       undefined local variable or method `container' for #<RSpec::ExampleGroups::Container:0x007fd53416d8a0>
+       undefined local variable or method `container' for #<RSpec::ExampleGroups::Container:0x007fcafe150f60>
        Did you mean?  contain_exactly
      # ./container_spec.rb:5:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00071 seconds (files took 0.96883 seconds to load)
+Finished in 0.00065 seconds (files took 1.28 seconds to load)
 1 example, 1 failure
 
 Failed examples:
@@ -136,10 +136,10 @@ Failures:
      Failure/Error: container.add pasta
 
      NameError:
-       undefined local variable or method `pasta' for #<RSpec::ExampleGroups::Container:0x007f8bbf1981b8>
+       undefined local variable or method `pasta' for #<RSpec::ExampleGroups::Container:0x007fd3a1974d58>
      # ./container_spec.rb:7:in `block (2 levels) in <top (required)>'
 
-Finished in 0.0007 seconds (files took 0.21872 seconds to load)
+Finished in 0.00071 seconds (files took 0.27835 seconds to load)
 1 example, 1 failure
 
 Failed examples:
@@ -176,10 +176,10 @@ Failures:
      Failure/Error: container.add pasta
 
      NoMethodError:
-       undefined method `add' for #<Container:0x007fe3561aea00>
+       undefined method `add' for #<Container:0x007f969fa0ba58>
      # ./container_spec.rb:9:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00062 seconds (files took 0.11975 seconds to load)
+Finished in 0.00078 seconds (files took 0.27569 seconds to load)
 1 example, 1 failure
 
 Failed examples:
@@ -187,7 +187,7 @@ Failed examples:
 rspec ./container_spec.rb:8 # Container can add items
 <% end %>
 
-The test is failing because we haven't implemented the add method. So let's add that next.
+The test is failing because we haven't implemented the `add` method. So let's add that next.
 
 <% code_tag "ruby" do %>
 class Container
@@ -218,10 +218,10 @@ Failures:
      Failure/Error: expect(container.items).to include pasta
 
      NoMethodError:
-       undefined method `items' for #<Container:0x007fb5a418b7b0>
+       undefined method `items' for #<Container:0x007fce65a16b08>
      # ./container_spec.rb:13:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00055 seconds (files took 0.1139 seconds to load)
+Finished in 0.00068 seconds (files took 0.25235 seconds to load)
 1 example, 1 failure
 
 Failed examples:
@@ -262,7 +262,7 @@ Failures:
        expected nil to include "pasta", but it does not respond to `include?`
      # ./container_spec.rb:14:in `block (2 levels) in <top (required)>'
 
-Finished in 0.02871 seconds (files took 0.19786 seconds to load)
+Finished in 0.25862 seconds (files took 0.32494 seconds to load)
 1 example, 1 failure
 
 Failed examples:
@@ -302,7 +302,7 @@ end
 $ rspec container_spec.rb
 .
 
-Finished in 0.0025 seconds (files took 0.28632 seconds to load)
+Finished in 0.00198 seconds (files took 0.22488 seconds to load)
 1 example, 0 failures
 <% end %>
 
@@ -344,8 +344,6 @@ describe Container do
 end
 <% end %>
 
-This fails since we haven't told the test what a house is:
-
 <% code_tag "sh" do %>
 $ rspec container_spec.rb
 .F
@@ -356,16 +354,18 @@ Failures:
      Failure/Error: container.add house
 
      NameError:
-       undefined local variable or method `house' for #<RSpec::ExampleGroups::Container:0x007f996c8afd38>
+       undefined local variable or method `house' for #<RSpec::ExampleGroups::Container:0x007fe2a68d2cd8>
      # ./container_spec.rb:26:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00148 seconds (files took 0.13178 seconds to load)
+Finished in 0.00256 seconds (files took 0.24082 seconds to load)
 2 examples, 1 failure
 
 Failed examples:
 
 rspec ./container_spec.rb:24 # Container does not add items that would exceed the weight limit
 <% end %>
+
+This fails because we haven't told the test what a house is.
 
 What does it mean to be a house? Let's say it means a string with the value "house" for now.
 
@@ -416,7 +416,7 @@ Failures:
        expected ["pasta", "house"] not to include "house"
      # ./container_spec.rb:29:in `block (2 levels) in <top (required)>'
 
-Finished in 0.10028 seconds (files took 0.21663 seconds to load)
+Finished in 0.1118 seconds (files took 0.44737 seconds to load)
 2 examples, 1 failure
 
 Failed examples:
@@ -466,11 +466,11 @@ Whoa, the tests pass!
 $ rspec container_spec.rb
 ..
 
-Finished in 0.00246 seconds (files took 0.54005 seconds to load)
+Finished in 0.00256 seconds (files took 0.21494 seconds to load)
 2 examples, 0 failures
 <% end %>
 
-That's a bit weird, right? We fudged the code to make the tests pass. The key thing here is that we have a really tight red, green, refactor cycle; we write the tests, do the bear minimum to get them passing, then refactor to clean things up. We're doing the smallest thing we can to get to a "safe" (tests passing) state, before adding more code. That way we don't stray too far away from the safety of passing tests.
+That's a bit weird, right? We fudged the code to make the tests pass. The key thing here is that we have a really tight red, green, refactor cycle; we write the tests, do the bear minimum to get them passing, then refactor to clean things up. We're doing the smallest thing we can to get to a "safe" (tests passing) state, before adding more code. That way we don't stray too far away from the safety of passing tests and don't get sidetracked implementing everything at once.
 
 Now that the tests are passing we can refactor our add method to take into account an item's weight.
 
@@ -518,7 +518,7 @@ end
 $ rspec container_spec.rb
 ..
 
-Finished in 0.01019 seconds (files took 0.9205 seconds to load)
+Finished in 0.00367 seconds (files took 0.24654 seconds to load)
 2 examples, 0 failures
 <% end %>
 
@@ -574,24 +574,24 @@ Failures:
 
      NameError:
        uninitialized constant Item
-     # ./container_spec.rb:18:in `block (2 levels) in <top (required)>'
-     # ./container_spec.rb:23:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:20:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:25:in `block (2 levels) in <top (required)>'
 
   2) Container does not add items that would exceed the weight limit
      Failure/Error: let(:pasta) { Item.new(5) }
 
      NameError:
        uninitialized constant Item
-     # ./container_spec.rb:18:in `block (2 levels) in <top (required)>'
-     # ./container_spec.rb:30:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:20:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:32:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00085 seconds (files took 0.13171 seconds to load)
+Finished in 0.00088 seconds (files took 0.23031 seconds to load)
 2 examples, 2 failures
 
 Failed examples:
 
-rspec ./container_spec.rb:22 # Container can add items
-rspec ./container_spec.rb:29 # Container does not add items that would exceed the weight limit
+rspec ./container_spec.rb:24 # Container can add items
+rspec ./container_spec.rb:31 # Container does not add items that would exceed the weight limit
 <% end %>
 
 The tests fail because we haven't defined Item yet. Let's do that now:
@@ -650,19 +650,19 @@ Failures:
   1) Container does not add items that would exceed the weight limit
      Failure/Error: expect(container.items).to_not include house
 
-       expected [#<Item:0x007fa67514ead8 @weight=5>, #<Item:0x007fa67514e9e8 @weight=20>] not to include #<Item:0x007fa67514e9e8 @weight=20>
+       expected [#<Item:0x007fa7481ab5e8 @weight=5>, #<Item:0x007fa7481ab138 @weight=20>] not to include #<Item:0x007fa7481ab138 @weight=20>
        Diff:
        @@ -1,2 +1,2 @@
-       -[#<Item:0x007fa67514e9e8 @weight=20>]
-       +[#<Item:0x007fa67514ead8 @weight=5>, #<Item:0x007fa67514e9e8 @weight=20>]
-     # ./container_spec.rb:39:in `block (2 levels) in <top (required)>'
+       -[#<Item:0x007fa7481ab138 @weight=20>]
+       +[#<Item:0x007fa7481ab5e8 @weight=5>, #<Item:0x007fa7481ab138 @weight=20>]
+     # ./container_spec.rb:41:in `block (2 levels) in <top (required)>'
 
-Finished in 0.11428 seconds (files took 0.21704 seconds to load)
+Finished in 0.1253 seconds (files took 0.26481 seconds to load)
 2 examples, 1 failure
 
 Failed examples:
 
-rspec ./container_spec.rb:35 # Container does not add items that would exceed the weight limit
+rspec ./container_spec.rb:37 # Container does not add items that would exceed the weight limit
 <% end %>
 
 Our implementation of the `item_too_heavy?` method only checks if an item is equal to "house". Since we're now using Items, and not strings, this test fails! Let's perform a similar check, but this time look for an item's weight being equal to 20 (the same as the house).
@@ -716,7 +716,7 @@ end
 $ rspec container_spec.rb
 ..
 
-Finished in 0.01038 seconds (files took 0.8922 seconds to load)
+Finished in 0.00213 seconds (files took 0.22381 seconds to load)
 2 examples, 0 failures
 <% end %>
 
@@ -773,7 +773,7 @@ end
 $ rspec test.rb
 ..
 
-Finished in 0.00942 seconds (files took 1.14 seconds to load)
+Finished in 0.00234 seconds (files took 0.22688 seconds to load)
 2 examples, 0 failures
 <% end %>
 Cool, we have our `item_too_heavy?` method taking in to account the container weight limit.
@@ -843,15 +843,15 @@ Failures:
      Failure/Error: expect(container.weight).to eq pasta.weight
 
      NoMethodError:
-       undefined method `weight' for #<Container:0x007f98e99e0208>
-     # ./container_spec.rb:46:in `block (2 levels) in <top (required)>'
+       undefined method `weight' for #<Container:0x007fae3f1764d0>
+     # ./container_spec.rb:47:in `block (2 levels) in <top (required)>'
 
-Finished in 0.01097 seconds (files took 1.03 seconds to load)
+Finished in 0.0026 seconds (files took 0.23364 seconds to load)
 3 examples, 1 failure
 
 Failed examples:
 
-rspec ./container_spec.rb:44 # Container updates the weight when an item is added
+rspec ./container_spec.rb:45 # Container updates the weight when an item is added
 <% end %>
 
 The Container class doesn't know about its current weight, so the test is failing. Let's add a weight attribute to the Container.
@@ -912,7 +912,7 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 ..F
 
 Failures:
@@ -926,7 +926,7 @@ Failures:
        (compared using ==)
      # ./container_spec.rb:48:in `block (2 levels) in <top (required)>'
 
-Finished in 0.09821 seconds (files took 0.22318 seconds to load)
+Finished in 0.16023 seconds (files took 0.26932 seconds to load)
 3 examples, 1 failure
 
 Failed examples:
@@ -996,7 +996,7 @@ end
 $ rspec container_spec.rb
 ...
 
-Finished in 0.00355 seconds (files took 0.23894 seconds to load)
+Finished in 0.00337 seconds (files took 0.26162 seconds to load)
 3 examples, 0 failures
 <% end %>
 
@@ -1062,7 +1062,7 @@ end
 $ rspec container_spec.rb
 ...
 
-Finished in 0.00218 seconds (files took 0.14696 seconds to load)
+Finished in 0.00394 seconds (files took 0.21574 seconds to load)
 3 examples, 0 failures
 <% end %>
 
@@ -1127,7 +1127,7 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 FFF
 
 Failures:
@@ -1143,9 +1143,9 @@ Failures:
      ArgumentError:
        wrong number of arguments (given 1, expected 0)
      # ./container_spec.rb:4:in `initialize'
-     # ./container_spec.rb:26:in `new'
-     # ./container_spec.rb:26:in `block (2 levels) in <top (required)>'
-     # ./container_spec.rb:32:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:28:in `new'
+     # ./container_spec.rb:28:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:34:in `block (2 levels) in <top (required)>'
 
   2) Container does not add items that would exceed the weight limit
      Failure/Error:
@@ -1158,9 +1158,9 @@ Failures:
      ArgumentError:
        wrong number of arguments (given 1, expected 0)
      # ./container_spec.rb:4:in `initialize'
-     # ./container_spec.rb:26:in `new'
-     # ./container_spec.rb:26:in `block (2 levels) in <top (required)>'
-     # ./container_spec.rb:39:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:28:in `new'
+     # ./container_spec.rb:28:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:41:in `block (2 levels) in <top (required)>'
 
   3) Container updates the weight when an item is added
      Failure/Error:
@@ -1173,21 +1173,21 @@ Failures:
      ArgumentError:
        wrong number of arguments (given 1, expected 0)
      # ./container_spec.rb:4:in `initialize'
-     # ./container_spec.rb:26:in `new'
-     # ./container_spec.rb:26:in `block (2 levels) in <top (required)>'
-     # ./container_spec.rb:46:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:28:in `new'
+     # ./container_spec.rb:28:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:48:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00121 seconds (files took 0.21845 seconds to load)
+Finished in 0.00117 seconds (files took 0.21716 seconds to load)
 3 examples, 3 failures
 
 Failed examples:
 
-rspec ./container_spec.rb:31 # Container can add items
-rspec ./container_spec.rb:38 # Container does not add items that would exceed the weight limit
-rspec ./container_spec.rb:45 # Container updates the weight when an item is added
+rspec ./container_spec.rb:33 # Container can add items
+rspec ./container_spec.rb:40 # Container does not add items that would exceed the weight limit
+rspec ./container_spec.rb:47 # Container updates the weight when an item is added
 <% end %>
 
-Cool, we broke everything. Let's update the `initialize` method in Container to accept the weight limit.
+Cool, we broke everything. Let's update the `initialize` method in `Container` to accept the weight limit.
 
 <% code_tag "ruby" do %>
 class Container
@@ -1249,7 +1249,7 @@ end
 $ rspec container_spec.rb
 ...
 
-Finished in 0.01111 seconds (files took 0.24546 seconds to load)
+Finished in 0.01101 seconds (files took 0.24302 seconds to load)
 3 examples, 0 failures
 <% end %>
 
@@ -1314,7 +1314,7 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 FFF
 
 Failures:
@@ -1324,42 +1324,42 @@ Failures:
 
      TypeError:
        Hash can't be coerced into Integer
-     # ./container_spec.rb:16:in `+'
-     # ./container_spec.rb:16:in `item_too_heavy?'
+     # ./container_spec.rb:18:in `+'
+     # ./container_spec.rb:18:in `item_too_heavy?'
      # ./container_spec.rb:11:in `add'
-     # ./container_spec.rb:32:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:34:in `block (2 levels) in <top (required)>'
 
   2) Container does not add items that would exceed the weight limit
      Failure/Error: weight + item.weight > @weight_limit
 
      TypeError:
        Hash can't be coerced into Integer
-     # ./container_spec.rb:16:in `+'
-     # ./container_spec.rb:16:in `item_too_heavy?'
+     # ./container_spec.rb:18:in `+'
+     # ./container_spec.rb:18:in `item_too_heavy?'
      # ./container_spec.rb:11:in `add'
-     # ./container_spec.rb:39:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:41:in `block (2 levels) in <top (required)>'
 
   3) Container updates the weight when an item is added
      Failure/Error: weight + item.weight > @weight_limit
 
      TypeError:
        Hash can't be coerced into Integer
-     # ./container_spec.rb:16:in `+'
-     # ./container_spec.rb:16:in `item_too_heavy?'
+     # ./container_spec.rb:18:in `+'
+     # ./container_spec.rb:18:in `item_too_heavy?'
      # ./container_spec.rb:11:in `add'
-     # ./container_spec.rb:46:in `block (2 levels) in <top (required)>'
+     # ./container_spec.rb:48:in `block (2 levels) in <top (required)>'
 
-Finished in 0.00097 seconds (files took 0.14589 seconds to load)
+Finished in 0.00106 seconds (files took 0.29553 seconds to load)
 3 examples, 3 failures
 
 Failed examples:
 
-rspec ./container_spec.rb:31 # Container can add items
-rspec ./container_spec.rb:38 # Container does not add items that would exceed the weight limit
-rspec ./container_spec.rb:45 # Container updates the weight when an item is added
+rspec ./container_spec.rb:33 # Container can add items
+rspec ./container_spec.rb:40 # Container does not add items that would exceed the weight limit
+rspec ./container_spec.rb:47 # Container updates the weight when an item is added
 <% end %>
 
-Now we can fix `Item` class just like we did for the `Container` class to make the tests pass.
+Now we can fix up the `Item` class by updating the `initialize` method, just like we did for the `Container` class.
 
 <% code_tag "ruby" do %>
 class Container
@@ -1418,14 +1418,14 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 ...
 
-Finished in 0.01194 seconds (files took 0.23022 seconds to load)
+Finished in 0.01256 seconds (files took 0.25995 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-Time to refactor! Notice that we aren't using an accessor method to get the weight limit, we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit` the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were in. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were around. We'd be duplicating behaviour and things would go wrong quickly. By using an accessor method, we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
+Time to refactor! Notice that we aren't using an accessor method to get the weight limit, we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit`, the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were in. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were around. We'd be duplicating behaviour and it'd be likely that something would go wrong. By using an accessor method, we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
 
 So let's make use of Ruby's accessor methods to get the weight limit.
 
@@ -1489,7 +1489,7 @@ end
 $ rspec container_spec.rb
 ...
 
-Finished in 0.01215 seconds (files took 0.99866 seconds to load)
+Finished in 0.00201 seconds (files took 0.13739 seconds to load)
 3 examples, 0 failures
 <% end %>
 
@@ -1499,7 +1499,7 @@ While we're on removing unnecessary direct calls to instance variables, how abou
 @weight += item.weight
 <% end %>
 
-with a call to an accessor method?
+with a call to an accessor method too?
 
 <% code_tag "ruby" do %>
 class Container
@@ -1562,10 +1562,10 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 ...
 
-Finished in 0.00422 seconds (files took 0.23954 seconds to load)
+Finished in 0.00586 seconds (files took 0.28069 seconds to load)
 3 examples, 0 failures
 <% end %>
 
@@ -1644,13 +1644,13 @@ end
 <% end %>
 
 <% code_tag "sh" do %>
-rspec container_spec.rb
+$ rspec container_spec.rb
 ...
 
-Finished in 0.00336 seconds (files took 0.22253 seconds to load)
+Finished in 0.00203 seconds (files took 0.11261 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-_Amazing_, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost brand new tupperware container.
+_Amazing_, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost _brand new_ tupperware container.
 
 <%= image_tag "tdd/tupperware.jpg", class: "blog-post-image" %>
