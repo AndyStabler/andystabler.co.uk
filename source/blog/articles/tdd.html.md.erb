@@ -2,14 +2,20 @@
 title: TDD
 date: 2017-03-18
 ---
-We have the following requirements:
+
+Welcome to _Container Industries Ltd_. As the top engineer here you've been assigned the job of developing the company's container functionality.
+
+The following requirements have made there way over to your desk:
 
 1. Items can be added to a container
 2. Items are not added to a container if doing so would exceed the container's weight limit.
-3. Sometimes an item knows its weight in lbs and sometimes in kg
-4. Some items are actually containers too(!); all the above requirements apply to them.
 
-Let's use a TDD approach to develop a simple container/item system. The rhythm of testing frequently and only adding new functionality when the tests pass should become apparent fairly early on.
+Seems nice and simple. Let's use these requirements as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:
+
+1. Write the tests first (duh)
+2. Run the tests often
+3. Only start adding new functionality when the tests are passing
+4. When the tests are failing, you're sole intention should be to get them to a passing state. Sometimes this means fudging the code, but that's OK; it's all about taking tiny steps to meet the requirements
 
 ## 1. Items can be added to a container
 
@@ -480,6 +486,8 @@ class Container
     items << item unless item_too_heavy? item
   end
 
+  private
+
   def item_too_heavy? item
     item == "house"
   end
@@ -527,6 +535,8 @@ class Container
   def add(item)
     items << item unless item_too_heavy? item
   end
+
+  private
 
   def item_too_heavy? item
     item == "house"
@@ -598,6 +608,8 @@ class Container
     items << item unless item_too_heavy? item
   end
 
+  private
+
   def item_too_heavy? item
     item == "house"
   end
@@ -667,6 +679,8 @@ class Container
     items << item unless item_too_heavy? item
   end
 
+  private
+
   def item_too_heavy? item
     item.weight == 20
   end
@@ -720,9 +734,11 @@ class Container
     items << item unless item_too_heavy? item
   end
 
+  private
+
   def item_too_heavy? item
     weight_limit = 19
-    weight + item.weight > weight_limit
+    item.weight > weight_limit
   end
 end
 class Item
@@ -751,13 +767,13 @@ describe Container do
     expect(container.items).to_not include house
   end
 end
-
 <% end %>
+
 <% code_tag "sh" do %>
-$ rspec container_spec.rb
+$ rspec test.rb
 ..
 
-Finished in 0.00178 seconds (files took 0.11923 seconds to load)
+Finished in 0.00942 seconds (files took 1.14 seconds to load)
 2 examples, 0 failures
 <% end %>
 Cool, we have our `item_too_heavy?` method taking in to account the container weight limit.
@@ -775,9 +791,11 @@ class Container
     items << item unless item_too_heavy? item
   end
 
+  private
+
   def item_too_heavy? item
     weight_limit = 19
-    weight + item.weight > weight_limit
+    item.weight > weight_limit
   end
 end
 class Item
@@ -850,6 +868,8 @@ class Container
   def add(item)
     items << item unless item_too_heavy? item
   end
+
+  private
 
   def item_too_heavy? item
     weight_limit = 19
@@ -930,6 +950,8 @@ class Container
     @weight += item.weight
   end
 
+  private
+
   def item_too_heavy? item
     weight_limit = 19
     weight + item.weight > weight_limit
@@ -978,7 +1000,7 @@ Finished in 0.00355 seconds (files took 0.23894 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-At this point our `add` method is looking OK, and I'm happy to move on. We can look now into refactoring other parts of the class. I think `item_too_heavy?` would be a good next step. It breaks the Single Responsibilty Principle in that it's responsible for seting the weight limit of the container _and_ checking if an item is too heavy. By extracting this assignment into the constructor we are ensuring that our `item_too_heavy?` only has one reason to change.
+At this point our `add` method is looking OK, and I'm happy to move on. We can look now into refactoring other parts of the class. I think `item_too_heavy?` would be a good next step. It breaks the Single Responsibilty Principle in that it's responsible for setting the weight limit of the container _and_ checking if an item is too heavy. By extracting this assignment into the constructor we are ensuring that `item_too_heavy?` only has one reason to change.
 
 <% code_tag "ruby" do %>
 class Container
@@ -994,6 +1016,8 @@ class Container
     items << item unless item_too_heavy? item
     @weight += item.weight
   end
+
+  private
 
   def item_too_heavy? item
     weight + item.weight > @weight_limit
@@ -1042,7 +1066,7 @@ Finished in 0.00218 seconds (files took 0.14696 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he'd need to go into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container limit, that way Barry can have containers of varying weight limits without having to modify the Container class. Score!
+That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container limit, that way Barry can have containers of varying weight limits without having to modify the Container class. Score!
 
 Let's update the tests to inject the weight limit into the container when we instantiate it.
 
@@ -1060,6 +1084,8 @@ class Container
     items << item unless item_too_heavy? item
     @weight += item.weight
   end
+
+  private
 
   def item_too_heavy? item
     weight + item.weight > @weight_limit
@@ -1178,6 +1204,8 @@ class Container
     @weight += item.weight
   end
 
+  private
+
   def item_too_heavy? item
     weight + item.weight > @weight_limit
   end
@@ -1217,7 +1245,17 @@ describe Container do
 end
 <% end %>
 
+<% code_tag "sh" do %>
+$ rspec container_spec.rb
+...
+
+Finished in 0.01111 seconds (files took 0.24546 seconds to load)
+3 examples, 0 failures
+<% end %>
+
 Now that the tests are passing, we can perform more clean up. For example, we used a named argument for `weight_limit` in Container. Let's do the same thing for `Item` and its weight.
+
+First, the tests...
 
 <% code_tag "ruby" do %>
 class Container
@@ -1233,6 +1271,8 @@ class Container
     items << item unless item_too_heavy? item
     @weight += item.weight
   end
+
+  private
 
   def item_too_heavy? item
     weight + item.weight > @weight_limit
@@ -1319,6 +1359,8 @@ rspec ./container_spec.rb:38 # Container does not add items that would exceed th
 rspec ./container_spec.rb:45 # Container updates the weight when an item is added
 <% end %>
 
+Now we can fix `Item` class just like we did for the `Container` class to make the tests pass.
+
 <% code_tag "ruby" do %>
 class Container
   attr_reader :items, :weight
@@ -1333,6 +1375,8 @@ class Container
     items << item unless item_too_heavy? item
     @weight += item.weight
   end
+
+  private
 
   def item_too_heavy? item
     weight + item.weight > @weight_limit
@@ -1400,6 +1444,8 @@ class Container
     @weight += item.weight
   end
 
+  private
+
   def item_too_heavy? item
     weight + item.weight > weight_limit
   end
@@ -1447,7 +1493,13 @@ Finished in 0.01215 seconds (files took 0.99866 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-While we're on removing unnecessary direct calls to instance variables, how about we replace `@weight += item.weight` with an accessor approach?
+While we're on removing unnecessary direct calls to instance variables, how about we replace
+
+<% code_tag "ruby" do %>
+@weight += item.weight
+<% end %>
+
+with a call to an accessor method?
 
 <% code_tag "ruby" do %>
 class Container
@@ -1464,11 +1516,11 @@ class Container
     self.weight += item.weight
   end
 
+  private
+
   def item_too_heavy? item
     weight + item.weight > weight_limit
   end
-
-  private
 
   def weight=(value)
     @weight = value
@@ -1508,3 +1560,97 @@ describe Container do
   end
 end
 <% end %>
+
+<% code_tag "sh" do %>
+rspec container_spec.rb
+...
+
+Finished in 0.00422 seconds (files took 0.23954 seconds to load)
+3 examples, 0 failures
+<% end %>
+
+At this point, our `container_spec.rb` file is getting pretty _hefty_, so let's extract out the classes into their own files.
+
+<% code_tag "ruby" do %>
+# container.rb
+class Container
+  attr_reader :items, :weight, :weight_limit
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  def add item
+    items << item unless item_too_heavy? item
+    self.weight += item.weight
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight + item.weight > weight_limit
+  end
+
+  def weight=(value)
+    @weight = value
+  end
+end
+<% end %>
+
+<% code_tag "ruby" do %>
+# item.rb
+class Item
+  attr_reader :weight
+  def initialize(weight:)
+    @weight = weight
+  end
+end
+<% end %>
+
+<% code_tag "ruby" do %>
+# container_spec.rb
+require "./container"
+require "./item"
+
+describe Container do
+  let(:container) { Container.new(weight_limit: 19) }
+  let(:pasta) { Item.new(weight: 5) }
+  let(:cake) { Item.new(weight: 5) }
+  let(:house) { Item.new(weight: 20) }
+
+  it "can add items" do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+
+  it "does not add items that would exceed the weight limit" do
+    container.add pasta
+    container.add house
+    expect(container.items).to include pasta
+    expect(container.items).to_not include house
+  end
+
+  it "updates the weight when an item is added" do
+    container.add pasta
+    expect(container.weight).to eq pasta.weight
+    container.add cake
+    expect(container.weight).to eq (pasta.weight + cake.weight)
+  end
+end
+<% end %>
+
+<% code_tag "sh" do %>
+rspec container_spec.rb
+...
+
+Finished in 0.00336 seconds (files took 0.22253 seconds to load)
+3 examples, 0 failures
+<% end %>
+
+_Amazing_, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost brand new tupperware container.
+
+<%= image_tag "http://ecx.images-amazon.com/images/I/51DqunFT8YL._SL1137_.jpg", class: "blog-post-image" %>
