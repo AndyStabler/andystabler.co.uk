@@ -47,7 +47,7 @@ $ rspec container_spec.rb
   from /Users/andy/.gem/ruby/2.4.0/bin/rspec:22:in `<main>'
 <% end %>
 
-Looks like we need to create the Container definition. We are going to be iterating frequently, so let's do the simplest thing we can right now to get the tests to pass. We'll add the Container definition right at the top of the spec file.
+Looks like we need to create the `Container` definition. We are going to be iterating frequently, so let's do the simplest thing we can right now to get the tests to pass. We'll add the `Container` definition right at the top of the spec file.
 
 <% code_tag "ruby" do %>
 class Container
@@ -109,7 +109,7 @@ Failed examples:
 rspec ./container_spec.rb:4 # Container can add items
 <% end %>
 
-Alright, looks like we need to define the container attribute.
+Alright, looks like we need to define the `container` attribute in the test.
 
 <% code_tag "ruby" do %>
 class Container
@@ -147,7 +147,7 @@ Failed examples:
 rspec ./container_spec.rb:6 # Container can add items
 <% end %>
 
-...and we need to define pasta and cake too, I guess.
+...and we need to define `pasta` and `cake` too.
 
 <% code_tag "ruby" do %>
 class Container
@@ -229,7 +229,7 @@ Failed examples:
 rspec ./container_spec.rb:10 # Container can add items
 <% end %>
 
-Now, it's time to tell Container that it has some items
+Now, it's time to tell `Container` that it has some items
 
 <% code_tag "ruby" do %>
 class Container
@@ -270,7 +270,7 @@ Failed examples:
 rspec ./container_spec.rb:11 # Container can add items
 <% end %>
 
-This test is failing because our add method isn't implemented yet. So let's tackle that next.
+This test is failing because our `add` method isn't implemented yet. So let's tackle that next.
 
 <% code_tag "ruby" do %>
 class Container
@@ -403,8 +403,6 @@ describe Container do
 end
 <% end %>
 
-Cool, a proper failure! The house _was_ added to the container, when instead we should have cast it asunder.
-
 <% code_tag "sh" do%>
 $ rspec container_spec.rb
 .F
@@ -423,6 +421,8 @@ Failed examples:
 
 rspec ./container_spec.rb:25 # Container does not add items that would exceed the weight limit
 <% end %>
+
+Cool, a proper failure! The house _was_ added to the container, when instead we should have cast it asunder.
 
 What's the quickest way we can get the test to pass? Before we figure out the logic for deciding if we should add an item based on its weight, let's get the tests green.
 
@@ -460,8 +460,6 @@ describe Container do
 end
 <% end %>
 
-Whoa, the tests pass!
-
 <% code_tag "sh" do %>
 $ rspec container_spec.rb
 ..
@@ -470,9 +468,11 @@ Finished in 0.00256 seconds (files took 0.21494 seconds to load)
 2 examples, 0 failures
 <% end %>
 
+Whoa, the tests pass!
+
 That's a bit weird, right? We fudged the code to make the tests pass. The key thing here is that we have a really tight red, green, refactor cycle; we write the tests, do the bear minimum to get them passing, then refactor to clean things up. We're doing the smallest thing we can to get to a "safe" (tests passing) state, before adding more code. That way we don't stray too far away from the safety of passing tests and don't get sidetracked implementing everything at once.
 
-Now that the tests are passing we can refactor our add method to take into account an item's weight.
+Now that the tests are passing we can refactor our `add` method to take into account an `item`'s weight.
 
 <% code_tag "ruby" do %>
 class Container
@@ -594,7 +594,7 @@ rspec ./container_spec.rb:24 # Container can add items
 rspec ./container_spec.rb:31 # Container does not add items that would exceed the weight limit
 <% end %>
 
-The tests fail because we haven't defined Item yet. Let's do that now:
+The tests fail because we haven't defined `Item` yet. Let's do that now:
 
 <% code_tag "ruby" do %>
 class Container
@@ -665,7 +665,7 @@ Failed examples:
 rspec ./container_spec.rb:37 # Container does not add items that would exceed the weight limit
 <% end %>
 
-Our implementation of the `item_too_heavy?` method only checks if an item is equal to "house". Since we're now using Items, and not strings, this test fails! Let's perform a similar check, but this time look for an item's weight being equal to 20 (the same as the house).
+Our implementation of the `item_too_heavy?` method only checks if an `item` is equal to "house". Since we're now using `Items`, and not strings, this test fails! Let's perform a similar check, but this time look for an `item`'s weight being equal to 20 (the same as the house).
 
 <% code_tag "ruby" do %>
 class Container
@@ -776,7 +776,7 @@ $ rspec test.rb
 Finished in 0.00234 seconds (files took 0.22688 seconds to load)
 2 examples, 0 failures
 <% end %>
-Cool, we have our `item_too_heavy?` method taking in to account the container weight limit.
+Cool, we have our `item_too_heavy?` method taking in to account the container's weight limit.
 Since the tests are passing, we can look into cleaning this method up. One thing that jumps out here is that we aren't storing what the container's current weight is. That's important, so let's write a test for it.
 
 <% code_tag "ruby" do %>
@@ -854,7 +854,7 @@ Failed examples:
 rspec ./container_spec.rb:45 # Container updates the weight when an item is added
 <% end %>
 
-The Container class doesn't know about its current weight, so the test is failing. Let's add a weight attribute to the Container.
+The `Container` class doesn't know about its current weight, so the test is failing. Let's add a `weight` attribute to the `Container`.
 
 <% code_tag "ruby" do %>
 class Container
@@ -934,7 +934,7 @@ Failed examples:
 rspec ./container_spec.rb:46 # Container updates the weight when an item is added
 <% end %>
 
-Although we're storing the weight on the Container, we're never updating the value when we add items. This is why we expected a weight of 5 when the weight was actually 0.
+Although we're storing the weight on the container, we're never updating the value when we add items. This is why we expected a weight of 5 when it was actually 0.
 
 <% code_tag "ruby" do %>
 class Container
@@ -1000,7 +1000,7 @@ Finished in 0.00337 seconds (files took 0.26162 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-At this point our `add` method is looking OK, and I'm happy to move on. We can look now into refactoring other parts of the class. I think `item_too_heavy?` would be a good next step. It breaks the Single Responsibilty Principle in that it's responsible for setting the weight limit of the container _and_ checking if an item is too heavy. By extracting this assignment into the constructor we are ensuring that `item_too_heavy?` only has one reason to change.
+At this point our `add` method is looking OK, and I'm happy to move on. We can now look into refactoring other parts of the class. I think `item_too_heavy?` would be a good next step. It breaks the [Single Responsibilty Principle](https://en.wikipedia.org/wiki/Single_responsibility_principle){:target="_blank"} in that it's responsible for setting the weight limit of the container _and_ checking if an item is too heavy. By extracting this assignment into the constructor we are ensuring that `item_too_heavy?` only has one reason to change.
 
 <% code_tag "ruby" do %>
 class Container
@@ -1066,9 +1066,9 @@ Finished in 0.00394 seconds (files took 0.21574 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container limit, that way Barry can have containers of varying weight limits without having to modify the Container class. Score!
+That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container limit, that way Barry can have containers of varying weight limits without having to modify the `Container` class. Score!
 
-Let's update the tests to inject the weight limit into the container when we instantiate it.
+Let's update the tests to inject the weight limit into the `container` when we instantiate it.
 
 <% code_tag "ruby" do %>
 class Container
@@ -1253,7 +1253,7 @@ Finished in 0.01101 seconds (files took 0.24302 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-Now that the tests are passing, we can perform more clean up. For example, we used a named argument for `weight_limit` in Container. Let's do the same thing for `Item` and its weight.
+Now that the tests are passing, we can perform more clean up. For example, we used a named argument for `weight_limit` in `Container`. Let's do the same thing for `Item` and its `weight`.
 
 First, the tests...
 
@@ -1493,7 +1493,7 @@ Finished in 0.00201 seconds (files took 0.13739 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-While we're on removing unnecessary direct calls to instance variables, how about we replace
+While we're on removing unnecessary direct calls to instance variables, how about we clean up the `add` method by replacing
 
 <% code_tag "ruby" do %>
 @weight += item.weight
@@ -1653,4 +1653,8 @@ Finished in 0.00203 seconds (files took 0.11261 seconds to load)
 
 _Amazing_, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost _brand new_ tupperware container.
 
-<%= image_tag "tdd/tupperware.jpg", class: "blog-post-image" %>
+<%= image_tag "tdd/tupperware.jpg", class: "blog-post-image", width: '200px' %>
+
+I really enjoy the TDD approach. In the past I've found myself trying to implement all the features at once and getting in too deep quite early on. In the end the code coverage was usually not as high and the code quality was  lower than when I used TDD.
+
+Do you use TDD regularly? What do you think of it? Do you use an alternative approach?
