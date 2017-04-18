@@ -150,8 +150,7 @@ rspec ./container_spec.rb:6 # Container can add items
 ...and we need to define `pasta` and `cake` too.
 
 <% code_tag "ruby" do %>
-class Container
-end
+# ...
 describe Container do
   let(:container) { Container.new }
   let(:pasta) { "pasta" }
@@ -194,18 +193,7 @@ class Container
   def add(item)
   end
 end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { "pasta" }
-  let(:cake) { "cake" }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -237,18 +225,7 @@ class Container
   def add(item)
   end
 end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { "pasta" }
-  let(:cake) { "cake" }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -284,18 +261,7 @@ class Container
     items << item
   end
 end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { "pasta" }
-  let(:cake) { "cake" }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -306,10 +272,7 @@ Finished in 0.00198 seconds (files took 0.22488 seconds to load)
 1 example, 0 failures
 <% end %>
 
-
-## 2. Items are not added to a container if doing so would exceed the container's weight limit
-
-OK, here's my test:
+Here's what `container_spec.rb` looks like so far:
 
 <% code_tag "ruby" do %>
 class Container
@@ -334,14 +297,23 @@ describe Container do
     expect(container.items).to include pasta
     expect(container.items).to include cake
   end
+end
+<% end %>
 
+
+## 2. Items are not added to a container if doing so would exceed the container's weight limit
+
+OK, here's my test:
+
+<% code_tag "ruby" do %>
+  # ...
   it "does not add items that would exceed the weight limit" do
     container.add pasta
     container.add house
     expect(container.items).to include pasta
     expect(container.items).to_not include house
   end
-end
+  # ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -370,37 +342,13 @@ This fails because we haven't told the test what a house is.
 What does it mean to be a house? Let's say it means a string with the value "house" for now.
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items
-
-  def initialize
-    @items = []
-  end
-
-  def add(item)
-    items << item
-  end
-end
 describe Container do
   let(:container) { Container.new }
   let(:pasta) { "pasta" }
   let(:cake) { "cake" }
   let(:house) { "house" }
 
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-end
+  # ...
 <% end %>
 
 <% code_tag "sh" do%>
@@ -424,7 +372,7 @@ rspec ./container_spec.rb:25 # Container does not add items that would exceed th
 
 Cool, a proper failure! The house _was_ added to the container, when instead we should have cast it asunder.
 
-What's the quickest way we can get the test to pass? Before we figure out the logic for deciding if we should add an item based on its weight, let's get the tests green.
+What's the quickest way we can get the test to pass? Before we figure out the logic for deciding if we should add an item based on its weight, let's get the tests green by only adding the item if it isn't equal to "house".
 
 <% code_tag "ruby" do %>
 class Container
@@ -438,26 +386,7 @@ class Container
     items << item unless item == "house"
   end
 end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { "pasta" }
-  let(:cake) { "cake" }
-  let(:house) { "house" }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -492,26 +421,7 @@ class Container
     item == "house"
   end
 end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { "pasta" }
-  let(:cake) { "cake" }
-  let(:house) { "house" }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -525,42 +435,14 @@ Finished in 0.00367 seconds (files took 0.24654 seconds to load)
 We've extracted the logic that checks if an item is too heavy into its own method. The tests pass, but we don't really have any way to define how heavy an item is. Let's amend the tests to specify the weights of items.
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items
-
-  def initialize
-    @items = []
-  end
-
-  def add(item)
-    items << item unless item_too_heavy? item
-  end
-
-  private
-
-  def item_too_heavy? item
-    item == "house"
-  end
-end
+# ...
 describe Container do
   let(:container) { Container.new }
   let(:pasta) { Item.new(5) }
   let(:cake) { Item.new(5) }
   let(:house) { Item.new(20) }
 
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
+  # ...
 end
 <% end %>
 <% code_tag "sh" do %>
@@ -594,26 +476,10 @@ rspec ./container_spec.rb:24 # Container can add items
 rspec ./container_spec.rb:31 # Container does not add items that would exceed the weight limit
 <% end %>
 
-The tests fail because we haven't defined `Item` yet. Let's do that now:
+The tests fail because we haven't defined `Item` yet. Let's do that now (still inside `container_spec.rb` for now):
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items
-
-  def initialize
-    @items = []
-  end
-
-  def add(item)
-    items << item unless item_too_heavy? item
-  end
-
-  private
-
-  def item_too_heavy? item
-    item == "house"
-  end
-end
+# ...
 class Item
   attr_reader :weight
   def initialize(weight)
@@ -626,19 +492,7 @@ describe Container do
   let(:cake) { Item.new(5) }
   let(:house) { Item.new(20) }
 
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
+  # ...
 end
 <% end %>
 <% code_tag "sh" do %>
@@ -685,32 +539,7 @@ class Container
     item.weight == 20
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-end
+# ...
 <% end %>
 <% code_tag "sh" do %>
 $ rspec container_spec.rb
@@ -741,32 +570,7 @@ class Container
     item.weight > weight_limit
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -780,49 +584,9 @@ Cool, we have our `item_too_heavy?` method taking in to account the container's 
 Since the tests are passing, we can look into cleaning this method up. One thing that jumps out here is that we aren't storing what the container's current weight is. That's important, so let's write a test for it.
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items
-
-  def initialize
-    @items = []
-  end
-
-  def add(item)
-    items << item unless item_too_heavy? item
-  end
-
-  private
-
-  def item_too_heavy? item
-    weight_limit = 19
-    item.weight > weight_limit
-  end
-end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
+# ...
 describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
+  # ...
 
   it "updates the weight when an item is added" do
     container.add pasta
@@ -876,39 +640,7 @@ class Container
     weight + item.weight > weight_limit
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -938,58 +670,16 @@ Although we're storing the weight on the container, we're never updating the val
 
 <% code_tag "ruby" do %>
 class Container
-  attr_reader :items, :weight
-
-  def initialize
-    @items = []
-    @weight = 0
-  end
+  # ...
 
   def add(item)
     items << item unless item_too_heavy? item
     @weight += item.weight
   end
 
-  private
-
-  def item_too_heavy? item
-    weight_limit = 19
-    weight + item.weight > weight_limit
-  end
+  # ...
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -1023,39 +713,7 @@ class Container
     weight + item.weight > @weight_limit
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -1066,63 +724,18 @@ Finished in 0.00394 seconds (files took 0.21574 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container limit, that way Barry can have containers of varying weight limits without having to modify the `Container` class. Score!
+That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you _know_ what he's like). A more robust approach would be to inject the value of the container weight limit, that way Barry can have containers of varying weight limits without having to modify the `Container` class. Score!
 
 Let's update the tests to inject the weight limit into the `container` when we instantiate it.
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items, :weight
-
-  def initialize
-    @items = []
-    @weight = 0
-    @weight_limit = 19
-  end
-
-  def add item
-    items << item unless item_too_heavy? item
-    @weight += item.weight
-  end
-
-  private
-
-  def item_too_heavy? item
-    weight + item.weight > @weight_limit
-  end
-end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
 describe Container do
   let(:container) { Container.new(weight_limit: 19) }
   let(:pasta) { Item.new(5) }
   let(:cake) { Item.new(5) }
   let(:house) { Item.new(20) }
 
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
+  # ...
 end
 <% end %>
 
@@ -1199,50 +812,9 @@ class Container
     @weight_limit = weight_limit
   end
 
-  def add item
-    items << item unless item_too_heavy? item
-    @weight += item.weight
-  end
-
-  private
-
-  def item_too_heavy? item
-    weight + item.weight > @weight_limit
-  end
+  # ...
 end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new(weight_limit: 19) }
-  let(:pasta) { Item.new(5) }
-  let(:cake) { Item.new(5) }
-  let(:house) { Item.new(20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -1258,58 +830,14 @@ Now that the tests are passing, we can perform more clean up. For example, we us
 First, the tests...
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items, :weight
-
-  def initialize(weight_limit:)
-    @items = []
-    @weight = 0
-    @weight_limit = weight_limit
-  end
-
-  def add item
-    items << item unless item_too_heavy? item
-    @weight += item.weight
-  end
-
-  private
-
-  def item_too_heavy? item
-    weight + item.weight > @weight_limit
-  end
-end
-class Item
-  attr_reader :weight
-  def initialize(weight)
-    @weight = weight
-  end
-end
+# ...
 describe Container do
   let(:container) { Container.new(weight_limit: 19) }
   let(:pasta) { Item.new(weight: 5) }
   let(:cake) { Item.new(weight: 5) }
   let(:house) { Item.new(weight: 20) }
 
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
+  # ...
 end
 <% end %>
 
@@ -1362,59 +890,14 @@ rspec ./container_spec.rb:47 # Container updates the weight when an item is adde
 Now we can fix up the `Item` class by updating the `initialize` method, just like we did for the `Container` class.
 
 <% code_tag "ruby" do %>
-class Container
-  attr_reader :items, :weight
-
-  def initialize(weight_limit:)
-    @items = []
-    @weight = 0
-    @weight_limit = weight_limit
-  end
-
-  def add item
-    items << item unless item_too_heavy? item
-    @weight += item.weight
-  end
-
-  private
-
-  def item_too_heavy? item
-    weight + item.weight > @weight_limit
-  end
-end
+# ...
 class Item
   attr_reader :weight
   def initialize(weight:)
     @weight = weight
   end
 end
-describe Container do
-  let(:container) { Container.new(weight_limit: 19) }
-  let(:pasta) { Item.new(weight: 5) }
-  let(:cake) { Item.new(weight: 5) }
-  let(:house) { Item.new(weight: 20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -1425,7 +908,18 @@ Finished in 0.01256 seconds (files took 0.25995 seconds to load)
 3 examples, 0 failures
 <% end %>
 
-Time to refactor! Notice that we aren't using an accessor method to get the weight limit, we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit`, the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were in. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were around. We'd be duplicating behaviour and it'd be likely that something would go wrong. By using an accessor method, we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
+
+### Time to refactor!
+
+This is what our `Container`'s `item_too_heavy?` method currently looks like:
+
+<% code_tag "ruby" do %>
+def item_too_heavy? item
+  weight + item.weight > @weight_limit
+end
+<% end %>
+
+Notice that we aren't using an accessor method to get the weight limit; we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit`, the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were in. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were around. We'd be duplicating behaviour and it'd be likely that something would break. By using an accessor method we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
 
 So let's make use of Ruby's accessor methods to get the weight limit.
 
@@ -1450,39 +944,7 @@ class Container
     weight + item.weight > weight_limit
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight:)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new(weight_limit: 19) }
-  let(:pasta) { Item.new(weight: 5) }
-  let(:cake) { Item.new(weight: 5) }
-  let(:house) { Item.new(weight: 20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
@@ -1526,39 +988,7 @@ class Container
     @weight = value
   end
 end
-class Item
-  attr_reader :weight
-  def initialize(weight:)
-    @weight = weight
-  end
-end
-describe Container do
-  let(:container) { Container.new(weight_limit: 19) }
-  let(:pasta) { Item.new(weight: 5) }
-  let(:cake) { Item.new(weight: 5) }
-  let(:house) { Item.new(weight: 20) }
-
-  it "can add items" do
-    container.add pasta
-    container.add cake
-    expect(container.items).to include pasta
-    expect(container.items).to include cake
-  end
-
-  it "does not add items that would exceed the weight limit" do
-    container.add pasta
-    container.add house
-    expect(container.items).to include pasta
-    expect(container.items).to_not include house
-  end
-
-  it "updates the weight when an item is added" do
-    container.add pasta
-    expect(container.weight).to eq pasta.weight
-    container.add cake
-    expect(container.weight).to eq (pasta.weight + cake.weight)
-  end
-end
+# ...
 <% end %>
 
 <% code_tag "sh" do %>
