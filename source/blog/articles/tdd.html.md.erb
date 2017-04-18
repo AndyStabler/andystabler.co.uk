@@ -1,9 +1,9 @@
 ---
-title: TDD
-date: 2017-03-18
+title: Test Driven Development
+date: 2017-04-18
 image: https://andystabler.co.uk/assets/images/tdd/tupperware.jpg
 ---
-Welcome to _Container Industries Ltd_. As the top engineer here you've been assigned the job of developing the company's container functionality.
+Welcome to _Container Industries Ltd_. As the new engineer here you've been assigned the job of developing the company's container functionality.
 
 The following requirements have made there way over to your desk:
 
@@ -919,9 +919,9 @@ def item_too_heavy? item
 end
 <% end %>
 
-Notice that we aren't using an accessor method to get the weight limit; we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit`, the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were in. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were around. We'd be duplicating behaviour and it'd be likely that something would break. By using an accessor method we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
+Notice that we aren't using an accessor method to get the weight limit; we are calling `@weight_limit` to access it directly. Although this is _fine_ here, it's generally best to use an accessor because it changes the statement from calling data (`@weight_limit`) to calling behaviour (`weight_limit`, the `attr_reader` method). This is useful because it means there is one place in our code that defines what it means to be a `weight_limit`. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were around. We would need to find everywhere we were calling the data `@weight_limit` and subtract 5 if the inspectors were near. We'd be duplicating behaviour and it'd be likely that something would break. By using an accessor method we could simply override the `weight_limit` method to include the suitable logic, and our other methods that relied on the accessor would not need to change.
 
-So let's make use of Ruby's accessor methods to get the weight limit.
+Let's make use of Ruby's accessor methods to get the weight limit.
 
 <% code_tag "ruby" do %>
 class Container
