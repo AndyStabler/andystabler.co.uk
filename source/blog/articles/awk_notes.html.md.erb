@@ -1,0 +1,361 @@
+---
+title: Awk Notes
+date: 2017-5-21
+image: http://andystabler.co.uk/assets/images/awk_notes/awk-a59d58bc.png
+---
+
+Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+
+## Example 1: Tabulating Data
+
+Below are some fruits and their prices.
+
+<% code_tag "sh" do %>
+$ cat fruits
+Apple £2.00
+Banana £1.50
+Kumquat £2.00
+Peach £1.50
+Strawberry £2.00
+Raspberry £2.00
+Kiwi £1.00
+Pear £1.00
+Tomato £1.50
+<% end %>
+
+It'd be really useful if I could take that list and print it in a tabulated way:
+
+<% code_tag "sh" do %>
+$ cat fruits | awk '{print $2 "\t" $1}'
+£2.00   Apple
+£1.50   Banana
+£2.00   Kumquat
+£1.50   Peach
+£2.00   Strawberry
+£2.00   Raspberry
+£1.00   Kiwi
+£1.00   Pear
+£1.50   Tomato
+<% end %>
+
+Might be nice to sort them by price too:
+
+<% code_tag "sh" do %>
+$ cat fruits | awk '{print $2 "\t" $1}' | sort
+£1.00   Kiwi
+£1.00   Pear
+£1.50   Banana
+£1.50   Peach
+£1.50   Tomato
+£2.00   Apple
+£2.00   Kumquat
+£2.00   Raspberry
+£2.00   Strawberry
+<% end %>
+
+That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let's just not print it:
+
+<% code_tag "sh" do %>
+$ cat fruit_formatting
+awk '{print $2 "\t" $1 }' |
+sort |
+awk '{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print "\t" name
+  } else {
+    same_price = price
+    print price "\t" name
+  }
+}'
+<% end %>
+
+You'll notice that I moved the script into its own file. Writing all of that on one line would be tricky!
+
+Let's try running it 🤞
+
+<% code_tag "sh" do %>
+$ cat fruits | ./fruit_formatting
+zsh: permission denied: ./fruit_formatting
+<% end %>
+
+Ruh-Roh...
+
+<% code_tag "sh" do %>
+$ ls -la fruit_formatting
+-rw-r--r--  1 andy  staff  150 21 May 20:29 fruit_formatting
+<% end %>
+
+We forgot to make the file executable.
+
+<% code_tag "sh" do %>
+$ chmod 744 fruit_formatting
+<% end %>
+
+<% code_tag "sh" do %>
+$ cat fruits | ./fruit_formatting
+£1.00   Kiwi
+        Pear
+£1.50   Banana
+        Peach
+        Tomato
+£2.00   Apple
+        Kumquat
+        Raspberry
+        Strawberry
+<% end %>
+
+Nice, we did it!
+
+
+## Example 2: Filtering
+
+OK, here's a new problem. I'd like to find the 5 slowest response times on my site with a 200 status code.
+
+Here's what my log file looks like:
+
+<% code_tag "sh" do %>
+$ tail -20 logfile
+Started GET "/balance_forecasts/97?date=18-12-2016" for ::1 at 2017-05-21 13:33:12 +0100
+Processing by BalanceForecastsController#show as */*
+  Parameters: {"date"=>"18-12-2016", "id"=>"97"}
+  User Load (0.2ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 97]]
+  Balance Load (0.2ms)  SELECT  "balances".* FROM "balances" WHERE "balances"."user_id" = ?  ORDER BY "balances"."on" DESC LIMIT 1  [["user_id", 97]]
+  Transfer Load (0.1ms)  SELECT "transfers".* FROM "transfers" WHERE "transfers"."user_id" = ?  [["user_id", 97]]
+  CACHE (0.0ms)  SELECT  "balances".* FROM "balances" WHERE "balances"."user_id" = ?  ORDER BY "balances"."on" DESC LIMIT 1  [["user_id", 97]]
+  Rendered balance_forecasts/_blank_slate.html.erb (0.1ms)
+Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/balance_forecasts/97?date=26-6-2017" for ::1 at 2017-05-21 13:33:14 +0100
+Processing by BalanceForecastsController#show as */*
+  Parameters: {"date"=>"26-6-2017", "id"=>"97"}
+  User Load (0.1ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ?  ORDER BY "users"."id" ASC LIMIT 1  [["id", 97]]
+  Balance Load (0.3ms)  SELECT  "balances".* FROM "balances" WHERE "balances"."user_id" = ?  ORDER BY "balances"."on" DESC LIMIT 1  [["user_id", 97]]
+  Transfer Load (0.1ms)  SELECT "transfers".* FROM "transfers" WHERE "transfers"."user_id" = ?  [["user_id", 97]]
+  CACHE (0.0ms)  SELECT  "balances".* FROM "balances" WHERE "balances"."user_id" = ?  ORDER BY "balances"."on" DESC LIMIT 1  [["user_id", 97]]
+  Rendered balance_forecasts/_show.html.erb (1.2ms)
+Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+<% end %>
+
+First, let's see if we can find all of the `Completed 200 OK` rows:
+
+<% code_tag "sh" do %>
+$ tail -50 logfile | awk '/Completed 200 OK/'
+Completed 200 OK in 490ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+Completed 200 OK in 388ms (Views: 11.7ms | ActiveRecord: 0.4ms)
+Completed 200 OK in 32ms (Views: 15.3ms | ActiveRecord: 0.5ms)
+Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
+Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+<% end %>
+
+Next up is extracting the time in ms from those rows. Since the times are always in column 5 we can use `$5` to get the values.
+
+<% code_tag "sh" do %>
+$ tail -50 logfile | awk '/Completed 200 OK/{print $5}'
+490ms
+388ms
+32ms
+22ms
+261ms
+<% end %>
+
+Now let's sort them in descending order to see the slowest values at the top
+
+<% code_tag "sh" do %>
+$ tail -50 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr
+490ms
+388ms
+261ms
+32ms
+22ms
+<% end %>
+
+I used `sort -nr` there to sort by numerical value and reverse the order.
+
+That's looking quite useful, but looking at a larger set of data will render these results unreadable. I'll run this script over 5000 rows of log file and then use the `head` command to only look at the top 5 slowest times.
+
+<% code_tag "sh" do %>
+$ tail -5000 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr | head -5
+8140ms
+6257ms
+5409ms
+5382ms
+5118ms
+<% end %>
+
+
+## Example 3: More tabulation
+
+Back to food again (naturally). I have a new price list:
+
+<% code_tag "sh" do %>
+$ cat foods
+Item name, Price
+Rice pudding, £1.20
+Jam sandwich, £1.75
+Coffee, £1.00
+Crisps, £1.00
+Custard tart, £1.75
+Red grapes, £1.20
+Green grapes, £1.20
+<% end %>
+
+I'd like to format it in the same way as the previous prices.
+
+<% code_tag "sh" do %>
+£1.00   Kiwi
+        Pear
+£1.50   Banana
+        Peach
+        Tomato
+£2.00   Apple
+        Kumquat
+        Raspberry
+        Strawberry
+<% end %>
+
+There's a slight problem here though. You'll notice that the top row of this file contains `Item name` and `Price`. We don't want this in our report, so we'll need a way to remove it. There's another issue here however, and it isn't immediately obvious. In our original `fruit_formatting` script we said
+
+<% code_tag "sh" do %>
+awk '{print $2 "\t" $1}'
+<% end %>
+
+This printed the price followed by the name of the fruit. Unfortunately, this won't work here because some of our food names span two words, for example `Jam sandwich`. This script would print `sandwich` followed by a tab, followed by `jam`. Let's run it to find out.
+
+<% code_tag "sh" do %>
+cat foods | awk '{print $2 "\t" $1}'
+name,   Item
+pudding,        Rice
+sandwich,       Jam
+£1.00   Coffee,
+£1.00   Crisps,
+tart,   Custard
+grapes, Red
+grapes, Green
+<% end %>
+
+First, let's look at ignoring the top line of the file:
+
+<% code_tag "sh" do %>
+$ cat fruits2 | awk 'NR != 1 {print $0}'
+Rice pudding, £1.20
+Jam sandwich, £1.75
+Coffee, £1.00
+Crisps, £1.00
+Custard tart, £1.75
+Red grapes, £1.20
+Green grapes, £1.20
+<% end %>
+
+`NR` here tells us the number of the current record. In our script we are saying "if the current record is not the first record in the file, then print the full record".
+
+Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let's use a comma.
+
+<% code_tag "sh" do %>
+$ cat fruits2 | awk -F ", " 'NR != 1 {print $2 "\t" $1}'
+£1.20   Rice pudding
+£1.75   Jam sandwich
+£1.00   Coffee
+£1.00   Crisps
+£1.75   Custard tart
+£1.20   Red grapes
+£1.20   Green grapes
+<% end %>
+
+Putting all this together with our original `fruit_formatting` script, we get the following:
+
+<% code_tag "sh" do %>
+$ cat food_formatting
+awk -F ", " 'NR != 1 {print $2 "\t" $1}' |
+sort |
+awk '{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print "\t" name
+  } else {
+    same_price = price
+    print price "\t" name
+  }
+}'
+<% end %>
+
+<% code_tag "sh" do %>
+$ cat foods | ./food_formatting
+£1.00   Coffee
+        Crisps
+£1.20   Green
+        Red
+        Rice
+£1.75   Custard
+        Jam
+<% end %>
+
+Almost there, but it still looks like we're cutting off the `sandwich` part of `Jam`. This is because our second awk script
+
+<% code_tag "sh" do %>
+awk '{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print "\t" name
+  } else {
+    same_price = price
+    print price "\t" name
+  }
+}'
+<% end %>
+
+is given this input:
+
+<% code_tag "sh" do %>
+cat foods | awk -F ", " 'NR != 1 {print $2 "\t" $1}' | sort
+£1.00 Coffee
+£1.00 Crisps
+£1.20 Green grapes
+£1.20 Red grapes
+£1.20 Rice pudding
+£1.75 Custard tart
+£1.75 Jam sandwich
+<% end %>
+
+and the `print "\t" name` part is going to only look at the second word (`Jam`), but not the remaining line since we set `name` to `$2`.
+
+Let's set `$1` (the price) to the empty string and then use `$0`, which gives us the full record (sans `$1` in this case), to print the full food name:
+
+<% code_tag "sh" do %>
+$ cat food_formatting
+awk -F ", " 'NR != 1 {print $2 "\t" $1}' |
+sort |
+awk '{
+  price = $1
+  name = $2
+  if (price == current_price) {
+    $1 = ""
+    print "\t" $0
+  } else {
+    current_price = price
+    $1 = ""
+    print price "\t" $0
+  }
+}'
+<% end %>
+
+<% code_tag "sh" do %>
+$ cat foods | ./food_formatting
+£1.00    Coffee
+         Crisps
+£1.20    Green grapes
+         Red grapes
+         Rice pudding
+£1.75    Custard tart
+         Jam sandwich
+<% end %>
+
+And there you have it, some teeny footsteps towards the land of awk. If you'd like to dive deeper I can recommend the [sed & awk](https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255){:target="_blank"} book, which is really great.
+
+If you've got any awk scripts you use regularly that make your life easier I'd love to hear about them.
+
+👋
