@@ -1,0 +1,443 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <title>Awk Notes - Blog - Andy Stabler</title>
+      <meta content="Awk Notes - Blog - Andy Stabler" property="title"></meta><meta content="Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+
+Example 1: Tabulating Data
+
+Below are some fruits and their..." property="description"></meta><meta content="Awk Notes - Blog - Andy Stabler" itemprop="name"></meta><meta content="Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+
+Example 1: Tabulating Data
+
+Below are some fruits and their..." itemprop="description"></meta><meta content="Awk Notes - Blog - Andy Stabler" property="og:title"></meta><meta content="Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+
+Example 1: Tabulating Data
+
+Below are some fruits and their..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/sed_awk_play/" property="og:url"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Awk Notes - Blog - Andy Stabler" name="twitter:title"></meta><meta content="Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+
+Example 1: Tabulating Data
+
+Below are some fruits and their..." name="twitter:description"></meta>
+
+    <link href="/assets/stylesheets/main-ec8268fd.css" rel="stylesheet" />
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/darcula.min.css">
+
+      <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+      <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-49987996-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+  </head>
+
+  <body class="blog blog_sed_awk_play blog_sed_awk_play_index">
+      <section class="left-column">
+    <header>
+      <div>
+<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
+</a>      </div>
+      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
+    </header>
+  </section>
+  <section class="mid-column">
+    <section class="mid-column-container">
+        <div class="blog-post-container">
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/tdd/">Test Driven Development</a>
+        </p>
+    </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1>Awk Notes</h1>
+        <p class="article-published-on">21 May 2017</p>
+      </div>
+      <div class="blog-post-content">
+        <p>Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.</p>
+
+<h2 id="example-1-tabulating-data">Example 1: Tabulating Data</h2>
+
+<p>Below are some fruits and their prices.</p>
+
+<pre><code class="sh">$ cat fruits
+Apple £2.00
+Banana £1.50
+Kumquat £2.00
+Peach £1.50
+Strawberry £2.00
+Raspberry £2.00
+Kiwi £1.00
+Pear £1.00
+Tomato £1.50
+</code></pre>
+<p>It'd be really useful if I could take that list and print it in a tabulated way:</p>
+
+<pre><code class="sh">$ cat fruits | awk &#x27;{print $2 &quot;\t&quot; $1}&#x27;
+£2.00   Apple
+£1.50   Banana
+£2.00   Kumquat
+£1.50   Peach
+£2.00   Strawberry
+£2.00   Raspberry
+£1.00   Kiwi
+£1.00   Pear
+£1.50   Tomato
+</code></pre>
+<p>Might be nice to sort them by price too:</p>
+
+<pre><code class="sh">$ cat fruits | awk &#x27;{print $2 &quot;\t&quot; $1}&#x27; | sort
+£1.00   Kiwi
+£1.00   Pear
+£1.50   Banana
+£1.50   Peach
+£1.50   Tomato
+£2.00   Apple
+£2.00   Kumquat
+£2.00   Raspberry
+£2.00   Strawberry
+</code></pre>
+<p>That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let's just not print it:</p>
+
+<pre><code class="sh">$ cat fruit_formatting
+awk &#x27;{print $2 &quot;\t&quot; $1 }&#x27; |
+sort |
+awk &#x27;{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print &quot;\t&quot; name
+  } else {
+    same_price = price
+    print price &quot;\t&quot; name
+  }
+}&#x27;
+</code></pre>
+<p>You'll notice that I moved the script into its own file. Writing all of that on one line would be tricky!</p>
+
+<p>Let's try running it 🤞</p>
+
+<pre><code class="sh">$ cat fruits | .&#x2F;fruit_formatting
+zsh: permission denied: .&#x2F;fruit_formatting
+</code></pre>
+<p>Ruh-Roh…</p>
+
+<pre><code class="sh">$ ls -la fruit_formatting
+-rw-r--r--  1 andy  staff  150 21 May 20:29 fruit_formatting
+</code></pre>
+<p>We forgot to make the file executable.</p>
+
+<pre><code class="sh">$ chmod 744 fruit_formatting
+</code></pre>
+<pre><code class="sh">$ cat fruits | .&#x2F;fruit_formatting
+£1.00   Kiwi
+        Pear
+£1.50   Banana
+        Peach
+        Tomato
+£2.00   Apple
+        Kumquat
+        Raspberry
+        Strawberry
+</code></pre>
+<p>Nice, we did it!</p>
+
+<h2 id="example-2-filtering">Example 2: Filtering</h2>
+
+<p>OK, here's a new problem. I'd like to find the 5 slowest response times on my site with a 200 status code.</p>
+
+<p>Here's what my log file looks like:</p>
+
+<pre><code class="sh">$ tail -20 logfile
+Started GET &quot;&#x2F;balance_forecasts&#x2F;97?date=18-12-2016&quot; for ::1 at 2017-05-21 13:33:12 +0100
+Processing by BalanceForecastsController#show as *&#x2F;*
+  Parameters: {&quot;date&quot;=&gt;&quot;18-12-2016&quot;, &quot;id&quot;=&gt;&quot;97&quot;}
+  User Load (0.2ms)  SELECT  &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;id&quot; = ?  ORDER BY &quot;users&quot;.&quot;id&quot; ASC LIMIT 1  [[&quot;id&quot;, 97]]
+  Balance Load (0.2ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
+  Transfer Load (0.1ms)  SELECT &quot;transfers&quot;.* FROM &quot;transfers&quot; WHERE &quot;transfers&quot;.&quot;user_id&quot; = ?  [[&quot;user_id&quot;, 97]]
+  CACHE (0.0ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
+  Rendered balance_forecasts&#x2F;_blank_slate.html.erb (0.1ms)
+Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET &quot;&#x2F;balance_forecasts&#x2F;97?date=26-6-2017&quot; for ::1 at 2017-05-21 13:33:14 +0100
+Processing by BalanceForecastsController#show as *&#x2F;*
+  Parameters: {&quot;date&quot;=&gt;&quot;26-6-2017&quot;, &quot;id&quot;=&gt;&quot;97&quot;}
+  User Load (0.1ms)  SELECT  &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;id&quot; = ?  ORDER BY &quot;users&quot;.&quot;id&quot; ASC LIMIT 1  [[&quot;id&quot;, 97]]
+  Balance Load (0.3ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
+  Transfer Load (0.1ms)  SELECT &quot;transfers&quot;.* FROM &quot;transfers&quot; WHERE &quot;transfers&quot;.&quot;user_id&quot; = ?  [[&quot;user_id&quot;, 97]]
+  CACHE (0.0ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
+  Rendered balance_forecasts&#x2F;_show.html.erb (1.2ms)
+Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+</code></pre>
+<p>First, let's see if we can find all of the <code>Completed 200 OK</code> rows:</p>
+
+<pre><code class="sh">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;&#x27;
+Completed 200 OK in 490ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+Completed 200 OK in 388ms (Views: 11.7ms | ActiveRecord: 0.4ms)
+Completed 200 OK in 32ms (Views: 15.3ms | ActiveRecord: 0.5ms)
+Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
+Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
+</code></pre>
+<p>Next up is extracting the time in ms from those rows. Since the times are always in column 5 we can use <code>$5</code> to get the values.</p>
+
+<pre><code class="sh">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27;
+490ms
+388ms
+32ms
+22ms
+261ms
+</code></pre>
+<p>Now let's sort them in descending order to see the slowest values at the top</p>
+
+<pre><code class="sh">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27; | sort -nr
+490ms
+388ms
+261ms
+32ms
+22ms
+</code></pre>
+<p>I used <code>sort -nr</code> there to sort by numerical value and reverse the order.</p>
+
+<p>That's looking quite useful, but looking at a larger set of data will render these results unreadable. I'll run this script over 5000 rows of log file and then use the <code>head</code> command to only look at the top 5 slowest times.</p>
+
+<pre><code class="sh">$ tail -5000 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27; | sort -nr | head -5
+8140ms
+6257ms
+5409ms
+5382ms
+5118ms
+</code></pre>
+
+<h2 id="example-3-more-tabulation">Example 3: More tabulation</h2>
+
+<p>Back to food again (naturally). I have a new price list:</p>
+
+<pre><code class="sh">$ cat foods
+Item name, Price
+Rice pudding, £1.20
+Jam sandwich, £1.75
+Coffee, £1.00
+Crisps, £1.00
+Custard tart, £1.75
+Red grapes, £1.20
+Green grapes, £1.20
+</code></pre>
+<p>I'd like to format it in the same way as the previous prices.</p>
+
+<pre><code class="sh">£1.00   Kiwi
+        Pear
+£1.50   Banana
+        Peach
+        Tomato
+£2.00   Apple
+        Kumquat
+        Raspberry
+        Strawberry
+</code></pre>
+<p>There's a slight problem here though. You'll notice that the top row of this file contains <code>Item name</code> and <code>Price</code>. We don't want this in our report, so we'll need a way to remove it. There's another issue here however, and it isn't immediately obvious. In our original <code>fruit_formatting</code> script we said</p>
+
+<pre><code class="sh">awk &#x27;{print $2 &quot;\t&quot; $1}&#x27;
+</code></pre>
+<p>This printed the price followed by the name of the fruit. Unfortunately, this won't work here because some of our food names span two words, for example <code>Jam sandwich</code>. This script would print <code>sandwich</code> followed by a tab, followed by <code>jam</code>. Let's run it to find out.</p>
+
+<pre><code class="sh">cat foods | awk &#x27;{print $2 &quot;\t&quot; $1}&#x27;
+name,   Item
+pudding,        Rice
+sandwich,       Jam
+£1.00   Coffee,
+£1.00   Crisps,
+tart,   Custard
+grapes, Red
+grapes, Green
+</code></pre>
+<p>First, let's look at ignoring the top line of the file:</p>
+
+<pre><code class="sh">$ cat fruits2 | awk &#x27;NR != 1 {print $0}&#x27;
+Rice pudding, £1.20
+Jam sandwich, £1.75
+Coffee, £1.00
+Crisps, £1.00
+Custard tart, £1.75
+Red grapes, £1.20
+Green grapes, £1.20
+</code></pre>
+<p><code>NR</code> here tells us the number of the current record. In our script we are saying "if the current record is not the first record in the file, then print the full record".</p>
+
+<p>Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let's use a comma.</p>
+
+<pre><code class="sh">$ cat fruits2 | awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27;
+£1.20   Rice pudding
+£1.75   Jam sandwich
+£1.00   Coffee
+£1.00   Crisps
+£1.75   Custard tart
+£1.20   Red grapes
+£1.20   Green grapes
+</code></pre>
+<p>Putting all this together with our original <code>fruit_formatting</code> script, we get the following:</p>
+
+<pre><code class="sh">$ cat food_formatting
+awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; |
+sort |
+awk &#x27;{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print &quot;\t&quot; name
+  } else {
+    same_price = price
+    print price &quot;\t&quot; name
+  }
+}&#x27;
+</code></pre>
+<pre><code class="sh">$ cat foods | .&#x2F;food_formatting
+£1.00   Coffee
+        Crisps
+£1.20   Green
+        Red
+        Rice
+£1.75   Custard
+        Jam
+</code></pre>
+<p>Almost there, but it still looks like we're cutting off the <code>sandwich</code> part of <code>Jam</code>. This is because our second awk script</p>
+
+<pre><code class="sh">awk &#x27;{
+  price = $1
+  name = $2
+  if (price == same_price) {
+    print &quot;\t&quot; name
+  } else {
+    same_price = price
+    print price &quot;\t&quot; name
+  }
+}&#x27;
+</code></pre>
+<p>is given this input:</p>
+
+<pre><code class="sh">cat foods | awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; | sort
+£1.00 Coffee
+£1.00 Crisps
+£1.20 Green grapes
+£1.20 Red grapes
+£1.20 Rice pudding
+£1.75 Custard tart
+£1.75 Jam sandwich
+</code></pre>
+<p>and the <code>print "\t" name</code> part is going to only look at the second word (<code>Jam</code>), but not the remaining line since we set <code>name</code> to <code>$2</code>.</p>
+
+<p>Let's set <code>$1</code> (the price) to the empty string and then use <code>$0</code>, which gives us the full record (sans <code>$1</code> in this case), to print the full food name:</p>
+
+<pre><code class="sh">$ cat food_formatting
+awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; |
+sort |
+awk &#x27;{
+  price = $1
+  name = $2
+  if (price == current_price) {
+    $1 = &quot;&quot;
+    print &quot;\t&quot; $0
+  } else {
+    current_price = price
+    $1 = &quot;&quot;
+    print price &quot;\t&quot; $0
+  }
+}&#x27;
+</code></pre>
+<pre><code class="sh">$ cat foods | .&#x2F;food_formatting
+£1.00    Coffee
+         Crisps
+£1.20    Green grapes
+         Red grapes
+         Rice pudding
+£1.75    Custard tart
+         Jam sandwich
+</code></pre>
+<p>And there you have it, some teeny footsteps towards the land of awk. If you'd like to dive deeper I can recommend the <a href="https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255" target="_blank">sed &amp; awk</a> book, which is really great.</p>
+
+<p>If you've got any awk scripts you use regularly that make your life easier I'd love to hear about them.</p>
+
+<p>👋</p>
+
+      </div>
+    </section>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- andystabler -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6786957205988281"
+     data-ad-slot="7961587765"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/sed_awk_play/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </div>
+
+    </section>
+  </section>
+
+    <script src="/assets/javascripts/all-da39a3ee.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+
+  </body>
+</html>
