@@ -1,0 +1,111 @@
+---
+title: Typed Arrays in ECMAScript
+date: 2018-02-27
+---
+
+### What are they?
+
+Typed arrays are a bit like normal arrays, but their length is fixed– once you've created one you can't change its size.
+They provide a way to quickly and easily manipulate the raw data stored inside the array, which is really
+useful for processing audio/video data and for games programming.
+
+### How do they work?
+
+There are 3 things to consider to understand how typed arrays work:
+
+1. [Numeric data types](#numeric-data-types) - the data that is stored in the typed array
+2. [Array Buffers](#array-buffers) – where the data is stored
+3. [Data Views](#data-views) – reading and writing the data in the typed array
+
+#### Numeric data types
+
+Storing all numbers in a 64-bit floating point format isn't particularly efficient if you're only using, say an
+8 bit integer. This is how numbers are stored in JavaScript however, and numeric data types were
+introduced as a way to pass this limitation and increase performance and efficiency.
+
+Using a numeric type to store numbers means that the values are stored as an array of bits and the methods
+available on arays are also available on these values. If you use an `int8` typed array, then each element in the
+array will take up exactly 8 bits.
+
+The following 8 numeric types are available:
+
+1. int8
+2. uint8
+3. int16
+4. uint16
+5. int32
+6. uint32
+7. float32
+8. float64
+
+#### Array Buffers
+
+Array buffers are at the centre of typed arrays. They're an object that represent the raw binary data, but you
+can't manipulate the data they store directly (see (Data Views)[#data-views]).
+
+```js
+let arrayBuffer = new ArrayBuffer(5); // allocates 5 bytes for this buffer
+```
+
+#### Data Views
+
+Data views are the means by which the data stored in an array buffer can be accessed.
+
+There are type specific views for each of the different numeric types and also a generic `DataView` object.
+
+```js
+let arrayBuffer = new ArrayBuffer(10); // allocates 10 bytes for this buffer
+
+let dataView = new DataView(arrayBuffer); // creates a generic Data View object with access to all 10 bytes
+
+dataView.setInt8(0, 5); // stores the number 5 in the first byte
+dataView.getInt8(0); // returns the number 5
+
+// Oops – be careful here. We assigned an int8 to the first byte, but we can ask for an int16
+dataView.getInt16(0); // (byte 1) 00000101 (byte 2 ) 00000000 together they make 0000010100000000 = 1280
+```
+
+As you can see in the above example, with a generic data view object you can access the data in any of the
+available formats– this may not be what you want, in this case use the type-specific data views.
+
+```js
+let arrayBuffer = new ArrayBuffer(10);
+
+let int8Array = new Int8Array(arrayBuffer, 0, 6); // access to 6 8-bit ints starting from the 1st byte
+let int16Array = new Int16Array(arrayBuffer, 6, 2); // access to 2 16-bit integers starting from the 7th byte
+
+int8Array.length; // 6
+int16Array.length; // 2
+
+int8Array[0] = 5;
+int8Array[0]; // 5
+int8Array[1] = 128; // assigning a larger number. This is a signed int, where 1 bit is
+                    // used to represent the sign, giving us 7 bits of number to play with (a range
+                    // of -128 to +127)
+int8Array[1]; // -128 binary overflow meant the number flipped around to -128
+
+int16Array[0] = 128;
+int16Array[0]; // 128; // no binary overflow here!
+```
+
+_Note: you'll notice that we had some binary overflow in the previous example. If you don't want this to happen
+you can use a `Uint8ClampedArray` where numbers greater than the maximum number are _clamped_ to the maximum value
+and numbers lower than the minimum are _clamped_ to the minimum value._
+
+### Typed Arrays aren't arrays
+
+I already mentioned that a typed array's size can't be altered, but they are also different in the following ways:
+
+* These methods are not available for typed arrays as they could result in an array that has a different size:
+  * `concat`
+  * `shift`
+  * `pop`
+  * `splice`
+  * `push`
+  * `unshift` methods are all _not_ available for typed arrays as
+* `set` and `subarray` methods are available on typed arrays
+  ```js
+  let arrayBuffer = new ArrayBuffer(2);
+  let int8Array = new Int8Array(arrayBuffer);
+  ```
+
