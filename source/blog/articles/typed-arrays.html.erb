@@ -11,7 +11,7 @@ useful for processing audio/video data and for games programming.
 
 ### How do they work?
 
-There are 3 things to consider to understand how typed arrays work:
+To know how typed arrays work let's look at the following areas:
 
 1. [Numeric data types](#numeric-data-types) - the data that is stored in the typed array
 2. [Array Buffers](#array-buffers) – where the data is stored
@@ -19,13 +19,12 @@ There are 3 things to consider to understand how typed arrays work:
 
 #### Numeric data types
 
-Storing all numbers in a 64-bit floating point format isn't particularly efficient if you're only using, say an
-8 bit integer. This is how numbers are stored in JavaScript however, and numeric data types were
-introduced as a way to pass this limitation and increase performance and efficiency.
+Numbers are stored in a 64-bit floating point format in JavaScript, which isn't particularly efficient if you only
+need to represent an 8-bit integer (you're wasting 56 bits!).
 
-Using a numeric type to store numbers means that the values are stored as an array of bits and the methods
-available on arays are also available on these values. If you use an `int8` typed array, then each element in the
-array will take up exactly 8 bits.
+Numeric types give us the ability to allocate only the memory we need, which makes mathematical operations on the
+data a lot more speedy. For example, if you use an `int8` typed array, then each element in the
+array will take up 8 bits.
 
 The following 8 numeric types are available:
 
@@ -69,43 +68,67 @@ As you can see in the above example, with a generic data view object you can acc
 available formats– this may not be what you want, in this case use the type-specific data views.
 
 ```js
-let arrayBuffer = new ArrayBuffer(10);
+let arrayBuffer = new ArrayBuffer(10); // allocates 10 bytes for this buffer
 
 let int8Array = new Int8Array(arrayBuffer, 0, 6); // access to 6 8-bit ints starting from the 1st byte
-let int16Array = new Int16Array(arrayBuffer, 6, 2); // access to 2 16-bit integers starting from the 7th byte
+let int16Array = new Int16Array(arrayBuffer, 6, 2); // access to 2 16-bit ints starting from the 7th byte
 
 int8Array.length; // 6
 int16Array.length; // 2
 
-int8Array[0] = 5;
-int8Array[0]; // 5
-int8Array[1] = 128; // assigning a larger number. This is a signed int, where 1 bit is
-                    // used to represent the sign, giving us 7 bits of number to play with (a range
-                    // of -128 to +127)
-int8Array[1]; // -128 binary overflow meant the number flipped around to -128
+int8Array[0] = 127;
+int8Array[0]; // 127
+int8Array[1] = 128; // assigning a number larger than can be represented with a signed byte
+
+int8Array[1]; // -128 – binary overflow meant the number flipped around to -128
+              // 128 is 10000000 in binary and since we are using signed integers the first bit
+              // indicates this is a negative number. The maximum positive number we can store is 01111111 (127)
 
 int16Array[0] = 128;
-int16Array[0]; // 128; // no binary overflow here!
+int16Array[0]; // 128 – no binary overflow here!
 ```
 
-_Note: you'll notice that we had some binary overflow in the previous example. If you don't want this to happen
-you can use a `Uint8ClampedArray` where numbers greater than the maximum number are _clamped_ to the maximum value
-and numbers lower than the minimum are _clamped_ to the minimum value._
+_Note: with the unsigned int arrays (`Uint8Array`, `Uint16Array`, `Uint32Array`) any value below 0 will loop back
+around to the maximum value available and any value above the maximum value will loop back around to 0. However,
+there is a special `Uint8ClampedArray` for the case of unsigned 8-bit integers. In this case any value below 0
+will be capped at 0 and any value above 255 will be capped at 255.
 
-### Typed Arrays aren't arrays
+### How are typed arrays different from normal arrays?
 
-I already mentioned that a typed array's size can't be altered, but they are also different in the following ways:
+* Typed arrays arent `Array`s– they don't inherit from `Array`
 
-* These methods are not available for typed arrays as they could result in an array that has a different size:
+```js
+Array.isArray(new Int8Array()); // false
+```
+
+* A typed array's size can't be altered once it's been created. Any attempt at setting a value at a
+non-existent index will be ignored:
+
+```js
+let int8Array = Int8Array.of(1, 2, 3);
+int8Array[5] = 10;
+int8Array; // Int8Array [ 1, 2, 3 ]
+```
+
+* The following methods are not available for typed arrays as they could result in an array that has a
+different size:
   * `concat`
   * `shift`
   * `pop`
   * `splice`
   * `push`
-  * `unshift` methods are all _not_ available for typed arrays as
-* `set` and `subarray` methods are available on typed arrays
-  ```js
-  let arrayBuffer = new ArrayBuffer(2);
-  let int8Array = new Int8Array(arrayBuffer);
-  ```
+  * `unshift`
 
+* The `set` and `subarray` methods are available on typed arrays, but not on normal arrays:
+
+```js
+let ints = new Int8Array(4);
+ints.set([2,3]); // sets the first element to 2 and the second to 3
+ints.set([5, 8], 2); // 2 is used as an offset. The 3rd element is set to 5 and the 4th element is set to 8
+ints; // Int8Array [ 2, 3, 5, 8 ]
+
+let ints = new Int8Array([1, 3, 5, 8, 13]);
+ints.subarray(); // Int8Array [ 1, 2, 3, 4 ] – this is a new typed array object
+ints.subarray(2); // Int8Array [ 5, 8, 13] – 2 is used as the index offset
+ints.subarray(2, 3); // Int8Array [ 5 ] – the end index is exclusive
+```
