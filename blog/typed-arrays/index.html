@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <title>Typed Arrays in ECMAScript - Blog - Andy Stabler</title>
+      <meta content="Typed Arrays in ECMAScript - Blog - Andy Stabler" property="title"></meta><meta content="What are they?
+
+Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll..." property="description"></meta><meta content="Typed Arrays in ECMAScript - Blog - Andy Stabler" itemprop="name"></meta><meta content="What are they?
+
+Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll..." itemprop="description"></meta><meta content="Typed Arrays in ECMAScript - Blog - Andy Stabler" property="og:title"></meta><meta content="What are they?
+
+Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/typed-arrays/" property="og:url"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Typed Arrays in ECMAScript - Blog - Andy Stabler" name="twitter:title"></meta><meta content="What are they?
+
+Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll..." name="twitter:description"></meta>
+
+    <link href="/assets/stylesheets/main-ec8268fd.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
+
+      <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+
+  <body class="blog blog_typed-arrays blog_typed-arrays_index">
+      <section class="left-column">
+    <header>
+      <div>
+<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
+</a>      </div>
+      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
+    </header>
+  </section>
+  <section class="mid-column">
+    <section class="mid-column-container">
+        <div class="blog-post-container">
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/tdd/">Test Driven Development</a>
+        </p>
+    </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1>Typed Arrays in ECMAScript</h1>
+        <p class="article-published-on">28 Feb 2018</p>
+      </div>
+      <div class="blog-post-content">
+        <h3 id="what-are-they">What are they?</h3>
+
+<p>Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll cover in the <a href="#how-are-they-different-from-normal-arrays">How are they different from normal arrays?</a> section.</p>
+
+<h3 id="how-do-they-work">How do they work?</h3>
+
+<p>To get an understanding of typed arrays, let's look at the following areas:</p>
+
+<ol>
+  <li><a href="#numeric-data-types">Numeric data types</a> - a way of representing the data stored in an array buffer</li>
+  <li><a href="#array-buffers">Array Buffers</a> – where the data is stored</li>
+  <li><a href="#data-views">Data Views</a> – reading and writing the data in a typed array</li>
+</ol>
+
+<h4 id="numeric-data-types">Numeric data types</h4>
+
+<p>Numbers are stored in a 64-bit floating point format in JavaScript, which isn't particularly efficient if you only
+need to represent an 8-bit integer (you're wasting 56 bits!).</p>
+
+<p>Numeric types give us the ability to allocate only the memory we need, which makes mathematical operations on the
+data a lot more speedy. For example, if you use an <code>int8</code> typed array, then each element in the
+array will take up 8 bits.</p>
+
+<p>The following 8 numeric types are available:</p>
+
+<ol>
+  <li>int8</li>
+  <li>uint8</li>
+  <li>int16</li>
+  <li>uint16</li>
+  <li>int32</li>
+  <li>uint32</li>
+  <li>float32</li>
+  <li>float64</li>
+</ol>
+
+<h4 id="array-buffers">Array Buffers</h4>
+
+<p>An array buffer is an object that represents the raw binary data of the typed array. Their contents can't be
+manipulated directly, so to do so you'll need to make use of a <a href="#data-views">data view</a>.</p>
+
+<pre><code class="js">let arrayBuffer = new ArrayBuffer(5); &#x2F;&#x2F; allocates 5 bytes for this buffer
+</code></pre>
+
+<h4 id="data-views">Data Views</h4>
+
+<p>Data views are the means by which the data stored in an array buffer can be accessed and manipulated.</p>
+
+<p>There are type specific views for each of the different numeric types and also a generic <code>DataView</code> object.</p>
+
+<pre><code class="js">let arrayBuffer = new ArrayBuffer(10); &#x2F;&#x2F; allocates 10 bytes for this buffer
+
+&#x2F;&#x2F; creates a generic Data View object with access to all 10 bytes
+let dataView = new DataView(arrayBuffer);
+
+dataView.setInt8(0, 5); &#x2F;&#x2F; stores the number 5 in the first byte
+dataView.getInt8(0); &#x2F;&#x2F; returns the number 5
+
+&#x2F;&#x2F; be careful here – we assigned an int8 to the first location, but we
+&#x2F;&#x2F; can ask for an int16
+&#x2F;&#x2F; (byte 1) 00000101 (byte 2 ) 00000000 together they make 0000010100000000
+&#x2F;&#x2F; (or 1280 in base 10)
+dataView.getInt16(0); &#x2F;&#x2F; 1280
+</code></pre>
+<p>As you can see in the above example, with a generic data view object you can access the data in any of the
+available formats. If this is not what you want, then use the type-specific data views.</p>
+
+<pre><code class="js">let arrayBuffer = new ArrayBuffer(10); &#x2F;&#x2F; allocates 10 bytes for this buffer
+
+&#x2F;&#x2F; access to 6 8-bit ints starting from the 1st byte (index 0)
+let int8Array = new Int8Array(arrayBuffer, 0, 6);
+
+&#x2F;&#x2F; access to 2 16-bit ints starting from the 7th byte (index 6)
+let int16Array = new Int16Array(arrayBuffer, 6, 2)
+
+int8Array.length; &#x2F;&#x2F; 6
+int16Array.length; &#x2F;&#x2F; 2
+
+int8Array[0] = 127;
+int8Array[0]; &#x2F;&#x2F; 127
+&#x2F;&#x2F; assigning a number larger than can be represented with a signed byte
+int8Array[1] = 128;
+
+&#x2F;&#x2F; binary overflow means the number flips around to -128
+&#x2F;&#x2F; 128 is 10000000 in binary and since we are using signed
+&#x2F;&#x2F; integers the first bit (1) indicates this is a negative
+&#x2F;&#x2F; number. The maximum positive number we can store
+&#x2F;&#x2F; is 01111111 (127)
+int8Array[1]; &#x2F;&#x2F; -128
+
+int16Array[0] = 128;
+int16Array[0]; &#x2F;&#x2F; 128 – no binary overflow here!
+</code></pre>
+<p><em><strong>Note</strong>: with the unsigned int arrays (<code>Uint8Array</code>, <code>Uint16Array</code>, <code>Uint32Array</code>) any value below 0 will loop back
+around to the maximum value available and any value above the maximum value will loop back around to 0. However,
+there is a special <code>Uint8ClampedArray</code> for unsigned 8-bit integers. In this case, any value below 0
+will be capped at 0 and any value above 255 will be capped at 255.</em></p>
+
+<h3 id="how-are-they-different-from-normal-arrays">How are they different from normal arrays?</h3>
+
+<ul>
+  <li>Typed arrays aren't <code>Array</code>s– they don't inherit from <code>Array</code></li>
+</ul>
+
+<pre><code class="js">Array.isArray(new Int8Array()); &#x2F;&#x2F; false
+</code></pre>
+<ul>
+  <li>A typed array's size can't be altered once it's been created. Any attempt at setting a value at a
+non-existent index will be ignored:</li>
+</ul>
+
+<pre><code class="js">let int8Array = Int8Array.of(1, 2, 3);
+int8Array[5] = 10;
+int8Array; &#x2F;&#x2F; Int8Array [ 1, 2, 3 ]
+</code></pre>
+<ul>
+  <li>The following methods are not available for typed arrays as they could result in a typed array that has a
+different size:
+    <ul>
+      <li><code>concat</code></li>
+      <li><code>shift</code></li>
+      <li><code>pop</code></li>
+      <li><code>splice</code></li>
+      <li><code>push</code></li>
+      <li><code>unshift</code></li>
+    </ul>
+  </li>
+  <li>The <code>set</code> and <code>subarray</code> methods are available on typed arrays, but not on normal arrays. <code>set</code> is used for
+setting multiple values in a typed array, and <code>subarray</code> is used for extracting a new typed array containing some
+of the elements of another typed array.</li>
+</ul>
+
+<pre><code class="js">let ints = new Int8Array(4);
+
+ints.set([2,3]); &#x2F;&#x2F; sets the first element to 2 and the second to 3
+
+&#x2F;&#x2F; 2 is used as an offset index. The 3rd element is set to 5 and the
+&#x2F;&#x2F; 4th element is set to 8
+ints.set([5, 8], 2);
+ints; &#x2F;&#x2F; Int8Array [ 2, 3, 5, 8 ]
+
+let moreInts = Int8Array.of(1, 3, 5, 8, 13);
+let clone = moreInts.subarray(); &#x2F;&#x2F; Int8Array [ 1, 3, 5, 8, 13 ]
+clone === moreInts; &#x2F;&#x2F; false - subarray() creates a new typed array
+moreInts.subarray(2); &#x2F;&#x2F; Int8Array [ 5, 8, 13] – 2 is used as the offset index
+moreInts.subarray(2, 3); &#x2F;&#x2F; Int8Array [ 5 ] – the end index is exclusive
+</code></pre>
+
+<h3 id="where-can-i-learn-more">Where can I learn more?</h3>
+
+<ul>
+  <li><a href="//amzn.eu/6mexKCK" target="_blank">Understanding ECMAScript 6</a> is my favourite book right now. Give it a read.
+    <ul>
+      <li>I'm making notes as I go through the book. Nicholas was kind enough to let me make these public, so you can
+follow along <a href="https://github.com/AndyStabler/ECMAScript6Notes" target="_blank">here</a>.</li>
+    </ul>
+  </li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" target="_blank">The MDN web docs</a></li>
+  <li><a href="https://www.ecma-international.org/ecma-262/#sec-typedarray-objects" target="_blank">The ECMAScript specification</a></li>
+</ul>
+
+      </div>
+    </section>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- andystabler -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6786957205988281"
+     data-ad-slot="7961587765"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/typed-arrays/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </div>
+
+    </section>
+  </section>
+
+    <script src="/assets/javascripts/all-da39a3ee.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+
+  </body>
+</html>
