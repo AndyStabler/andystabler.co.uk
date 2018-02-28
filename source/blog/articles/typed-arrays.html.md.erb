@@ -1,12 +1,13 @@
 ---
 title: Typed Arrays in ECMAScript
-date: 2018-02-27
+date: 2018-02-28
 ---
 
 ### What are they?
 
-Typed arrays provide a way to quickly and easily manipulate the raw data stored inside an array. This is really
-useful for processing audio/video data and for games programming.
+Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
+is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
+we'll cover in the [How are they different from normal arrays?](#how-are-they-different-from-normal-arrays) section.
 
 ### How do they work?
 
@@ -61,7 +62,7 @@ let dataView = new DataView(arrayBuffer);
 dataView.setInt8(0, 5); // stores the number 5 in the first byte
 dataView.getInt8(0); // returns the number 5
 
-// Oops – be careful here. We assigned an int8 to the first location, but we
+// be careful here – we assigned an int8 to the first location, but we
 // can ask for an int16
 // (byte 1) 00000101 (byte 2 ) 00000000 together they make 0000010100000000
 // (or 1280 in base 10)
@@ -69,7 +70,7 @@ dataView.getInt16(0); // 1280
 <% end %>
 
 As you can see in the above example, with a generic data view object you can access the data in any of the
-available formats– this may not be what you want, in this case use the type-specific data views.
+available formats. If this is not what you want, then use the type-specific data views.
 
 <% code_tag "js" do %>
 let arrayBuffer = new ArrayBuffer(10); // allocates 10 bytes for this buffer
