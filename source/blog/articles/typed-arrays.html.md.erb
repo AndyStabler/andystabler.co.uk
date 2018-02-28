@@ -102,7 +102,7 @@ int16Array[0]; // 128 – no binary overflow here!
 
 _**Note**: with the unsigned int arrays (`Uint8Array`, `Uint16Array`, `Uint32Array`) any value below 0 will loop back
 around to the maximum value available and any value above the maximum value will loop back around to 0. However,
-there is a special `Uint8ClampedArray` for unsigned 8-bit integers. In this case any value below 0
+there is a special `Uint8ClampedArray` for unsigned 8-bit integers. In this case, any value below 0
 will be capped at 0 and any value above 255 will be capped at 255._
 
 ### How are they different from normal arrays?
@@ -155,7 +155,7 @@ moreInts.subarray(2, 3); // Int8Array [ 5 ] – the end index is exclusive
 
 ### Where can I learn more?
 
-* [Understanding Understanding ECMAScript 6](//amzn.eu/6mexKCK){:target="_blank"} is my favourite book right now. Give it a read.
+* [Understanding ECMAScript 6](//amzn.eu/6mexKCK){:target="_blank"} is my favourite book right now. Give it a read.
   * I'm making notes as I go through the book. Nicholas was kind enough to let me make these public, so you can
   follow along [here](https://github.com/AndyStabler/ECMAScript6Notes){:target="_blank"}.
 * [The MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray){:target="_blank"}
