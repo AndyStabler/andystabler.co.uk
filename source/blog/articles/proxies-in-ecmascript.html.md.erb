@@ -1,0 +1,77 @@
+---
+title: Proxies in ECMAScript
+date: 2018-03-19
+---
+
+### What are they?
+
+Proxies were introduced in ECMAScript 6 and give developers the opportunity to create objects that behave more
+like those built-in to the JavaScript engine.
+
+They intercept low-level method calls, such as those that get/set a property, allowing the developer to customise
+the call.
+
+#### Some layman definitions:
+
+* Proxy: An object that intercepts method calls
+* Target: The object the proxy is intercepting calls from
+* Handler: The proxy looks in this object for any trap methods that you may have provided
+* Trap: A function you add to a handler object that tells the proxy what to do when a specific method on the target
+is called
+
+
+### Example
+
+I find the best way to explain/learn a new concept is with an example, so here's a simple one that adds logging
+for getting/setting a property.
+
+```js
+// this is going to be our target
+let friend = {
+  name: "Luna Lovegood",
+  house: "Ravenclaw",
+  patronus: "Hare",
+};
+
+let handler = {
+  // this is a trap method
+  // this method will be called when we read a property on the proxy
+  get(trapTarget, key, receiver) {
+    console.log(`Getting property "${key}"`);
+    // The Reflect object provides us with the default implementation
+    // There's a Reflect method for all proxy trap methods
+    return Reflect.get(trapTarget, key, receiver);
+  },
+  // this is another trap method
+  // this method will be called when we set a property on the proxy
+  set(trapTarget, key, value, receiver) {
+    console.log(`Setting property "${key}"`);
+    // The Reflect object provides us with the default implementation
+    // There's a Reflect method for all proxy trap methods
+    return Reflect.set(trapTarget, key, value, receiver);
+  }
+};
+
+// passing the friend (target) and the handler to the Proxy constructor
+let friendProxy = new Proxy(friend, handler);
+
+friendProxy.name;
+// Getting property "name"
+// 'Luna Lovegood'
+
+friendProxy.hobby = "Painting";
+// Setting property "hobby"
+// 'Painting'
+```
+
+What I find interesting about proxies however, is that they can be used to add validation to objects.
+
+### Using proxies for validation
+
+#### Checking argument types
+
+Taking the previous example a little further we can add validation.
+
+#### Checking typos on property names
+
+
