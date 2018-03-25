@@ -113,4 +113,71 @@ satisfies our validation criteria, then we call `Reflect.apply()` to execute the
 
 #### Checking typos on property names
 
+When a property cannot be found on an object, the default behaviour is to return `undefined`. This behaviour can sometimes lead to hard to track down bugs, especially in larger in projects. We can guard against this using proxies.
+
+<% code_tag "js" do %>
+let friend = {
+  name: "Luna Lovegood",
+  house: "Ravenclaw",
+  patronus: "Hare",
+};
+
+friend.house; // Ravenclaw
+friend.hoose; // undefined – Let's raise an error here instead
+
+let friendProxy = new Proxy(friend, {
+  get(trapTarget, key, receiver) {
+    if (!(key in receiver))
+      throw new TypeError("Property not recognised");
+    return Reflect.get(trapTarget, key, receiver);
+  }
+});
+
+friend.house; // Ravenclaw
+friend.hoose; // undefined (the validation exists on the proxy)
+
+friendProxy.house; // Ravenclaw
+friendProxy.hoose; // TypeError: Property not recognised.
+<% end %>
+
+We can add similar validation to make sure we are only ever setting a property that already exists. This isn't
+always what we want, but it's still an interesting example:
+
+<% code_tag "js" do %>
+  let friend = {
+    name: "Andy Stabler",
+    house: "Hufflepuff",
+    patronus: undefined
+  };
+
+  friend.patronus = "Salmon";
+  friend.patroonus = "Stag";
+  friend;
+  // { name: 'Andy Stabler',
+  //  house: 'Hufflepuff',
+  //  patronus: 'Salmon',
+  //  patroonus: 'Stag' }
+  // Whoopsy! We accidentally set a patroonus property!
+
+  let friendProxy = new Proxy(friend, {
+    get(trapTarget, key, receiver) {
+      if (!(key in receiver))
+        throw new TypeError("Property not recognised.");
+      return Reflect.get(trapTarget, key, receiver);
+    },
+    set(trapTarget, key, value, receiver) {
+      if (!(key in receiver))
+        throw new TypeError("Property not recognised.");
+      return Reflect.set(trapTarget, key, value, receiver);
+    }
+  });
+
+  delete friend.patroonus;
+  friendProxy.patronus = "Stag";
+  friendProxy.patroonus = "Wolf"; // TypeError: Property not recognised.
+<% end %>
+
+In both the `get` and `set` trap methods we performed a check to make sure that the `key` was `in` the receiver
+object. The `in` operator looks in the object and the prototype chain for a property with a matching key. If the
+property is not found, then a `TypeError` is raised.
 
