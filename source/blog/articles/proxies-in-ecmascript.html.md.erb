@@ -5,50 +5,45 @@ date: 2018-03-19
 
 ### What are they?
 
-Proxies were introduced in ECMAScript 6 and give developers the opportunity to create objects that behave more
-like those built-in to the JavaScript engine.
-
-They intercept low-level method calls, such as those that get/set a property, allowing the developer to customise
-the call.
+Proxies wrap a given `target` object and expose some of the internal operations on it. By using them we gain
+greater control over what happens when we interact with objects because we can inject code of our choosing into
+the proxy through trap methods.
 
 #### Some layman definitions:
 
-* Proxy: An object that intercepts method calls
-* Target: The object the proxy is intercepting calls from
+* Proxy: A wrapper object that exposes fundamental operations of a target object
+* Target: The object the proxy is wrapping
 * Handler: The proxy looks in this object for any trap methods that you may have provided
-* Trap: A function you add to a handler object that tells the proxy what to do when a specific method on the target
+* Trap: A function added to a handler object that tells the proxy what to do when a specific method on the target
 is called
 
 
 ### Example
 
-I find the best way to explain/learn a new concept is with an example, so here's a simple one that adds logging
-for getting/setting a property.
+Here's a simple example of a proxy that adds logging for getting/setting a property on a target object.
 
 <% code_tag "js" do %>
-  // this is going to be our target
+  // this is our target object
   let friend = {
     name: "Luna Lovegood",
     house: "Ravenclaw",
     patronus: "Hare",
   };
 
-  // the handler for the proxy. This contains trap methods.
+  // the handler for the proxy
   let handler = {
-    // this is a trap method
-    // this method will be called when we read a property on the proxy
+    // trap method
+    // this method will be called when we read a property on the proxy object
     get(trapTarget, key, receiver) {
       console.log(`Getting property "${key}"`);
       // The Reflect object provides us with the default implementation
       // There's a Reflect method for all proxy trap methods
       return Reflect.get(trapTarget, key, receiver);
     },
-    // this is another trap method
-    // this method will be called when we set a property on the proxy
+    // trap method
+    // this method will be called when we set a property on the proxy object
     set(trapTarget, key, value, receiver) {
       console.log(`Setting property "${key}"`);
-      // The Reflect object provides us with the default implementation
-      // There's a Reflect method for all proxy trap methods
       return Reflect.set(trapTarget, key, value, receiver);
     }
   };
@@ -65,30 +60,40 @@ for getting/setting a property.
   // 'Painting'
 <% end %>
 
+We used the `get` and `set` trap methods there to intercept the calls that get and set values on the target
+object respectively. You can see a full list of the trap methods available [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object){:target="_blank"}.
+
 What I find interesting about proxies however, is that they can be used to add validation to objects.
 
 ### Using proxies for validation
 
 #### Checking argument types
 
-Since we can intercept the `apply` function, we can add some validation to make sure that, when a function is called,
-the arguments passed into it are what we'd expect.
+Since there is an `apply()` trap method available for us to use, we can add validation to make sure that the
+arguments we pass into a function are what we would expect.
+
+Let's create a `speak()` function with the following requirements:
+
+* We don't want to say more than one thing at a time
+* We only want to speak in strings
 
 <% code_tag "js" do %>
+  // this is our target object
   function speak(message) {
     console.log(`Raising your head, you declare to the room "${message}"`);
   }
 
   let speakProxy = new Proxy(speak, {
+    // trap method
     apply(trapTarget, thisArg, argumentsList) {
-      if (argumentsList.length != 1) {
+      if (argumentsList.length !== 1) {
         throw new Error("Please say one thing at a time");
       }
       if (typeof argumentsList[0] !== "string") {
         throw new TypeError("Please use your words");
       }
-
-      Reflect.apply(trapTarget, thisArg, argumentsList);
+      // call the apply method on the Reflect object to get the default behaviour
+      return Reflect.apply(trapTarget, thisArg, argumentsList);
     }
   });
 
@@ -96,6 +101,15 @@ the arguments passed into it are what we'd expect.
   speakProxy("Wingardium Leviosa", "Accio Firebolt!"); // Error: Please say one thing at a time
   speakProxy(42); // TypeError: Please use your words
 <% end %>
+
+Here we defined a `speak()` method that prints out a given message.
+Firstly, we added the `apply()` trap method to the handler. This method is executed when we call a function on
+the proxy object. Since the proxy is _virtualising_ the target object, the `apply()` method on the proxy object
+has the same implementation as the target object by default.
+
+Next, we added two conditions– the first checks that there is exactly 1 argument passed into
+the function, the other checks that the type of the argument is a string. If we're happy that the argument
+satisfies our validation criteria, then we call `Reflect.apply()` to execute the default implementation.
 
 #### Checking typos on property names
 
