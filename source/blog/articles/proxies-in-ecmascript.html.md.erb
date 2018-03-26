@@ -3,31 +3,32 @@ title: Proxies in ECMAScript
 date: 2018-03-19
 ---
 
-### What are they?
+## What are they?
 
-Proxies wrap a given `target` object and expose some of the internal operations on it. By using them we gain
-greater control over what happens when we interact with objects because we can inject code of our choosing into
-the proxy through trap methods.
+Proxies give us greater control over what happens when we interact with objects. They wrap a `target` object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create a new instance of an object, call a function, and more (see the full list of the low-level
+operations we can intercept
+[here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object){:target="_blank"}).
 
-#### Some layman definitions:
+### Some layman definitions:
 
-* Proxy: A wrapper object that exposes fundamental operations of a target object
-* Target: The object the proxy is wrapping
-* Handler: The proxy looks in this object for any trap methods that you may have provided
-* Trap: A function added to a handler object that tells the proxy what to do when a specific method on the target
-is called
+* **Proxy**: A wrapper object that exposes internal operations of a target object
+* **Target**: The object the proxy is wrapping
+* **Handler**: The proxy looks in this object for any trap methods you may have provided
+* **Trap**: A function added to a handler object that tells the proxy what to do when a specific method on the
+target is called
 
+## Example
 
-### Example
-
-Here's a simple example of a proxy that adds logging for getting/setting a property on a target object.
+Here's an example of a proxy that adds logging for getting and setting a property on a target object.
 
 <% code_tag "js" do %>
   // this is our target object
   let friend = {
     name: "Luna Lovegood",
     house: "Ravenclaw",
-    patronus: "Hare",
+    patronus: "Hare"
   };
 
   // the handler for the proxy
@@ -60,16 +61,18 @@ Here's a simple example of a proxy that adds logging for getting/setting a prope
   // 'Painting'
 <% end %>
 
-We used the `get` and `set` trap methods there to intercept the calls that get and set values on the target
-object respectively. You can see a full list of the trap methods available [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object){:target="_blank"}.
+We used the `get` and `set` trap methods there to intercept calls that get and set properties on the target
+object through the proxy. Since the proxy _virtualises_ the target object, any operation available on the target
+object can be called from the proxy.
 
-What I find interesting about proxies however, is that they can be used to add validation to objects.
+## Using proxies for validation
 
-### Using proxies for validation
+Proxies can be used to add validation to objects. I'll cover two use cases here– checking the arguments passed
+into a function match some validation criteria, and checking for typos in property names.
 
-#### Checking argument types
+### Parameter validation
 
-Since there is an `apply()` trap method available for us to use, we can add validation to make sure that the
+Since there is an `apply()` trap method available to us, we can add validation to make sure that the
 arguments we pass into a function are what we would expect.
 
 Let's create a `speak()` function with the following requirements:
@@ -92,52 +95,56 @@ Let's create a `speak()` function with the following requirements:
       if (typeof argumentsList[0] !== "string") {
         throw new TypeError("Please use your words");
       }
-      // call the apply method on the Reflect object to get the default behaviour
+      // call the apply method on the Reflect object to get the default
+      // behaviour
       return Reflect.apply(trapTarget, thisArg, argumentsList);
     }
   });
 
-  speakProxy("Wingardium Leviosa"); // Raising your head, you declare to the room "Wingardium Leviosa"
-  speakProxy("Wingardium Leviosa", "Accio Firebolt!"); // Error: Please say one thing at a time
+  speakProxy("Wingardium Leviosa");
+  // Raising your head, you declare to the room "Wingardium Leviosa"
+  speakProxy("Wingardium Leviosa", "Accio Firebolt!");
+  // Error: Please say one thing at a time
   speakProxy(42); // TypeError: Please use your words
 <% end %>
 
 Here we defined a `speak()` method that prints out a given message.
-Firstly, we added the `apply()` trap method to the handler. This method is executed when we call a function on
-the proxy object. Since the proxy is _virtualising_ the target object, the `apply()` method on the proxy object
-has the same implementation as the target object by default.
+Firstly, we added the `apply()` trap method to the handler object. This method is executed when we call a function
+on the proxy object.
 
 Next, we added two conditions– the first checks that there is exactly 1 argument passed into
 the function, the other checks that the type of the argument is a string. If we're happy that the argument
 satisfies our validation criteria, then we call `Reflect.apply()` to execute the default implementation.
 
-#### Checking typos on property names
+### Checking for typos in property names
 
-When a property cannot be found on an object, the default behaviour is to return `undefined`. This behaviour can sometimes lead to hard to track down bugs, especially in larger in projects. We can guard against this using proxies.
+When a property cannot be found on an object, the default behaviour is to return `undefined`. This behaviour can
+sometimes lead to hard to track down bugs, especially in larger in projects. We can guard against this using
+proxies.
 
 <% code_tag "js" do %>
-let friend = {
-  name: "Luna Lovegood",
-  house: "Ravenclaw",
-  patronus: "Hare",
-};
+  let friend = {
+    name: "Luna Lovegood",
+    house: "Ravenclaw",
+    patronus: "Hare"
+  };
 
-friend.house; // Ravenclaw
-friend.hoose; // undefined – Let's raise an error here instead
+  friend.house; // Ravenclaw
+  friend.hoose; // undefined
 
-let friendProxy = new Proxy(friend, {
-  get(trapTarget, key, receiver) {
-    if (!(key in receiver))
-      throw new TypeError("Property not recognised");
-    return Reflect.get(trapTarget, key, receiver);
-  }
-});
+  let friendProxy = new Proxy(friend, {
+    get(trapTarget, key, receiver) {
+      if (!(key in receiver))
+        throw new TypeError("Property not recognised");
+      return Reflect.get(trapTarget, key, receiver);
+    }
+  });
 
-friend.house; // Ravenclaw
-friend.hoose; // undefined (the validation exists on the proxy)
+  friend.house; // Ravenclaw
+  friend.hoose; // undefined (the validation exists on the proxy, not the target)
 
-friendProxy.house; // Ravenclaw
-friendProxy.hoose; // TypeError: Property not recognised.
+  friendProxy.house; // Ravenclaw
+  friendProxy.hoose; // TypeError: Property not recognised.
 <% end %>
 
 We can add similar validation to make sure we are only ever setting a property that already exists. This isn't
@@ -178,6 +185,17 @@ always what we want, but it's still an interesting example:
 <% end %>
 
 In both the `get` and `set` trap methods we performed a check to make sure that the `key` was `in` the receiver
-object. The `in` operator looks in the object and the prototype chain for a property with a matching key. If the
+object. The `in` operator looks in the object and its prototype chain for a property with a matching key. If the
 property is not found, then a `TypeError` is raised.
 
+## Where can I learn more?
+
+I've only scratched the surface of proxies and their many uses in ECMAScript. You can find out a lot more using
+the following resources:
+
+* [Understanding ECMAScript 6](//amzn.eu/6mexKCK){:target="_blank"} is my favourite book right now. It has a very
+thorough chapter on proxies that's worth reading.
+  * I'm making notes as I go through the book. Nicholas was kind enough to let me make these public, so you can
+  follow along [here](https://github.com/AndyStabler/ECMAScript6Notes){:target="_blank"}.
+* [The MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy){:target="_blank"}
+* [The ECMAScript specification](https://www.ecma-international.org/ecma-262/#sec-proxy-object-internal-methods-and-internal-slots){:target="_blank"}
