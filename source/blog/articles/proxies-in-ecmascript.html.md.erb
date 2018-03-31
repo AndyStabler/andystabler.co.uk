@@ -1,6 +1,6 @@
 ---
 title: Proxies in ECMAScript
-date: 2018-03-19
+date: 2018-03-31
 ---
 
 ## What are they?
@@ -61,7 +61,7 @@ Here's an example of a proxy that adds logging for getting and setting a propert
   // 'Painting'
 <% end %>
 
-We used the `get` and `set` trap methods there to intercept calls that get and set properties on the target
+We used the `get()` and `set()` trap methods there to intercept calls that get and set properties on the target
 object through the proxy. Since the proxy _virtualises_ the target object, any operation available on the target
 object can be called from the proxy.
 
@@ -108,9 +108,9 @@ Let's create a `speak()` function with the following requirements:
   speakProxy(42); // TypeError: Please use your words
 <% end %>
 
-Here we defined a `speak()` method that prints out a given message.
-Firstly, we added the `apply()` trap method to the handler object. This method is executed when we call a function
-on the proxy object.
+Here we have defined a `speak()` method that prints out a given message.
+Firstly, we added the `apply()` trap method to the handler object. This method is executed when we call any
+function on the proxy object.
 
 Next, we added two conditions– the first checks that there is exactly 1 argument passed into
 the function, the other checks that the type of the argument is a string. If we're happy that the argument
@@ -184,7 +184,7 @@ always what we want, but it's still an interesting example:
   friendProxy.patroonus = "Wolf"; // TypeError: Property not recognised.
 <% end %>
 
-In both the `get` and `set` trap methods we performed a check to make sure that the `key` was `in` the receiver
+In both the `get()` and `set()` trap methods we performed a check to make sure that the `key` was `in` the receiver
 object. The `in` operator looks in the object and its prototype chain for a property with a matching key. If the
 property is not found, then a `TypeError` is raised.
 
@@ -194,8 +194,8 @@ I've only scratched the surface of proxies and their many uses in ECMAScript. Yo
 the following resources:
 
 * [Understanding ECMAScript 6](//amzn.eu/6mexKCK){:target="_blank"} is my favourite book right now. It has a very
-thorough chapter on proxies that's worth reading.
-  * I'm making notes as I go through the book. Nicholas was kind enough to let me make these public, so you can
+thorough chapter on proxies which is  worth reading.
+  * I'm making notes as I go through the book. Nicholas kindly let me make them public, so you can
   follow along [here](https://github.com/AndyStabler/ECMAScript6Notes){:target="_blank"}.
 * [The MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy){:target="_blank"}
 * [The ECMAScript specification](https://www.ecma-international.org/ecma-262/#sec-proxy-object-internal-methods-and-internal-slots){:target="_blank"}
