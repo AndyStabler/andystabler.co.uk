@@ -1,0 +1,336 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <title>Proxies in ECMAScript - Blog - Andy Stabler</title>
+      <meta content="Proxies in ECMAScript - Blog - Andy Stabler" property="title"></meta><meta content="What are they?
+
+Proxies give us greater control over what happens when we interact with objects. They wrap a target object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create..." property="description"></meta><meta content="Proxies in ECMAScript - Blog - Andy Stabler" itemprop="name"></meta><meta content="What are they?
+
+Proxies give us greater control over what happens when we interact with objects. They wrap a target object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" itemprop="image"></meta><meta content="Proxies in ECMAScript - Blog - Andy Stabler" property="og:title"></meta><meta content="What are they?
+
+Proxies give us greater control over what happens when we interact with objects. They wrap a target object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/proxies-in-ecmascript/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Proxies in ECMAScript - Blog - Andy Stabler" name="twitter:title"></meta><meta content="What are they?
+
+Proxies give us greater control over what happens when we interact with objects. They wrap a target object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" name="twitter:image"></meta>
+
+    <link href="/assets/stylesheets/main-ec8268fd.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
+
+      <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+
+  <body class="blog blog_proxies-in-ecmascript blog_proxies-in-ecmascript_index">
+      <section class="left-column">
+    <header>
+      <div>
+<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
+</a>      </div>
+      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
+    </header>
+  </section>
+  <section class="mid-column">
+    <section class="mid-column-container">
+        <div class="blog-post-container">
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/typed-arrays/">Typed Arrays in ECMAScript</a>
+        </p>
+    </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1>Proxies in ECMAScript</h1>
+        <p class="article-published-on">31 Mar 2018</p>
+      </div>
+      <div class="blog-post-content">
+        <h2 id="what-are-they">What are they?</h2>
+
+<p>Proxies give us greater control over what happens when we interact with objects. They wrap a <code>target</code> object and
+expose some of the internal operations on it. This means we can customise what happens when we get or set a
+property, create a new instance of an object, call a function, and more (see the full list of the low-level
+operations we can intercept
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object" target="_blank">here</a>).</p>
+
+<h3 id="some-layman-definitions">Some layman definitions:</h3>
+
+<ul>
+  <li><strong>Proxy</strong>: A wrapper object that exposes internal operations of a target object</li>
+  <li><strong>Target</strong>: The object the proxy is wrapping</li>
+  <li><strong>Handler</strong>: The proxy looks in this object for any trap methods you may have provided</li>
+  <li><strong>Trap</strong>: A function added to a handler object that tells the proxy what to do when a specific method on the
+target is called</li>
+</ul>
+
+<h2 id="example">Example</h2>
+
+<p>Here's an example of a proxy that adds logging for getting and setting a property on a target object.</p>
+
+<pre><code class="js">  &#x2F;&#x2F; this is our target object
+  let friend = {
+    name: &quot;Luna Lovegood&quot;,
+    house: &quot;Ravenclaw&quot;,
+    patronus: &quot;Hare&quot;
+  };
+
+  &#x2F;&#x2F; the handler for the proxy
+  let handler = {
+    &#x2F;&#x2F; trap method
+    &#x2F;&#x2F; this method will be called when we read a property on the proxy object
+    get(trapTarget, key, receiver) {
+      console.log(`Getting property &quot;${key}&quot;`);
+      &#x2F;&#x2F; The Reflect object provides us with the default implementation
+      &#x2F;&#x2F; There&#x27;s a Reflect method for all proxy trap methods
+      return Reflect.get(trapTarget, key, receiver);
+    },
+    &#x2F;&#x2F; trap method
+    &#x2F;&#x2F; this method will be called when we set a property on the proxy object
+    set(trapTarget, key, value, receiver) {
+      console.log(`Setting property &quot;${key}&quot;`);
+      return Reflect.set(trapTarget, key, value, receiver);
+    }
+  };
+
+  &#x2F;&#x2F; creating the proxy– we pass in the friend (target) and the handler
+  let friendProxy = new Proxy(friend, handler);
+
+  friendProxy.name;
+  &#x2F;&#x2F; Getting property &quot;name&quot;
+  &#x2F;&#x2F; &#x27;Luna Lovegood&#x27;
+
+  friendProxy.hobby = &quot;Painting&quot;;
+  &#x2F;&#x2F; Setting property &quot;hobby&quot;
+  &#x2F;&#x2F; &#x27;Painting&#x27;
+</code></pre>
+<p>We used the <code>get()</code> and <code>set()</code> trap methods there to intercept calls that get and set properties on the target
+object through the proxy. Since the proxy <em>virtualises</em> the target object, any operation available on the target
+object can be called from the proxy.</p>
+
+<h2 id="using-proxies-for-validation">Using proxies for validation</h2>
+
+<p>Proxies can be used to add validation to objects. I'll cover two use cases here– checking the arguments passed
+into a function match some validation criteria, and checking for typos in property names.</p>
+
+<h3 id="parameter-validation">Parameter validation</h3>
+
+<p>Since there is an <code>apply()</code> trap method available to us, we can add validation to make sure that the
+arguments we pass into a function are what we would expect.</p>
+
+<p>Let's create a <code>speak()</code> function with the following requirements:</p>
+
+<ul>
+  <li>We don't want to say more than one thing at a time</li>
+  <li>We only want to speak in strings</li>
+</ul>
+
+<pre><code class="js">  &#x2F;&#x2F; this is our target object
+  function speak(message) {
+    console.log(`Raising your head, you declare to the room &quot;${message}&quot;`);
+  }
+
+  let speakProxy = new Proxy(speak, {
+    &#x2F;&#x2F; trap method
+    apply(trapTarget, thisArg, argumentsList) {
+      if (argumentsList.length !== 1) {
+        throw new Error(&quot;Please say one thing at a time&quot;);
+      }
+      if (typeof argumentsList[0] !== &quot;string&quot;) {
+        throw new TypeError(&quot;Please use your words&quot;);
+      }
+      &#x2F;&#x2F; call the apply method on the Reflect object to get the default
+      &#x2F;&#x2F; behaviour
+      return Reflect.apply(trapTarget, thisArg, argumentsList);
+    }
+  });
+
+  speakProxy(&quot;Wingardium Leviosa&quot;);
+  &#x2F;&#x2F; Raising your head, you declare to the room &quot;Wingardium Leviosa&quot;
+  speakProxy(&quot;Wingardium Leviosa&quot;, &quot;Accio Firebolt!&quot;);
+  &#x2F;&#x2F; Error: Please say one thing at a time
+  speakProxy(42); &#x2F;&#x2F; TypeError: Please use your words
+</code></pre>
+<p>Here we have defined a <code>speak()</code> method that prints out a given message.
+Firstly, we added the <code>apply()</code> trap method to the handler object. This method is executed when we call any
+function on the proxy object.</p>
+
+<p>Next, we added two conditions– the first checks that there is exactly 1 argument passed into
+the function, the other checks that the type of the argument is a string. If we're happy that the argument
+satisfies our validation criteria, then we call <code>Reflect.apply()</code> to execute the default implementation.</p>
+
+<h3 id="checking-for-typos-in-property-names">Checking for typos in property names</h3>
+
+<p>When a property cannot be found on an object, the default behaviour is to return <code>undefined</code>. This behaviour can
+sometimes lead to hard to track down bugs, especially in larger in projects. We can guard against this using
+proxies.</p>
+
+<pre><code class="js">  let friend = {
+    name: &quot;Luna Lovegood&quot;,
+    house: &quot;Ravenclaw&quot;,
+    patronus: &quot;Hare&quot;
+  };
+
+  friend.house; &#x2F;&#x2F; Ravenclaw
+  friend.hoose; &#x2F;&#x2F; undefined
+
+  let friendProxy = new Proxy(friend, {
+    get(trapTarget, key, receiver) {
+      if (!(key in receiver))
+        throw new TypeError(&quot;Property not recognised&quot;);
+      return Reflect.get(trapTarget, key, receiver);
+    }
+  });
+
+  friend.house; &#x2F;&#x2F; Ravenclaw
+  friend.hoose; &#x2F;&#x2F; undefined (the validation exists on the proxy, not the target)
+
+  friendProxy.house; &#x2F;&#x2F; Ravenclaw
+  friendProxy.hoose; &#x2F;&#x2F; TypeError: Property not recognised.
+</code></pre>
+<p>We can add similar validation to make sure we are only ever setting a property that already exists. This isn't
+always what we want, but it's still an interesting example:</p>
+
+<pre><code class="js">  let friend = {
+    name: &quot;Andy Stabler&quot;,
+    house: &quot;Hufflepuff&quot;,
+    patronus: undefined
+  };
+
+  friend.patronus = &quot;Salmon&quot;;
+  friend.patroonus = &quot;Stag&quot;;
+  friend;
+  &#x2F;&#x2F; { name: &#x27;Andy Stabler&#x27;,
+  &#x2F;&#x2F;  house: &#x27;Hufflepuff&#x27;,
+  &#x2F;&#x2F;  patronus: &#x27;Salmon&#x27;,
+  &#x2F;&#x2F;  patroonus: &#x27;Stag&#x27; }
+  &#x2F;&#x2F; Whoopsy! We accidentally set a patroonus property!
+
+  let friendProxy = new Proxy(friend, {
+    get(trapTarget, key, receiver) {
+      if (!(key in receiver))
+        throw new TypeError(&quot;Property not recognised.&quot;);
+      return Reflect.get(trapTarget, key, receiver);
+    },
+    set(trapTarget, key, value, receiver) {
+      if (!(key in receiver))
+        throw new TypeError(&quot;Property not recognised.&quot;);
+      return Reflect.set(trapTarget, key, value, receiver);
+    }
+  });
+
+  delete friend.patroonus;
+  friendProxy.patronus = &quot;Stag&quot;;
+  friendProxy.patroonus = &quot;Wolf&quot;; &#x2F;&#x2F; TypeError: Property not recognised.
+</code></pre>
+<p>In both the <code>get()</code> and <code>set()</code> trap methods we performed a check to make sure that the <code>key</code> was <code>in</code> the receiver
+object. The <code>in</code> operator looks in the object and its prototype chain for a property with a matching key. If the
+property is not found, then a <code>TypeError</code> is raised.</p>
+
+<h2 id="where-can-i-learn-more">Where can I learn more?</h2>
+
+<p>I've only scratched the surface of proxies and their many uses in ECMAScript. You can find out a lot more using
+the following resources:</p>
+
+<ul>
+  <li><a href="//amzn.eu/6mexKCK" target="_blank">Understanding ECMAScript 6</a> is my favourite book right now. It has a very
+thorough chapter on proxies which is  worth reading.
+    <ul>
+      <li>I'm making notes as I go through the book. Nicholas kindly let me make them public, so you can
+follow along <a href="https://github.com/AndyStabler/ECMAScript6Notes" target="_blank">here</a>.</li>
+    </ul>
+  </li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" target="_blank">The MDN web docs</a></li>
+  <li><a href="https://www.ecma-international.org/ecma-262/#sec-proxy-object-internal-methods-and-internal-slots" target="_blank">The ECMAScript specification</a></li>
+</ul>
+
+      </div>
+    </section>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- andystabler -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6786957205988281"
+     data-ad-slot="7961587765"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/proxies-in-ecmascript/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </div>
+
+    </section>
+  </section>
+
+    <script src="/assets/javascripts/all-da39a3ee.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+
+  </body>
+</html>
