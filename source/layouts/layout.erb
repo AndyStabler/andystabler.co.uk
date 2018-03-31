@@ -10,7 +10,7 @@
     <%= stylesheet_link_tag :main unless current_page.data.ignore_main_styles %>
     <%= yield_content :css %>
     <%= yield_content :js %>
-    <%= partial "layouts/analytics" %>
+    <%= partial "layouts/analytics" if production? %>
   </head>
 
   <body class="<%= page_classes %>">
