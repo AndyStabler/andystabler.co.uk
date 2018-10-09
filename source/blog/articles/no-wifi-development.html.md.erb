@@ -25,33 +25,32 @@ tests whenever a file is modified), but here's the thing—Guard is usually set 
 not I'd just Google how to configure it. So what do? I wrote the following down on the back of a boomerang pillow
 receipt:
 
-> Things I don't know
+> <p>Things I don't know:</p>
 > 1. Guard
 
 I then had to figure out a way to get the tests to run periodically. As a temporary hack something like this
 seemed reasonable:
 
-```rb
+<% code_tag "shell" do %>
 while true
   run tests
   sleep 5 seconds
 end
-```
-
+<% end %>
 I thought something like that could be quite easily written in bash, so I focused my attention on the terminal and
 to my surprise my hands didn't start typing—I couldn't remember the syntax for a while loop in bash. Well, no
 matter, I thought to myself, I'll just add it to my list:
 
-> Things I don't know
+> <p>Things I don't know:</p>
 > 1. Guard
 > 2. While loop syntax in bash
 
 This is when I started to feel excited, maybe even a bit creative. I could remember how to repeat a command
 multiple times using `repeat`, so I ended up using the following to get my tests to run periodically:
 
-```sh
+<% code_tag "shell" do %>
 repeat 3000 rspec && sleep 5;
-```
+<% end %>
 
 This runs the tests, takes a 5 second nap, then does it all again, 3000 times in total. It's not ideal, but it did
 the job and it meant I identified 2 things I didn't know. That's a win (I think).
@@ -66,7 +65,7 @@ I couldn't remember what the OAuth 2 spec says about registerting applications�
 a software statement and getting back some client credentials. It was the least known requirement for me, so I
 just added it to my growing list of Things Andy Doesn't Know.
 
-> Things I don't know
+> <p>Things I don't know:</p>
 > 1. Guard
 > 2. While loop syntax in bash
 > 3. OAuth 2 – client registration
@@ -76,7 +75,7 @@ be used by a client's user to authorise with my application. I got a bit stumped
 there a secure way of achieving this? Is there an unsecure way of doing this? I settled on using
 `SecureRandom.uuid`, but I added an extra item to my list anyway so I could read up on it later.
 
-> Things I don't know
+> <p>Things I don't know:</p>
 > 1. Guard
 > 2. While loop syntax in bash
 > 3. OAuth 2 – client registration
@@ -91,7 +90,7 @@ seemed to do the trick, but I wasn't confident this is what is usually done.
 
 After wiping the crumbs and spilled tea off the back of my, somewhat crumpled, receipt I updated it once more:
 
-> Things I don't know
+> <p>Things I don't know:</p>
 > 1. Guard
 > 2. While loop syntax in bash
 > 3. OAuth 2 – client registration
