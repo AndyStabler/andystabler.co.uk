@@ -1,0 +1,256 @@
+<!doctype html>
+<html>
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <title>Offline Development - Blog - Andy Stabler</title>
+      <meta content="Offline Development - Blog - Andy Stabler" property="title"></meta><meta content="I was recently on a long haul flight from Manchester to San Francisco with no Wi-Fi. As you can imagine,
+between regular snacks and naps, being off the grid for so long was quite the struggle. A few hours into the
+flight, I decided to pop out my laptop..." property="description"></meta><meta content="Offline Development - Blog - Andy Stabler" itemprop="name"></meta><meta content="I was recently on a long haul flight from Manchester to San Francisco with no Wi-Fi. As you can imagine,
+between regular snacks and naps, being off the grid for so long was quite the struggle. A few hours into the
+flight, I decided to pop out my laptop..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" itemprop="image"></meta><meta content="Offline Development - Blog - Andy Stabler" property="og:title"></meta><meta content="I was recently on a long haul flight from Manchester to San Francisco with no Wi-Fi. As you can imagine,
+between regular snacks and naps, being off the grid for so long was quite the struggle. A few hours into the
+flight, I decided to pop out my laptop..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/no-wifi-development/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Offline Development - Blog - Andy Stabler" name="twitter:title"></meta><meta content="I was recently on a long haul flight from Manchester to San Francisco with no Wi-Fi. As you can imagine,
+between regular snacks and naps, being off the grid for so long was quite the struggle. A few hours into the
+flight, I decided to pop out my laptop..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" name="twitter:image"></meta>
+
+    <link href="/assets/stylesheets/main-c40f261e.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
+
+      <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+
+  <body class="blog blog_no-wifi-development blog_no-wifi-development_index">
+      <section class="left-column">
+    <header>
+      <div>
+<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
+</a>      </div>
+      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
+      <nav id="main-nav">
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/">Blog</a></li>
+        </ul>
+      </nav>
+      <nav id="sub-nav">
+        <ul>
+          <li>
+            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
+          </li>
+          <li>
+            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
+          </li>
+          <li>
+            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
+            target="_blank"><i class="fa fa-envelope-o"></i></a>
+          </li>
+        </ul>
+      </nav>
+      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
+    </header>
+  </section>
+  <section class="mid-column">
+    <section class="mid-column-container">
+        <div class="blog-post-container">
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/proxies-in-ecmascript/">Proxies in ECMAScript</a>
+        </p>
+    </section>
+    <section class="blog-post">
+      <div class="blog-post-header">
+        <h1>Offline Development</h1>
+        <p class="article-published-on">28 Sep 2018</p>
+      </div>
+      <div class="blog-post-content">
+        <p>I was recently on a long haul flight from Manchester to San Francisco with <em>no Wi-Fi</em>. As you can imagine,
+between regular snacks and naps, being off the grid for so long was quite the struggle. A few hours into the
+flight, I decided to pop out my laptop anyway and do some development—what happened next was a bit magical for me.</p>
+
+<p>Without the helping hand of The Google or colleagues to pester with my questions I had to (wait for it) think for
+myself. It sounds a little bit ridiculous, but having to only use what little I keep in my head is something I
+haven't done in a very long time—and rightly so really, almost everything I need to know in my day–to–day life can be
+acquired with a few tap–a–tap–taps on my phone. I decided to just have some fun with it and see how far I'd get.
+Between you and I, it took me about 2 minutes before I realised just how little I knew (the time it took to get my
+laptop out of overhead storage, log in, sip tea, and open up a terminal).</p>
+
+<p>Here's what I was working on.</p>
+
+<p>I've recently been doing some API work and wanted to see how much of the OAuth 2 protocol I could remember. I wanted
+to make a simple Ruby program where I had models for an authorisation server and a resource server. I could then
+make a call to get an authorisation grant, swap it for a token, and then use that token to access a resource.</p>
+
+<p>The first thing I wanted to do was have my tests run frequently. Usually, I'd use Guard for this (Guard runs the
+tests whenever a file is modified), but here's the thing—Guard is usually set up on projects I work on, and if it's
+not I'd just Google how to configure it. So what do? I wrote the following down on the back of a boomerang pillow
+receipt:</p>
+
+<blockquote>
+  <p>Things I don't know:</p>
+  <ol>
+    <li>Guard</li>
+  </ol>
+</blockquote>
+
+<p>I then had to figure out a way to get the tests to run periodically. As a temporary hack something like this
+seemed reasonable:</p>
+
+<pre><code class="shell">while true
+  run tests
+  sleep 5 seconds
+end
+</code></pre>
+<p>I thought something like that could be quite easily written in bash, so I focused my attention on the terminal and
+to my surprise, my hands didn't start typing—I couldn't remember the syntax for a while loop in bash. Well, no
+matter, I thought to myself, I'll just add it to my list:</p>
+
+<blockquote>
+  <p>Things I don't know:</p>
+  <ol>
+    <li>Guard</li>
+    <li>While loop syntax in bash</li>
+  </ol>
+</blockquote>
+
+<p>This is when I started to feel excited, maybe even a bit creative. I could remember how to repeat a command
+multiple times using <code>repeat</code>, so I ended up using the following to get my tests to run periodically:</p>
+
+<pre><code class="shell">repeat 3000 rspec &amp;&amp; sleep 5;
+</code></pre>
+<p>This runs the tests, takes a 5—second nap, then does it all again, 3000 times in total. It's not ideal, but it did
+the job and it meant I identified 2 things I didn't know. That's a win (I think).</p>
+
+<p>Next, I started thinking about what I wanted my project to achieve. Here is my list of requirements:</p>
+
+<ol>
+  <li>Developers can register their application with my program</li>
+  <li>Users can go through an authorisation process with my program</li>
+  <li>A client program can access some resource if the user has completed authorisation</li>
+</ol>
+
+<p>I couldn't remember what the OAuth 2 spec says about registering applications—something about the client sending
+a software statement and getting back some client credentials. It was the least known requirement for me, so I
+just added it to my growing list of Things Andy Doesn't Know.</p>
+
+<blockquote>
+  <p>Things I don't know:</p>
+  <ol>
+    <li>Guard</li>
+    <li>While loop syntax in bash</li>
+    <li>OAuth 2—client registration</li>
+  </ol>
+</blockquote>
+
+<p>At this point, I began putting together an authorisation server. This would be a Plain Old Ruby Object that could
+be used to authorise a client's application with mine. I got a bit stumped around generating tokens—is
+there a secure way of achieving this? Is there an insecure way of doing this? I settled on using
+<code>SecureRandom.uuid</code>, but I added an extra item to my list anyway so I could read up on it later.</p>
+
+<blockquote>
+  <p>Things I don't know:</p>
+  <ol>
+    <li>Guard</li>
+    <li>While loop syntax in bash</li>
+    <li>OAuth 2—client registration</li>
+    <li>How should I be generating tokens? Is SecureRandom.uuid the right thing to use?</li>
+  </ol>
+</blockquote>
+
+<p>Once I had a very basic authorisation server implemented I moved on to the resource server. The resource server
+takes an access token (provided by an authorisation server) and returns some resource in exchange. My resource
+server needed to talk to the authorisation server to verify access tokens. This meant I needed to remember how to
+include one file in another in Ruby. In Rails, you rarely need to think about this kind of thing due to the fancy
+autoloading of classes, so this had me stumped for a while. After some hacking, I found that <code>require_relative</code>
+seemed to do the trick, but I wasn't confident this is what is usually done.</p>
+
+<p>After wiping the crumbs and spilled tea off the back of my, somewhat crumpled, receipt I updated it once more:</p>
+
+<blockquote>
+  <p>Things I don't know:</p>
+  <ol>
+    <li>Guard</li>
+    <li>While loop syntax in bash</li>
+    <li>OAuth 2—client registration</li>
+    <li>How should I be generating tokens? Is SecureRandom.uuid the right thing to use?</li>
+    <li>Including files in Ruby land</li>
+    <li>How does Rails autoloading work?</li>
+  </ol>
+</blockquote>
+
+<p>I continued with the resource server and ended up with a (frankly janky) implementation of OAuth 2, but my tests
+were passing and I'd discovered 6 things I didn't know that, previously, I would have assured you I was au fait with.
+It was a strangely exciting experience for me (lack of sleep may have played a part).</p>
+
+<p>Have you tried anything like this before? If so, what was your experience? I may try and integrate something similar
+into my work–life by restricting certain pots of knowledge (solving problems by only speaking to people, or the
+opposite—figuring things out with just Google).</p>
+
+<p>If you're interested you can find my original OAuth 2 toy project <a href="https://github.com/AndyStabler/oauth-playground" target="_blank">here</a>.</p>
+
+<p>Thanks for reading!</p>
+
+      </div>
+    </section>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- andystabler -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-6786957205988281"
+     data-ad-slot="7961587765"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/no-wifi-development/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </div>
+
+    </section>
+  </section>
+
+    <script src="/assets/javascripts/all-da39a3ee.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
+
+  </body>
+</html>
