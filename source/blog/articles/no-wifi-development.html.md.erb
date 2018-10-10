@@ -61,7 +61,7 @@ Next I started thinking about what I wanted my project to achieve. Here is my li
 2. Users can authenticate with my program
 3. Users can access some resource if they have authenticated
 
-I couldn't remember what the OAuth 2 spec says about registerting applications—something about the client sending
+I couldn't remember what the OAuth 2 spec says about registering applications—something about the client sending
 a software statement and getting back some client credentials. It was the least known requirement for me, so I
 just added it to my growing list of Things Andy Doesn't Know.
 
@@ -71,7 +71,7 @@ just added it to my growing list of Things Andy Doesn't Know.
 > 3. OAuth 2 – client registration
 
 At this point I began putting together an authorisation server. This would be a Plain Old Ruby Object that could
-be used by a client's user to authorise with my application. I got a bit stumped around generating tokens—is
+be used to authorise a user with my application. I got a bit stumped around generating tokens—is
 there a secure way of achieving this? Is there an unsecure way of doing this? I settled on using
 `SecureRandom.uuid`, but I added an extra item to my list anyway so I could read up on it later.
 
@@ -98,7 +98,7 @@ After wiping the crumbs and spilled tea off the back of my, somewhat crumpled, r
 > 5. Including files in Ruby land
 > 6. How does Rails autoloading work?
 
-I continued with the resource server and ended up with a (frankly janky) implementation of OAuth 2, but my test
+I continued with the resource server and ended up with a (frankly janky) implementation of OAuth 2, but my tests
 were passing and I'd discovered 6 things I didn't know that, previously, I would have assured you I was au fait with.
 It was a strangely exciting experience for me (lack of sleep may have played a part).
 
@@ -106,6 +106,6 @@ Have you tried anything like this before? If so, what was your experience? I may
 into my work–life by restricting certain pots of knowledge (solving problems by only speaking to people, or the
 opposite—figuring things out with just Google).
 
-If you're interested you can find my original OAuth 2 toy project [here](https://github.com/AndyStabler/oauth-playground).
+If you're interested you can find my original OAuth 2 toy project [here](https://github.com/AndyStabler/oauth-playground){:target="_blank"}.
 
 Thanks for reading!
