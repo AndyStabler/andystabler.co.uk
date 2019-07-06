@@ -186,7 +186,7 @@ would mean having a Cake base class and several subclasses that encapsulated the
 logic. They could be called something like <span class="code">GasOvenCake</span> and
 <span class="code">ElectricOvenCake</span>. It reads a bit weird though and that's because it <em>is</em> a bit weird.
 </p>
-<img src="/images/strategy-design-pattern/cake-inheritance.svg" alt="Cake inheritance class diagram" class="blog-post-image" />
+<img src="/images/strategy-design-pattern/cake-inheritance-5fc6621d.svg" alt="Cake inheritance class diagram" class="blog-post-image" />
 <p>We've shoved the <em>IS-A</em> relationship where it doesn't really belong. Still, we're heading
 in the right direction, we've extracted out the oven implementations into separate classes. To add a new
 oven all we need to do is subclass Cake. This is nice because we don't need to touch any of
@@ -196,7 +196,7 @@ the other oven implementations.</p>
 <p>Also, what happens when we introduce a new type of cake? Say we want to make a fruit cake, this
 would subclass the Cake class (it <em>is-a</em> cake), but it should also be possible to bake it in
 any type of oven. Things get tricky at this point. What would the class diagram look like?</p>
-<img src="/images/strategy-design-pattern/fruit-cake-inheritance.svg" alt="Fruit cake inheritance class diagram" class="blog-post-image" />
+<img src="/images/strategy-design-pattern/fruit-cake-inheritance-5edf4fb7.svg" alt="Fruit cake inheritance class diagram" class="blog-post-image" />
 <p>It doesn't look like inheritance is the right thing to do here. Let's take a look
   at another approach.</p>
 
@@ -206,7 +206,7 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 </p>
 <p>Instead of having the cake subclasses implement the oven logic, let's extract it into its own class and use composition to store an Oven reference inside Cake. Here we have a Cake context class, and several
   strategies that the context can use to get the job done:</p>
-  <img src="/images/strategy-design-pattern/fruit-cake-composition.svg" class="blog-post-image" alt="Cake composition class diagram" />
+  <img src="/images/strategy-design-pattern/fruit-cake-composition-16e16a25.svg" class="blog-post-image" alt="Cake composition class diagram" />
 <p>At this point our oven and cake have a much looser coupling. We're free to add new cakes
   without touching any oven code, and we're free to add new ovens without touching cake code.
   The cost of change in our codebase has just had a massive reduction. We can be fairly confident that if we break a cake we aren't breaking an oven while we're on. From a psychological point of view this
