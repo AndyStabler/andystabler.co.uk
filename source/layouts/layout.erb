@@ -13,10 +13,8 @@
     <%= stylesheet_link_tag "site" %>
     <%= yield_content :css %>
     <%= javascript_include_tag "site" %>
-    <%= yield_content :js %>
-    <script type="text/javascript"
-   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
+    <%= yield_content :js %>
     <%= partial "partials/analytics" if production? %>
   </head>
   <body>
@@ -26,6 +24,8 @@
       <%= yield_content :footer_js %>
       <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
       <script>hljs.initHighlightingOnLoad();</script>
+      <script type="text/javascript"
+     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </section>
   </body>
 </html>
