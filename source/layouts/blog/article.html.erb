@@ -1,45 +1,29 @@
 <% content_for :custom_social do %>
   <%= social_meta_tags :description => strip_tags(current_article.summary) %>
 <% end %>
-<% content_for :css do %>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
-<% end %>
-<% content_for :js do %>
-  <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<% end %>
-<% content_for :footer_js do %>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
-<% end %>
-<% wrap_layout :main do %>
-  <div class="blog-post-container">
+<% wrap_layout :layout do %>
+  <section class="blog-post">
+    <section class="blog-post-header">
+      <h1><%= current_article.title %></h1>
+      <p class="article-published-on"><%= current_article.date.strftime("%d %b %Y") %></p>
+    </section>
+    <section class="blog-post-content">
+      <%= yield %>
+    </section>
     <section class="blog-post-navigation">
-      <% if current_article.previous_article %>
+      <% if current_article.article_previous %>
         <p class="prev-post">
-          Previous post: <%= link_to current_article.previous_article.title, current_article.previous_article.url %>
+          Previous post: <%= link_to current_article.article_previous.title, current_article.article_previous.url %>
         </p>
       <% end %>
-      <% if current_article.next_article %>
+      <% if current_article.article_next %>
         <p class="next-post">
-          Next post: <%= link_to current_article.next_article.title, current_article.next_article.url %>
+          Next post: <%= link_to current_article.article_next.title, current_article.article_next.url %>
         </p>
       <% end %>
     </section>
-    <section class="blog-post">
-      <div class="blog-post-header">
-        <h1><%= current_article.title %></h1>
-        <p class="article-published-on"><%= current_article.date.strftime("%d %b %Y") %></p>
-      </div>
-      <div class="blog-post-content">
-        <%= yield %>
-      </div>
-    </section>
-    <%= partial "layouts/ads" %>
     <section class="comments">
-      <%= partial "layouts/blog/disqus" %>
+      <%= partial "partials/blog/disqus" %>
     </section>
-  </div>
+  </section>
 <% end %>

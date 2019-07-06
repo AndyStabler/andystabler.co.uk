@@ -1,5 +1,4 @@
 module PageHelpers
-
   # "A blog post - Blog - Andy Stabler"
   def title_content
     [current_page.data.title, section, "Andy Stabler"].flatten.compact.join(" - ")

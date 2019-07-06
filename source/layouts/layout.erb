@@ -1,21 +1,31 @@
 <!doctype html>
 <html>
   <head>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <%= (yield_content :title) || title_tag %>
     <%= (yield_content :custom_social) || social_meta_tags %>
-    <%= stylesheet_link_tag :main unless current_page.data.ignore_main_styles %>
-    <%= yield_content :css %>
-    <%= yield_content :js %>
-    <%= partial "layouts/analytics" if production? %>
-  </head>
 
-  <body class="<%= page_classes %>">
-    <%= yield %>
-    <%= javascript_include_tag :all %>
-    <%= yield_content :footer_js %>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <%= stylesheet_link_tag "site" %>
+    <%= yield_content :css %>
+    <%= javascript_include_tag "site" %>
+    <%= yield_content :js %>
+    <script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
+    <%= partial "partials/analytics" if production? %>
+  </head>
+  <body>
+    <%= partial "partials/header" %>
+    <section class="content">
+      <%= yield %>
+      <%= yield_content :footer_js %>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+    </section>
   </body>
 </html>

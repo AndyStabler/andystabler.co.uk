@@ -1,5 +1,36 @@
 ---
-layout: main
+title: "Andy Stabler"
 ---
-<h1>Hello</h1>
-<p>I'm a software engineer living in Edinburgh. I like animals, cake, and the countryside.</p>
+<section class="bio"%>
+  <%= image_tag "me.png", class: "bio-pic bio-pic--large", width: "300", height: "300" %>
+  <section class="bio-text">
+    <p>
+      Hello, I'm Andy Stabler and I'm a Ruby Engineer living in Edinburgh, Scotland.
+    </p>
+    <p>
+      I currently work at <%= link_to "FreeAgent", "https://freeagent.com", target: "_blank" %>.
+    </p>
+    <p>
+      I like animals, cake, and the countryside :)
+    </p>
+    <nav class="social-links">
+      <ul>
+        <li>
+          <% link_to "https://github.com/AndyStabler", class: "github" do %>
+            <i class="fab fa-github"></i>
+          <% end %>
+        </li>
+        <li>
+          <% link_to "https://twitter.com/andy_stabler", class: "twitter" do %>
+            <i class="fab fa-twitter"></i>
+          <% end %>
+        </li>
+        <li>
+          <% link_to "mailto:sdolta@gmail.com?Subject=Hey!", class: "email", target: "_blank" do %>
+            <i class="far fa-envelope"></i>
+          <% end %>
+        </li>
+      </ul>
+    </nav>
+  </section>
+</section>
