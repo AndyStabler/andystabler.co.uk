@@ -1,28 +1,31 @@
 <!doctype html>
 <html>
   <head>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler</title>
       <meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" property="title"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
 
 Caesar's cipher shifts every character..." property="description"></meta><meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" itemprop="name"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
 
-Caesar's cipher shifts every character..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" itemprop="image"></meta><meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" property="og:title"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
+Caesar's cipher shifts every character..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" itemprop="image"></meta><meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" property="og:title"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
 
-Caesar's cipher shifts every character..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/cryptanalysis-vigenere-cipher/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" name="twitter:title"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
+Caesar's cipher shifts every character..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/cryptanalysis-vigenere-cipher/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Cryptanalysis - Vigenère Cipher - Blog - Andy Stabler" name="twitter:title"></meta><meta content="In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the previous post, with the additional twist that it uses multiple shift values instead of one. 
 
-Caesar's cipher shifts every character..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/assets/images/me-illustration-3b460f0d.png" name="twitter:image"></meta>
+Caesar's cipher shifts every character..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" name="twitter:image"></meta>
 
-    <link href="/assets/stylesheets/main-c40f261e.css" rel="stylesheet" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
 
-      <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-b7a1ac77.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    
+    <script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
     <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -35,55 +38,23 @@ Caesar's cipher shifts every character..." name="twitter:description"></meta><me
 </script>
 
   </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/me-illustration-3b460f0d.png" width="50px" height="50px" class="bio-pic--small" alt="Me illustration" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
 
-  <body class="blog blog_cryptanalysis-vigenere-cipher blog_cryptanalysis-vigenere-cipher_index">
-      <section class="left-column">
-    <header>
-      <div>
-<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
-</a>      </div>
-      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
-      <nav id="main-nav">
-        <ul>
-          <li><a href="/about">About</a></li>
-          <li><a href="/">Blog</a></li>
-        </ul>
-      </nav>
-      <nav id="sub-nav">
-        <ul>
-          <li>
-            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
-          </li>
-          <li>
-            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
-          </li>
-          <li>
-            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
-            target="_blank"><i class="fa fa-envelope-o"></i></a>
-          </li>
-        </ul>
-      </nav>
-      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
-    </header>
-  </section>
-  <section class="mid-column">
-    <section class="mid-column-container">
-        <div class="blog-post-container">
-    <section class="blog-post-navigation">
-        <p class="prev-post">
-          Previous post: <a href="/blog/cryptanalysis-caesar-cipher/">Cryptanalysis - Caesar Cipher</a>
-        </p>
-        <p class="next-post">
-          Next post: <a href="/blog/json-rabbit-hole/">A JSON rabbit hole</a>
-        </p>
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>Cryptanalysis - Vigenère Cipher</h1>
+      <p class="article-published-on">04 May 2015</p>
     </section>
-    <section class="blog-post">
-      <div class="blog-post-header">
-        <h1>Cryptanalysis - Vigenère Cipher</h1>
-        <p class="article-published-on">04 May 2015</p>
-      </div>
-      <div class="blog-post-content">
-        <p>In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the <a href="/blog/cryptanalysis-caesar-cipher">previous post</a>, with the additional twist that it uses multiple shift values instead of one. </p>
+    <section class="blog-post-content">
+      <p>In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the <a href="/blog/cryptanalysis-caesar-cipher">previous post</a>, with the additional twist that it uses multiple shift values instead of one. </p>
 
 <p>Caesar's cipher shifts every character in the plaintext by a single shift value, resulting in ciphertext with a non-uniform distribution of characters. This means we can look at the frequencies of characters in the ciphertext and easily work out the shift value. The Vigenère cipher, however, uses several different shift values, which means the ciphertext has a much more uniform distribution of characters, making it harder to decrypt using the same frequency analysis method.<p>
 
@@ -359,19 +330,15 @@ Sweet, an excerpt from The Hitchhiker's Guide to the Galaxy!
 <p>The index of coincidence attack becomes much more effective when the ciphertext is a large string because we can then get an accurate indication of whether each Caesar cipher's ciphertext has an Ic close to the Ic for English text. When the ciphertext is a short string we cannot accurately determine this, and therefore we cannot automatically determine the Vigenère cipher key. In this case it would be a good idea to alter the algorithm to return the 3-5 most likely key lengths.</p>
 <p>I've implemented the Vigenère cipher encryption/decryption and attacks in Java- you can grab the code <a href="https://github.com/AndyStabler/Crypto">here</a>.</p>
 
-      </div>
     </section>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- andystabler -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6786957205988281"
-     data-ad-slot="7961587765"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/cryptanalysis-caesar-cipher/">Cryptanalysis - Caesar Cipher</a>
+        </p>
+        <p class="next-post">
+          Next post: <a href="/blog/json-rabbit-hole/">A JSON rabbit hole</a>
+        </p>
+    </section>
     <section class="comments">
       <div id="disqus_thread"></div>
 <script>
@@ -395,15 +362,11 @@ Sweet, an excerpt from The Hitchhiker's Guide to the Galaxy!
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
     </section>
-  </div>
-
-    </section>
   </section>
 
-    <script src="/assets/javascripts/all-da39a3ee.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
-
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+    </section>
   </body>
 </html>

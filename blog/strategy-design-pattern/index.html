@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Strategising your way to clean code - Blog - Andy Stabler</title>
       <meta content="Strategising your way to clean code - Blog - Andy Stabler" property="title"></meta><meta content="
@@ -24,13 +25,15 @@
   of changing either the algorithm or the code that uses it is nice and low
   because..." name="twitter:description"></meta><meta content="http://i.giphy.com/65os7odbIW6pa.gif" name="twitter:image"></meta>
 
-    <link href="/assets/stylesheets/main-c40f261e.css" rel="stylesheet" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
 
-      <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-b7a1ac77.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    
+    <script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
     <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -43,55 +46,23 @@
 </script>
 
   </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/me-illustration-3b460f0d.png" width="50px" height="50px" class="bio-pic--small" alt="Me illustration" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
 
-  <body class="blog blog_strategy-design-pattern blog_strategy-design-pattern_index">
-      <section class="left-column">
-    <header>
-      <div>
-<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
-</a>      </div>
-      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
-      <nav id="main-nav">
-        <ul>
-          <li><a href="/about">About</a></li>
-          <li><a href="/">Blog</a></li>
-        </ul>
-      </nav>
-      <nav id="sub-nav">
-        <ul>
-          <li>
-            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
-          </li>
-          <li>
-            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
-          </li>
-          <li>
-            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
-            target="_blank"><i class="fa fa-envelope-o"></i></a>
-          </li>
-        </ul>
-      </nav>
-      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
-    </header>
-  </section>
-  <section class="mid-column">
-    <section class="mid-column-container">
-        <div class="blog-post-container">
-    <section class="blog-post-navigation">
-        <p class="prev-post">
-          Previous post: <a href="/blog/json-rabbit-hole/">A JSON rabbit hole</a>
-        </p>
-        <p class="next-post">
-          Next post: <a href="/blog/tdd/">Test Driven Development</a>
-        </p>
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>Strategising your way to clean code</h1>
+      <p class="article-published-on">22 Sep 2016</p>
     </section>
-    <section class="blog-post">
-      <div class="blog-post-header">
-        <h1>Strategising your way to clean code</h1>
-        <p class="article-published-on">22 Sep 2016</p>
-      </div>
-      <div class="blog-post-content">
-        <p>
+    <section class="blog-post-content">
+      <p>
   The Strategy design pattern is <em>neat</em>. It decouples algorithm implementations
   (the how) from the objects that use them (the what). This separation means the cost
   of changing either the algorithm or the code that uses it is nice and low
@@ -215,7 +186,7 @@ would mean having a Cake base class and several subclasses that encapsulated the
 logic. They could be called something like <span class="code">GasOvenCake</span> and
 <span class="code">ElectricOvenCake</span>. It reads a bit weird though and that's because it <em>is</em> a bit weird.
 </p>
-<img src="/assets/images/strategy-design-pattern/cake-inheritance-5fc6621d.svg" alt="Cake inheritance class diagram" class="blog-post-image" />
+<img src="/images/strategy-design-pattern/cake-inheritance.svg" alt="Cake inheritance class diagram" class="blog-post-image" />
 <p>We've shoved the <em>IS-A</em> relationship where it doesn't really belong. Still, we're heading
 in the right direction, we've extracted out the oven implementations into separate classes. To add a new
 oven all we need to do is subclass Cake. This is nice because we don't need to touch any of
@@ -225,7 +196,7 @@ the other oven implementations.</p>
 <p>Also, what happens when we introduce a new type of cake? Say we want to make a fruit cake, this
 would subclass the Cake class (it <em>is-a</em> cake), but it should also be possible to bake it in
 any type of oven. Things get tricky at this point. What would the class diagram look like?</p>
-<img src="/assets/images/strategy-design-pattern/fruit-cake-inheritance-5edf4fb7.svg" alt="Fruit cake inheritance class diagram" class="blog-post-image" />
+<img src="/images/strategy-design-pattern/fruit-cake-inheritance.svg" alt="Fruit cake inheritance class diagram" class="blog-post-image" />
 <p>It doesn't look like inheritance is the right thing to do here. Let's take a look
   at another approach.</p>
 
@@ -235,7 +206,7 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 </p>
 <p>Instead of having the cake subclasses implement the oven logic, let's extract it into its own class and use composition to store an Oven reference inside Cake. Here we have a Cake context class, and several
   strategies that the context can use to get the job done:</p>
-  <img src="/assets/images/strategy-design-pattern/fruit-cake-composition-16e16a25.svg" class="blog-post-image" alt="Cake composition class diagram" />
+  <img src="/images/strategy-design-pattern/fruit-cake-composition.svg" class="blog-post-image" alt="Cake composition class diagram" />
 <p>At this point our oven and cake have a much looser coupling. We're free to add new cakes
   without touching any oven code, and we're free to add new ovens without touching cake code.
   The cost of change in our codebase has just had a massive reduction. We can be fairly confident that if we break a cake we aren't breaking an oven while we're on. From a psychological point of view this
@@ -270,19 +241,15 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 
 <img src="http://i.giphy.com/65os7odbIW6pa.gif" class="blog-post-image" alt="65os7odbiw6pa" />
 
-      </div>
     </section>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- andystabler -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6786957205988281"
-     data-ad-slot="7961587765"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/json-rabbit-hole/">A JSON rabbit hole</a>
+        </p>
+        <p class="next-post">
+          Next post: <a href="/blog/tdd/">Test Driven Development</a>
+        </p>
+    </section>
     <section class="comments">
       <div id="disqus_thread"></div>
 <script>
@@ -306,15 +273,11 @@ any type of oven. Things get tricky at this point. What would the class diagram 
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
     </section>
-  </div>
-
-    </section>
   </section>
 
-    <script src="/assets/javascripts/all-da39a3ee.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
-
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+    </section>
   </body>
 </html>

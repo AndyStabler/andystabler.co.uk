@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
   <head>
-    <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
-    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Test Driven Development - Blog - Andy Stabler</title>
       <meta content="Test Driven Development - Blog - Andy Stabler" property="title"></meta><meta content="Welcome to Container Industries Ltd. As the new engineer here you've been assigned the job of developing the company's container functionality.
@@ -32,13 +33,15 @@ The following requirements have made there way over to your desk:
   Items can be added to a container
 " name="twitter:description"></meta><meta content="http://andystabler.co.uk/assets/images/tdd/tupperware-885f2d36.jpg" name="twitter:image"></meta>
 
-    <link href="/assets/stylesheets/main-c40f261e.css" rel="stylesheet" />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/rainbow.min.css">
 
-      <script type="text/javascript" async
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-b7a1ac77.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    
+    <script type="text/javascript"
+   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
     <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -51,55 +54,23 @@ The following requirements have made there way over to your desk:
 </script>
 
   </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/me-illustration-3b460f0d.png" width="50px" height="50px" class="bio-pic--small" alt="Me illustration" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
 
-  <body class="blog blog_tdd blog_tdd_index">
-      <section class="left-column">
-    <header>
-      <div>
-<a href="/">          <img src="/assets/images/me-simonside-ridge-55dea1f6.jpg" width="128" height="128" class="profile-pic" alt="Me simonside ridge" />
-</a>      </div>
-      <h1 id="site-title"><a href="/">Andy Stabler</a></h1>
-      <nav id="main-nav">
-        <ul>
-          <li><a href="/about">About</a></li>
-          <li><a href="/">Blog</a></li>
-        </ul>
-      </nav>
-      <nav id="sub-nav">
-        <ul>
-          <li>
-            <a class="github" href="//github.com/AndyStabler"><i class="fa fa-github"></i></a>
-          </li>
-          <li>
-            <a class="twitter" href="//twitter.com/andy_stabler"><i class="fa fa-twitter"></i></a>
-          </li>
-          <li>
-            <a class="email" href="mailto:sdolta@gmail.com?Subject=Website%20Feedback"
-            target="_blank"><i class="fa fa-envelope-o"></i></a>
-          </li>
-        </ul>
-      </nav>
-      <p id="acknowledgements">Powered by <a href="https://middlemanapp.com/">Middleman</a> and hosted by <a href="https://github.com/AndyStabler/andystabler.co.uk">GitHub</a></p>
-    </header>
-  </section>
-  <section class="mid-column">
-    <section class="mid-column-container">
-        <div class="blog-post-container">
-    <section class="blog-post-navigation">
-        <p class="prev-post">
-          Previous post: <a href="/blog/strategy-design-pattern/">Strategising your way to clean code</a>
-        </p>
-        <p class="next-post">
-          Next post: <a href="/blog/typed-arrays/">Typed Arrays in ECMAScript</a>
-        </p>
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>Test Driven Development</h1>
+      <p class="article-published-on">18 Apr 2017</p>
     </section>
-    <section class="blog-post">
-      <div class="blog-post-header">
-        <h1>Test Driven Development</h1>
-        <p class="article-published-on">18 Apr 2017</p>
-      </div>
-      <div class="blog-post-content">
-        <p>Welcome to <em>Container Industries Ltd</em>. As the new engineer here you've been assigned the job of developing the company's container functionality.</p>
+    <section class="blog-post-content">
+      <p>Welcome to <em>Container Industries Ltd</em>. As the new engineer here you've been assigned the job of developing the company's container functionality.</p>
 
 <p>The following requirements have made there way over to your desk:</p>
 
@@ -1070,25 +1041,21 @@ Finished in 0.00203 seconds (files took 0.11261 seconds to load)
 </code></pre>
 <p><em>Amazing</em>, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost <em>brand new</em> tupperware container.</p>
 
-<p><img src="/assets/images/tdd/tupperware-885f2d36.jpg" class="blog-post-image" width="200px" alt="Tupperware" /></p>
+<p><img src="/images/tdd/tupperware.jpg" class="blog-post-image" width="200px" alt="Tupperware" /></p>
 
 <p>I really enjoy the TDD approach. In the past I've found myself trying to implement all the features at once and getting in too deep quite early on. In the end the code coverage was usually not as high and the code quality was  lower than when I used TDD.</p>
 
 <p>Do you use TDD regularly? What do you think of it? Do you use an alternative approach?</p>
 
-      </div>
     </section>
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- andystabler -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6786957205988281"
-     data-ad-slot="7961587765"
-     data-ad-format="auto"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/strategy-design-pattern/">Strategising your way to clean code</a>
+        </p>
+        <p class="next-post">
+          Next post: <a href="/blog/typed-arrays/">Typed Arrays in ECMAScript</a>
+        </p>
+    </section>
     <section class="comments">
       <div id="disqus_thread"></div>
 <script>
@@ -1112,15 +1079,11 @@ Finished in 0.00203 seconds (files took 0.11261 seconds to load)
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
     </section>
-  </div>
-
-    </section>
   </section>
 
-    <script src="/assets/javascripts/all-da39a3ee.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <script id="dsq-count-scr" src="//andystabler.disqus.com/count.js" async></script>
-
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+    </section>
   </body>
 </html>
