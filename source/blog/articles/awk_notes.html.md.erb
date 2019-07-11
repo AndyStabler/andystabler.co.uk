@@ -1,17 +1,17 @@
 ---
 title: Awk Notes
-date: 2017-5-21
-image: http://andystabler.co.uk/assets/images/awk_notes/awk-a59d58bc.png
+date: 2019-07-19
+image: http://andystabler.co.uk/assets/images/awk_notes/awk-6df00f23.png
 ---
 
-Awk is in the bag of tools I've heard of, would like to know more about, but never really get round to understanding properly. Here are some notes from taking my first steps towards awk-fu.
+The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂
 
 ## Example 1: Tabulating Data
 
 Below are some fruits and their prices.
 
-<% code_tag "sh" do %>
-$ cat fruits
+<% code_tag "bash" do %>
+$ cat fruits.txt
 Apple £2.00
 Banana £1.50
 Kumquat £2.00
@@ -25,8 +25,8 @@ Tomato £1.50
 
 It'd be really useful if I could take that list and print it in a tabulated way:
 
-<% code_tag "sh" do %>
-$ cat fruits | awk '{print $2 "\t" $1}'
+<% code_tag "bash" do %>
+$ awk '{print $2 "\t" $1}' fruits.txt
 £2.00   Apple
 £1.50   Banana
 £2.00   Kumquat
@@ -40,8 +40,8 @@ $ cat fruits | awk '{print $2 "\t" $1}'
 
 Might be nice to sort them by price too:
 
-<% code_tag "sh" do %>
-$ cat fruits | awk '{print $2 "\t" $1}' | sort
+<% code_tag "bash" do %>
+$ awk '{print $2 "\t" $1}' fruits | sort
 £1.00   Kiwi
 £1.00   Pear
 £1.50   Banana
@@ -55,46 +55,44 @@ $ cat fruits | awk '{print $2 "\t" $1}' | sort
 
 That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let's just not print it:
 
-<% code_tag "sh" do %>
-$ cat fruit_formatting
-awk '{print $2 "\t" $1 }' |
+<% code_tag "bash" do %>
+$ awk '{print $2 "\t" $1 }' fruits.txt |
 sort |
 awk '{
   price = $1
   name = $2
-  if (price == same_price) {
+  if (price == previous_price) {
     print "\t" name
   } else {
-    same_price = price
+    previous_price = price
     print price "\t" name
   }
 }'
 <% end %>
 
-You'll notice that I moved the script into its own file. Writing all of that on one line would be tricky!
+You'll notice that's a bit of a mouthful to write all in one go. At this point we could move that to an executable file called `fruit_formatting` if we want:
 
-Let's try running it 🤞
-
-<% code_tag "sh" do %>
-$ cat fruits | ./fruit_formatting
-zsh: permission denied: ./fruit_formatting
-<% end %>
-
-Ruh-Roh...
-
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ ls -la fruit_formatting
--rw-r--r--  1 andy  staff  150 21 May 20:29 fruit_formatting
+-rwxr--r--  1 andy  staff  190  7 Jul 22:29 fruit_formatting
+$ cat fruit_formatting
+awk '{print $2 "\t" $1 }' fruits.txt |
+sort |
+awk '{
+  price = $1
+  name = $2
+  if (price == previous_price) {
+    print "\t" name
+  } else {
+    previous_price = price
+    print price "\t" name
+  }
+}'
 <% end %>
 
-We forgot to make the file executable.
+<% code_tag "bash" do %>
+$ ./fruit_formatting
 
-<% code_tag "sh" do %>
-$ chmod 744 fruit_formatting
-<% end %>
-
-<% code_tag "sh" do %>
-$ cat fruits | ./fruit_formatting
 £1.00   Kiwi
         Pear
 £1.50   Banana
@@ -115,7 +113,7 @@ OK, here's a new problem. I'd like to find the 5 slowest response times on my si
 
 Here's what my log file looks like:
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ tail -20 logfile
 Started GET "/balance_forecasts/97?date=18-12-2016" for ::1 at 2017-05-21 13:33:12 +0100
 Processing by BalanceForecastsController#show as */*
@@ -141,7 +139,7 @@ Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 
 First, let's see if we can find all of the `Completed 200 OK` rows:
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ tail -50 logfile | awk '/Completed 200 OK/'
 Completed 200 OK in 490ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 Completed 200 OK in 388ms (Views: 11.7ms | ActiveRecord: 0.4ms)
@@ -152,7 +150,7 @@ Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 
 Next up is extracting the time in ms from those rows. Since the times are always in column 5 we can use `$5` to get the values.
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ tail -50 logfile | awk '/Completed 200 OK/{print $5}'
 490ms
 388ms
@@ -163,7 +161,7 @@ $ tail -50 logfile | awk '/Completed 200 OK/{print $5}'
 
 Now let's sort them in descending order to see the slowest values at the top
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ tail -50 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr
 490ms
 388ms
@@ -174,9 +172,9 @@ $ tail -50 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr
 
 I used `sort -nr` there to sort by numerical value and reverse the order.
 
-That's looking quite useful, but looking at a larger set of data will render these results unreadable. I'll run this script over 5000 rows of log file and then use the `head` command to only look at the top 5 slowest times.
+That's looking quite useful, but if I run that over a much larger log file I'd get a lot of text printed to my terminal. I'll run this script over 5000 rows and then use the `head` command to only look at the top 5 slowest times.
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ tail -5000 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr | head -5
 8140ms
 6257ms
@@ -190,8 +188,8 @@ $ tail -5000 logfile | awk '/Completed 200 OK/{print $5}' | sort -nr | head -5
 
 Back to food again (naturally). I have a new price list:
 
-<% code_tag "sh" do %>
-$ cat foods
+<% code_tag "bash" do %>
+$ cat foods.txt
 Item name, Price
 Rice pudding, £1.20
 Jam sandwich, £1.75
@@ -202,9 +200,9 @@ Red grapes, £1.20
 Green grapes, £1.20
 <% end %>
 
-I'd like to format it in the same way as the previous prices.
+I'd like to format it in the same way as the fruits in [example 1](#example-1-tabulating-data).
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 £1.00   Kiwi
         Pear
 £1.50   Banana
@@ -218,14 +216,14 @@ I'd like to format it in the same way as the previous prices.
 
 There's a slight problem here though. You'll notice that the top row of this file contains `Item name` and `Price`. We don't want this in our report, so we'll need a way to remove it. There's another issue here however, and it isn't immediately obvious. In our original `fruit_formatting` script we said
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 awk '{print $2 "\t" $1}'
 <% end %>
 
 This printed the price followed by the name of the fruit. Unfortunately, this won't work here because some of our food names span two words, for example `Jam sandwich`. This script would print `sandwich` followed by a tab, followed by `jam`. Let's run it to find out.
 
-<% code_tag "sh" do %>
-cat foods | awk '{print $2 "\t" $1}'
+<% code_tag "bash" do %>
+awk '{print $2 "\t" $1}' foods.txt
 name,   Item
 pudding,        Rice
 sandwich,       Jam
@@ -238,8 +236,8 @@ grapes, Green
 
 First, let's look at ignoring the top line of the file:
 
-<% code_tag "sh" do %>
-$ cat fruits2 | awk 'NR != 1 {print $0}'
+<% code_tag "bash" do %>
+$ awk 'NR != 1 {print $0}' foods.txt
 Rice pudding, £1.20
 Jam sandwich, £1.75
 Coffee, £1.00
@@ -253,8 +251,8 @@ Green grapes, £1.20
 
 Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let's use a comma.
 
-<% code_tag "sh" do %>
-$ cat fruits2 | awk -F ", " 'NR != 1 {print $2 "\t" $1}'
+<% code_tag "bash" do %>
+$ awk -F ", " 'NR != 1 {print $2 "\t" $1}' foods.txt
 £1.20   Rice pudding
 £1.75   Jam sandwich
 £1.00   Coffee
@@ -266,24 +264,24 @@ $ cat fruits2 | awk -F ", " 'NR != 1 {print $2 "\t" $1}'
 
 Putting all this together with our original `fruit_formatting` script, we get the following:
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ cat food_formatting
-awk -F ", " 'NR != 1 {print $2 "\t" $1}' |
+awk -F ", " 'NR != 1 {print $2 "\t" $1}' foods.txt |
 sort |
 awk '{
   price = $1
   name = $2
-  if (price == same_price) {
+  if (price == previous_price) {
     print "\t" name
   } else {
-    same_price = price
+    previous_price = price
     print price "\t" name
   }
 }'
 <% end %>
 
-<% code_tag "sh" do %>
-$ cat foods | ./food_formatting
+<% code_tag "bash" do %>
+$ ./food_formatting
 £1.00   Coffee
         Crisps
 £1.20   Green
@@ -293,16 +291,16 @@ $ cat foods | ./food_formatting
         Jam
 <% end %>
 
-Almost there, but it still looks like we're cutting off the `sandwich` part of `Jam`. This is because our second awk script
+Almost there, but it still looks like we're cutting off the `sandwich` part of `Jam sandwich`. This is because our awk script
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 awk '{
   price = $1
   name = $2
-  if (price == same_price) {
+  if (price == previous_price) {
     print "\t" name
   } else {
-    same_price = price
+    previous_price = price
     print price "\t" name
   }
 }'
@@ -310,8 +308,8 @@ awk '{
 
 is given this input:
 
-<% code_tag "sh" do %>
-cat foods | awk -F ", " 'NR != 1 {print $2 "\t" $1}' | sort
+<% code_tag "bash" do %>
+awk -F ", " 'NR != 1 {print $2 "\t" $1}' foods.txt | sort
 £1.00 Coffee
 £1.00 Crisps
 £1.20 Green grapes
@@ -321,13 +319,13 @@ cat foods | awk -F ", " 'NR != 1 {print $2 "\t" $1}' | sort
 £1.75 Jam sandwich
 <% end %>
 
-and the `print "\t" name` part is going to only look at the second word (`Jam`), but not the remaining line since we set `name` to `$2`.
+and the `print "\t" name` part is going to only look at the second column of text (`Jam`), but not the remaining line since we set `name` to `$2`.
 
-Let's set `$1` (the price) to the empty string and then use `$0`, which gives us the full record (sans `$1` in this case), to print the full food name:
+Let's set `$1` (the price) to the empty string and then use `$0`, which gives us the full record, to print the full food name:
 
-<% code_tag "sh" do %>
+<% code_tag "bash" do %>
 $ cat food_formatting
-awk -F ", " 'NR != 1 {print $2 "\t" $1}' |
+awk -F ", " 'NR != 1 {print $2 "\t" $1}' foods.txt |
 sort |
 awk '{
   price = $1
@@ -343,8 +341,8 @@ awk '{
 }'
 <% end %>
 
-<% code_tag "sh" do %>
-$ cat foods | ./food_formatting
+<% code_tag "bash" do %>
+$ ./food_formatting
 £1.00    Coffee
          Crisps
 £1.20    Green grapes
@@ -354,7 +352,10 @@ $ cat foods | ./food_formatting
          Jam sandwich
 <% end %>
 
-And there you have it, some teeny footsteps towards the land of awk. If you'd like to dive deeper I can recommend the [sed & awk](https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255){:target="_blank"} book, which is really great.
+There you have it. We just used some simple parts of Awk to do some nifty text processing. If
+you'd like to know more things, like how to write detailed pattern matching, functions, loops, arrays, etc. then check out the
+[sed & awk](https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255){:target="_blank"}
+book. This has the added bonus of being written by someone that actually knows this stuff 😅
 
 If you've got any awk scripts you use regularly that make your life easier I'd love to hear about them.
 
