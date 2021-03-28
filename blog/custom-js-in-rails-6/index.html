@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Custom JS in Rails 6 - Blog - Andy Stabler</title>
+      <meta content="Custom JS in Rails 6 - Blog - Andy Stabler" property="title"></meta><meta content="I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.
+
+Users..." property="description"></meta><meta content="Custom JS in Rails 6 - Blog - Andy Stabler" itemprop="name"></meta><meta content="I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.
+
+Users..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" itemprop="image"></meta><meta content="Custom JS in Rails 6 - Blog - Andy Stabler" property="og:title"></meta><meta content="I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.
+
+Users..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/custom-js-in-rails-6/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Custom JS in Rails 6 - Blog - Andy Stabler" name="twitter:title"></meta><meta content="I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.
+
+Users..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/images/me-illustration-3b460f0d.png" name="twitter:image"></meta>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-b7a1ac77.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/me-illustration-3b460f0d.png" width="50px" height="50px" class="bio-pic--small" alt="" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
+
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>Custom JS in Rails 6</h1>
+      <p class="article-published-on">28 Mar 2021</p>
+    </section>
+    <section class="blog-post-content">
+      <p>I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.</p>
+
+<p>Users can upload an image as part of an edit form on my site and I want them to preview the image before hitting save.
+This is the JavaScript that's responsible for loading the preview image:</p>
+
+<pre><code class="javascript">class ImagePreview {
+  constructor(inputButton) {
+    this.inputButton = inputButton;
+    this.imageElement = this.findImageElement(inputButton);
+  }
+
+  &#x2F;&#x2F; The file input button has a data attribute that contains the id of the corresponding image preview element
+  &#x2F;&#x2F; This method is responsible for finding the image preview element based on that data attribute
+  findImageElement() {
+    let imageElementId = this.inputButton.dataset[&quot;imagePreviewId&quot;]
+    return document.getElementById(imageElementId);
+  }
+
+  loadImage() {
+    let file = this.inputButton.files[0];
+    this.imageElement.src = URL.createObjectURL(file);
+
+    this.imageElement.onload = function() {
+      this.freeMemory();
+    }.bind(this)
+  }
+
+  freeMemory() {
+    URL.revokeObjectURL(this.imageElement.src);
+  }
+}
+</code></pre>
+<p>I wanted to call this JavaScript in my view like so:</p>
+
+<pre><code class="ruby">  f.file_field :image,
+    accept: &quot;image&#x2F;png,image&#x2F;gif,image&#x2F;jpeg&quot;,
+    onchange: &quot;new ImagePreview(event.target).loadImage()&quot;,
+    data: { image_preview_id: &quot;TheIdOfThePreviewImage&quot; }
+</code></pre>
+<p>I first just shoved the JS inside a <code>&lt;script&gt;&lt;/script&gt;</code> tag on the page it was needed but that didn't feel great. By doing that
+I avoided all the good stuff that Rails Webpacker offers.</p>
+
+<p>With a lot of trial and error, this is the solution I eventually came up with that makes use of webpack.</p>
+
+<p>I added an <code>image_preview.js</code> file inside the <code>packs/</code> directory:</p>
+
+<pre><code class="shell">tree app&#x2F;javascript
+app&#x2F;javascript
+├── channels
+│   ├── consumer.js
+│   └── index.js
+└── packs
+    ├── application.js
+    └── image_preview.js
+</code></pre>
+<p>I then imported the code inside my <code>application.js</code> file and attached the <code>ImagePreview</code> object to the window. This
+is what my <code>application.js</code> file looked like afterwards:</p>
+
+<pre><code class="javascript">require(&quot;@rails&#x2F;ujs&quot;).start()
+require(&quot;turbolinks&quot;).start()
+require(&quot;@rails&#x2F;activestorage&quot;).start()
+require(&quot;channels&quot;)
+
+import ImagePreview from &quot;.&#x2F;image_preview&quot;
+window.ImagePreview = ImagePreview
+</code></pre>
+<p>Here it is in action:</p>
+
+<p><img src="/images/custom-js-in-rails-6/image_preview-209ab320.gif" alt="" /></p>
+
+<p>I had  a really confusing time trying to figure this out and I'm still not sure if this approach is correct.
+It works and I think that's enough for my use-case, but if you know of a better way please let me know!</p>
+
+    </section>
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/awk-notes/">Awk Notes</a>
+        </p>
+    </section>
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/custom-js-in-rails-6/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </section>
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+      <script type="text/javascript"
+     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </section>
+  </body>
+</html>
