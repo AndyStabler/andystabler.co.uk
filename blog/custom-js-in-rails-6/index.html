@@ -101,7 +101,7 @@ I avoided all the good stuff that Rails Webpacker offers.</p>
 
 <p>With a lot of trial and error, this is the solution I eventually came up with that makes use of webpack.</p>
 
-<p>I added an <code>image_preview.js</code> file inside the <code>packs/</code> directory:</p>
+<p>I added an <code>image_preview.js</code> file inside the <code>packs/</code> directory (inside was a copy and paste of the JavaScript class above):</p>
 
 <pre><code class="shell">tree app&#x2F;javascript
 app&#x2F;javascript
@@ -111,6 +111,10 @@ app&#x2F;javascript
 └── packs
     ├── application.js
     └── image_preview.js
+</code></pre>
+<p>I updated the class to export the object by default:</p>
+
+<pre><code class="javascript">  export default class ImagePreview {
 </code></pre>
 <p>I then imported the code inside my <code>application.js</code> file and attached the <code>ImagePreview</code> object to the window. This
 is what my <code>application.js</code> file looked like afterwards:</p>
