@@ -52,7 +52,7 @@ I avoided all the good stuff that Rails Webpacker offers.
 
 With a lot of trial and error, this is the solution I eventually came up with that makes use of webpack.
 
-I added an `image_preview.js` file inside the `packs/` directory:
+I added an `image_preview.js` file inside the `packs/` directory (inside was a copy and paste of the JavaScript class above):
 
 <% code_tag "shell" do %>
 tree app/javascript
@@ -65,9 +65,14 @@ app/javascript
     └── image_preview.js
 <% end %>
 
+I updated the class to export the object by default:
+
+<% code_tag "javascript" do %>
+  export default class ImagePreview {
+<% end %>
+
 I then imported the code inside my `application.js` file and attached the `ImagePreview` object to the window. This
 is what my `application.js` file looked like afterwards:
-
 
 <% code_tag "javascript" do %>
 require("@rails/ujs").start()
