@@ -1,0 +1,87 @@
+---
+title: Custom JS in Rails 6
+date: 2021-03-28
+---
+
+I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I quickly realised I had
+absolutely no idea what I was doing 🤷. Here's what I ended up with and you can tell me if it's a good or bad idea.
+
+Users can upload an image as part of an edit form on my site and I want them to preview the image before hitting save.
+This is the JavaScript that's responsible for loading the preview image:
+
+<% code_tag "javascript" do %>
+class ImagePreview {
+  constructor(inputButton) {
+    this.inputButton = inputButton;
+    this.imageElement = this.findImageElement(inputButton);
+  }
+
+  // The file input button has a data attribute that contains the id of the corresponding image preview element
+  // This method is responsible for finding the image preview element based on that data attribute
+  findImageElement() {
+    let imageElementId = this.inputButton.dataset["imagePreviewId"]
+    return document.getElementById(imageElementId);
+  }
+
+  loadImage() {
+    let file = this.inputButton.files[0];
+    this.imageElement.src = URL.createObjectURL(file);
+
+    this.imageElement.onload = function() {
+      this.freeMemory();
+    }.bind(this)
+  }
+
+  freeMemory() {
+    URL.revokeObjectURL(this.imageElement.src);
+  }
+}
+<% end %>
+
+I wanted to call this JavaScript in my view like so:
+
+<% code_tag "ruby" do %>
+  f.file_field :image,
+    accept: "image/png,image/gif,image/jpeg",
+    onchange: "new ImagePreview(event.target).loadImage()",
+    data: { image_preview_id: "TheIdOfThePreviewImage" }
+<% end %>
+
+I first just shoved the JS inside a `<script></script>` tag on the page it was needed but that didn't feel great. By doing that
+I avoided all the good stuff that Rails Webpacker offers.
+
+With a lot of trial and error, this is the solution I eventually came up with that makes use of webpack.
+
+I added an `image_preview.js` file inside the `packs/` directory:
+
+<% code_tag "shell" do %>
+tree app/javascript
+app/javascript
+├── channels
+│   ├── consumer.js
+│   └── index.js
+└── packs
+    ├── application.js
+    └── image_preview.js
+<% end %>
+
+I then imported the code inside my `application.js` file and attached the `ImagePreview` object to the window. This
+is what my `application.js` file looked like afterwards:
+
+
+<% code_tag "javascript" do %>
+require("@rails/ujs").start()
+require("turbolinks").start()
+require("@rails/activestorage").start()
+require("channels")
+
+import ImagePreview from "./image_preview"
+window.ImagePreview = ImagePreview
+<% end %>
+
+Here it is in action:
+
+<%= image_tag "custom-js-in-rails-6/image_preview.gif" %>
+
+I had  a really confusing time trying to figure this out and I'm still not sure if this approach is correct.
+It works and I think that's enough for my use-case, but if you know of a better way please let me know!
