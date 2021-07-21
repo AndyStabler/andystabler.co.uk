@@ -9,7 +9,7 @@ pageable: true
     </h1>
     <p class="article-snippet-date"><%= article.date.strftime("%d %b %Y") %></p>
     <div>
-      <%= article.summary %>
+      <%= Nokogiri::HTML(article.summary).text %>
       <p><%= link_to "Continue Reading &rarr;", article %></p>
     </div>
   </section>
