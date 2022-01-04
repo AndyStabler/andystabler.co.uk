@@ -10,6 +10,9 @@
     <section class="blog-post-content">
       <%= yield %>
     </section>
+    <section class="links">
+      <a href="/feed.xml"><%= image_tag "rss.png", width: "20px", height: "20px" %> RSS feed (Atom)</a>
+    </section>
     <section class="blog-post-navigation">
       <% if current_article.article_previous %>
         <p class="prev-post">
