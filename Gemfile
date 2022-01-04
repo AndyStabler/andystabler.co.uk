@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
 gem "byebug"
-gem "middleman", "~> 4.2"
-gem "middleman-autoprefixer", "~> 2.7"
+gem "middleman", "~> 4.4"
+gem "middleman-autoprefixer", "~> 3.0"
 gem "middleman-blog"
 gem "middleman-gh-pages"
 gem "nokogiri"
