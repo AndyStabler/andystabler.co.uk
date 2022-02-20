@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Andy Stabler</title>
   <subtitle>Blog</subtitle>
-  <id>https://andystabler.co.uk</id>
+  <id>https://andystabler.co.uk/</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
   <updated>2022-02-20T00:00:00+00:00</updated>
@@ -12,7 +12,7 @@
   <entry>
     <title>SYN Flood Denial of Service Attack</title>
     <link rel="alternate" href="/blog/syn-flood-denial-of-service-attack/"/>
-    <id>/blog/syn-flood-denial-of-service-attack/</id>
+    <id>http://www.andystabler.co.uk/blog/syn-flood-denial-of-service-attack/</id>
     <published>2022-02-20T00:00:00+00:00</published>
     <updated>2022-02-20T00:00:00+00:00</updated>
     <author>
@@ -155,7 +155,7 @@
   <entry>
     <title>10 Years In Tech</title>
     <link rel="alternate" href="/blog/ten-years-in-tech/"/>
-    <id>/blog/ten-years-in-tech/</id>
+    <id>http://www.andystabler.co.uk/blog/ten-years-in-tech/</id>
     <published>2022-01-03T00:00:00+00:00</published>
     <updated>2022-01-03T00:00:00+00:00</updated>
     <author>
@@ -208,7 +208,7 @@ both in my life and the tech world, and now feels like an appropriate time to sh
   <entry>
     <title>On Measuring Engineers</title>
     <link rel="alternate" href="/blog/on-measuring-engineers/"/>
-    <id>/blog/on-measuring-engineers/</id>
+    <id>http://www.andystabler.co.uk/blog/on-measuring-engineers/</id>
     <published>2021-07-21T01:00:00+01:00</published>
     <updated>2021-07-21T01:00:00+01:00</updated>
     <author>
@@ -240,7 +240,7 @@ both in my life and the tech world, and now feels like an appropriate time to sh
   <entry>
     <title>Custom JS in Rails 6</title>
     <link rel="alternate" href="/blog/custom-js-in-rails-6/"/>
-    <id>/blog/custom-js-in-rails-6/</id>
+    <id>http://www.andystabler.co.uk/blog/custom-js-in-rails-6/</id>
     <published>2021-03-28T00:00:00+00:00</published>
     <updated>2021-03-28T00:00:00+00:00</updated>
     <author>
@@ -330,7 +330,7 @@ It works and I think that's enough for my use-case, but if you know of a better 
   <entry>
     <title>Awk Notes</title>
     <link rel="alternate" href="/blog/awk-notes/"/>
-    <id>/blog/awk-notes/</id>
+    <id>http://www.andystabler.co.uk/blog/awk-notes/</id>
     <published>2019-07-19T01:00:00+01:00</published>
     <updated>2019-07-19T01:00:00+01:00</updated>
     <author>
@@ -655,7 +655,7 @@ book. This has the added bonus of being written by someone that actually knows t
   <entry>
     <title>Offline Development</title>
     <link rel="alternate" href="/blog/no-wifi-development/"/>
-    <id>/blog/no-wifi-development/</id>
+    <id>http://www.andystabler.co.uk/blog/no-wifi-development/</id>
     <published>2018-09-28T01:00:00+01:00</published>
     <updated>2018-09-28T01:00:00+01:00</updated>
     <author>
@@ -794,7 +794,7 @@ opposite—figuring things out with just Google).&lt;/p&gt;
   <entry>
     <title>Proxies in ECMAScript</title>
     <link rel="alternate" href="/blog/proxies-in-ecmascript/"/>
-    <id>/blog/proxies-in-ecmascript/</id>
+    <id>http://www.andystabler.co.uk/blog/proxies-in-ecmascript/</id>
     <published>2018-03-31T01:00:00+01:00</published>
     <updated>2018-03-31T01:00:00+01:00</updated>
     <author>
@@ -1007,7 +1007,7 @@ follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target
   <entry>
     <title>Typed Arrays in ECMAScript</title>
     <link rel="alternate" href="/blog/typed-arrays/"/>
-    <id>/blog/typed-arrays/</id>
+    <id>http://www.andystabler.co.uk/blog/typed-arrays/</id>
     <published>2018-02-28T00:00:00+00:00</published>
     <updated>2018-02-28T00:00:00+00:00</updated>
     <author>
@@ -1185,7 +1185,7 @@ follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target
   <entry>
     <title>Test Driven Development</title>
     <link rel="alternate" href="/blog/tdd/"/>
-    <id>/blog/tdd/</id>
+    <id>http://www.andystabler.co.uk/blog/tdd/</id>
     <published>2017-04-18T01:00:00+01:00</published>
     <updated>2017-04-18T01:00:00+01:00</updated>
     <author>
@@ -2179,7 +2179,7 @@ Finished in 0.00203 seconds (files took 0.11261 seconds to load)
   <entry>
     <title>Strategising your way to clean code</title>
     <link rel="alternate" href="/blog/strategy-design-pattern/"/>
-    <id>/blog/strategy-design-pattern/</id>
+    <id>http://www.andystabler.co.uk/blog/strategy-design-pattern/</id>
     <published>2016-09-22T01:00:00+01:00</published>
     <updated>2016-09-22T01:00:00+01:00</updated>
     <author>
@@ -2373,7 +2373,7 @@ any type of oven. Things get tricky at this point. What would the class diagram 
   <entry>
     <title>A JSON rabbit hole</title>
     <link rel="alternate" href="/blog/json-rabbit-hole/"/>
-    <id>/blog/json-rabbit-hole/</id>
+    <id>http://www.andystabler.co.uk/blog/json-rabbit-hole/</id>
     <published>2016-07-07T01:00:00+01:00</published>
     <updated>2016-07-07T01:00:00+01:00</updated>
     <author>
