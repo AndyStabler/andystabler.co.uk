@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>SYN Flood Denial of Service Attack - Blog - Andy Stabler</title>
+      <meta content="SYN Flood Denial of Service Attack - Blog - Andy Stabler" property="title"></meta><meta content="
+
+Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.
+
+Before we go any further I need to just point out that you can get..." property="description"></meta><link href="https://andystabler.co.uk/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" property="image_src"></link><meta content="SYN Flood Denial of Service Attack - Blog - Andy Stabler" itemprop="name"></meta><meta content="
+
+Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.
+
+Before we go any further I need to just point out that you can get..." itemprop="description"></meta><meta content="https://andystabler.co.uk/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" itemprop="image"></meta><meta content="SYN Flood Denial of Service Attack - Blog - Andy Stabler" property="og:title"></meta><meta content="
+
+Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.
+
+Before we go any further I need to just point out that you can get..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/syn-flood-denial-of-service-attack/" property="og:url"></meta><meta content="https://andystabler.co.uk/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="SYN Flood Denial of Service Attack - Blog - Andy Stabler" name="twitter:title"></meta><meta content="
+
+Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.
+
+Before we go any further I need to just point out that you can get..." name="twitter:description"></meta><meta content="https://andystabler.co.uk/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" name="twitter:image"></meta>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-2f28dd7d.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
+    
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49987996-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/me-illustration-3b460f0d.png" width="50px" height="50px" class="bio-pic--small" alt="" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
+
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>SYN Flood Denial of Service Attack</h1>
+      <p class="article-published-on">20 Feb 2022</p>
+    </section>
+    <section class="blog-post-content">
+      <p><img src="/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" class="blog-post-image" alt="" /></p>
+
+<p>Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.</p>
+
+<p>Before we go any further I need to just point out that you can get into serious trouble if you execute an attack on a computer you're not authorised to mess with. Here's what the NCA has to say:</p>
+
+<blockquote>
+  <p><a href="https://www.nationalcrimeagency.gov.uk/?view=article&amp;id=243"><em>The Computer Misuse Act 1990 makes it illegal to intentionally impair the operation of a computer or prevent or hinder access to a program/data on a computer unless you are authorised to do so.</em></a></p>
+</blockquote>
+
+<p>The laws could be different in your country so please do your research and behave responsibly :)</p>
+
+<h2 id="whats-a-syn-flood-attack">What's a SYN Flood attack?</h2>
+
+<p>When a server (website) and a client (your browser) want to talk to each other they need to first establish a connection. This is done by something called the TCP 3-way handshake. The handshake is essentially:</p>
+
+<ol>
+  <li>Client says to server "Hey, wanna chat?" (the SYN flag is set in the TCP header)</li>
+  <li>Server responds with "Yeah" (both the SYN and ACK flag would be set in the response)</li>
+  <li>Client responds with "Cool" (just the ACK flag would be set)</li>
+</ol>
+
+<p>Here's a picture from Wikipedia that shows the handshake:</p>
+
+<p>[1]<img src="/images/syn-flood-denial-of-service-attack/Tcp_normal.svg-4f2dae97.png" class="blog-post-image" alt="" /></p>
+
+<p>When the server receives a SYN request it uses some resources to remember that the request came in. This way when it receives the final ACK request it can match it up to the first SYN request and the connection can be established successfully.</p>
+
+<p>We can exploit the 3-way handshake by firing lots of SYN requests without any intention of finishing the handshake (we never send the final ACK request). The server will use more and more resources to store these incomplete handshakes and eventually be unable to respond to any legitimate requests.</p>
+
+<h2 id="the-attack">The Attack</h2>
+
+<p>The plan is to start a server on my Raspberry Pi and then trigger a SYN flood attack from another machine. I'm going to use a Raspberry Pi as my victim because it helps me visualise the client and server, but a virtual machine would work just as well!</p>
+
+<h3 id="step-1---starting-the-web-server-on-the-raspberry-pi">Step 1 - Starting the web server on the Raspberry Pi</h3>
+
+<p>I'm too lazy to connect the Raspberry Pi up to a keyboard/monitor so I'm going to control it from my macbook. The following nmap command scans the machines on the local network and tells us their IP address:</p>
+
+<pre><code class="bash"> $ nmap --script smb-os-discovery -p 445 192.168.1.0&#x2F;24
+</code></pre>
+<p><img src="/images/syn-flood-denial-of-service-attack/nmap-results-f62551ce.png" class="blog-post-image" alt="" /></p>
+
+<p>Now we know the IP address is 192.168.1.227, let's SSH into the Raspbery Pi and start the server.</p>
+
+<pre><code class="bash">  $ ssh pi@192.168.1.227
+  pi@raspberrypi:~ $ cd ~&#x2F;dev&#x2F;my_site
+  pi@raspberrypi:~ $ echo &quot;&lt;h1&gt;Hello, World&lt;&#x2F;h1&gt;&quot; &gt; index.html
+  pi@raspberrypi:~ $ ruby -run -ehttpd . -p8000
+</code></pre>
+<p>We have a server running on port 8000 of the Raspberry Pi!</p>
+
+<h3 id="step-2---start-inspecting-traffic-on-the-raspberry-pi">Step 2 - Start inspecting traffic on the Raspberry Pi</h3>
+
+<p>Using wireshark we can inspect the packets that the Raspberry Pi is sending and receiving. I'm going to use tshark so I can run it from a terminal, but you might get more out of using the GUI version. The following command will display all traffic that's coming and going on port 8000 (the port our site is using).</p>
+
+<pre><code class="bash">  pi@raspberrypi:~ $ tshark -Y &quot;tcp.port == 8000&quot;
+</code></pre>
+<p>Now when we visit 192.168.1.227:8000 we can actually see the handshake taking place in tshark's output:</p>
+
+<p><img src="/images/syn-flood-denial-of-service-attack/tshark-handshake-a0bda610.png" class="blog-post-image" alt="" /></p>
+
+<p>Keep tshark running while we perform the attack in step 3!</p>
+
+<h3 id="step-3---perform-the-attack">Step 3 - Perform the attack</h3>
+
+<p>I'm using a tool called scapy, but there are various options available (hping3 is a common choice). We just need the ability to construct and manipulate TCP packets.</p>
+
+<p>I like how scapy can be used to construct packets, the syntax involves using a <code>/</code> to stack layers, like so <code>packet = ip/tcp/data</code></p>
+
+<p>On the attacking machine (not the Raspberry Pi), the following commands can be used to start the attack:</p>
+
+<pre><code class="bash">  $ scapy
+  &gt;ip = IP(dst=&quot;192.168.1.227&quot;) # pass in the Raspberry Pi&#x27;s IP address as the destination
+  &gt;tcp = TCP(dport=8000, flags=&quot;S&quot;) # set the destination port to 8000 and use the &quot;S&quot; flag to say we&#x27;re just interested in SYN requests
+  &gt;data = Raw(&quot;Hello&quot;)
+  &gt;packet = ip&#x2F;tcp&#x2F;data # stack the layers together to get the packet
+  &gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
+</code></pre>
+
+<h3 id="step-4---inspecting-the-attack">Step 4 - Inspecting the attack</h3>
+
+<p>After about a second, hit Ctrl-C to cancel the attack. At this point, if we take a look at the output from tshark we <em>should</em> see a whole load of SYN requests.</p>
+
+<p><img src="/images/syn-flood-denial-of-service-attack/tshark-unsuccessful-syn-flood-1dd8217b.png" class="blog-post-image" alt="" /></p>
+
+<p>The output tells us that our attack isn't very effective. When the Raspberry Pi sends us a SYN/ACK response, our machine is responding with an RST. This means our machine is telling the server to forget about the connection and so our attack is doing no damage at all.</p>
+
+<h3 id="step-5---spoofing-the-source">Step 5 - Spoofing the source</h3>
+
+<p>Our last attack wasn't so effective because our machine was resetting the connection and the server also detected that the requests were from the same port and labelled them as "TCP Retransmission".</p>
+
+<p>We don't want the attacker to know who we are and so by spoofing the source IP address we get some anonymity. Spoofing the IP also means that we'll no longer get the response. This is fine because we're just interested in sending the SYN requests, we don't care about the response.</p>
+
+<p>You have to be careful here though. It's not a good idea to spoof an IP address you don't own. By doing that you would be involving other networks and machines in your attack.</p>
+
+<p>It's also worth noting that using any active IP address would result in the RST being sent back to the server, rendering the attack useless. It's best to use an IP address that isn't used and preferably one of the <a href="https://datatracker.ietf.org/doc/html/rfc1918">RFC1918</a> private addresses.</p>
+
+<p>Let's try the attack again with a spoofed IP address and port:</p>
+
+<pre><code class="bash">  $ scapy
+  &gt;ip = IP(src=&quot;10.0.0.1&quot;, dst=&quot;192.168.1.227&quot;) # pass in a spoofed, unused, private IP address as the source IP
+  &gt;tcp = TCP(sport=RandShort(), dport=8000, flags=&quot;S&quot;) # set the source port to a random value
+  &gt;data = Raw(&quot;Hello&quot;)
+  &gt;packet = ip&#x2F;tcp&#x2F;data # stack the layers together to get the packet
+  &gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
+</code></pre>
+<p>Let that run for about a second and hit Ctrl-C. The results in tshark should reveal a more effective attack:</p>
+
+<p><img src="/images/syn-flood-denial-of-service-attack/tshark-syn-flood-1065331d.png" class="blog-post-image" alt="" /></p>
+
+<p>Lots of SYN requests are being sent from our spoofed 10.0.0.1 IP address and lots of SYN/ACK responses are being sent back. I can't see any RSTs in the output, which is also great. Scrolling all the way to the bottom of the output though, shows something even more interesting:</p>
+
+<p><img src="/images/syn-flood-denial-of-service-attack/tshark-retransmissions-ded1dd03.png" class="blog-post-image" alt="" /></p>
+
+<p>Our Raspberry Pi didn't get any ACK responses when it sent the SYN/ACK to 10.0.0.1 and so it's sending the SYN/ACK again. This means it's not only taking up resources for fresh SYN requests, but it's also taking up resources by repeatedly sending the SYN/ACK because it assumed the packet was dropped.</p>
+
+<h2 id="final-notes">Final Notes</h2>
+
+<p>The SYN flood attack isn't as effective as it used to be in the 80s/90s. Modern Linux doesn't allocate full resources to partially complete handshakes, but even so, if you had a botnet with several hundred machines performing a SYN flood attack I think it could cause some damage.</p>
+
+<p>There are various ways to mitigate a SYN flood attack. Some to look at are <a href="https://en.wikipedia.org/wiki/SYN_cookies">SYN cookies</a> and blocking the source ip address (10.0.0.1 in our case).</p>
+
+<p>Cheers!</p>
+
+<h2 id="references">References</h2>
+
+<p>[1] <a href="https://en.wikipedia.org/wiki/SYN_flood">https://en.wikipedia.org/wiki/SYN_flood</a></p>
+
+    </section>
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/ten-years-in-tech/">10 Years In Tech</a>
+        </p>
+    </section>
+
+    <section class="links">
+      <a href="/feed.xml"><img src="/images/rss-a018aa79.png" width="20px" height="20px" alt="" /> RSS feed (Atom)</a>
+    </section>
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/syn-flood-denial-of-service-attack/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </section>
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+      <script type="text/javascript"
+     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </section>
+  </body>
+</html>
