@@ -73,7 +73,7 @@ module PageHelpers
   end
 
   def default_social_image(attributes:)
-    path = image_path("me-illustration.png")
+    path = image_path("icons/andy_icon_3.JPG")
     image_url = URI.join(config[:domain], path)
 
     opts = { content: image_url }.merge attributes
