@@ -15,7 +15,6 @@
     <%= javascript_include_tag "site" %>
     <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
     <%= yield_content :js %>
-    <%= partial "partials/analytics" if production? %>
   </head>
   <body>
     <%= partial "partials/header" %>
