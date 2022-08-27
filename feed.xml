@@ -119,7 +119,7 @@ if save is unsuccesful, otherwise we redirect to our root page.&lt;/p&gt;
 &lt;p&gt;From &lt;a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler"&gt;looking around&lt;/a&gt; it seems like this is an approach others have taken.&lt;/p&gt;
 
 &lt;p&gt;You can find the repo for this &lt;a href="https://github.com/AndyStabler/turbo-redirects/"&gt;here&lt;/a&gt;
-in case you'd like to play around. Take a look at the &lt;a href="https://github.com/AndyStabler/turbo-redirects/tree/without-turbo-frame-tag"&gt;without-turbo-frame-tag branch&lt;/a&gt; to see how this can be done without using a &lt;code&gt;turbo-frame-tag&lt;/code&gt;.&lt;/p&gt;
+in case you'd like to play around. Take a look at the &lt;a href="https://github.com/AndyStabler/turbo-redirects/pull/1/files"&gt;without-turbo-frame-tag branch&lt;/a&gt; to see how this can be done without using a &lt;code&gt;turbo-frame-tag&lt;/code&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>
