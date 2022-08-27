@@ -21,14 +21,14 @@
     <summary type="html">&lt;p&gt;When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.&lt;/p&gt;
 
-&lt;p&gt;I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  Response...&lt;/code&gt;&lt;/pre&gt;</summary>
+&lt;p&gt;I had some bother achieving this with Rails Turbo Streams while my form
+was inside a &lt;code&gt;turbo_frame_tag&lt;/code&gt;. When attempting
+to redirect...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.&lt;/p&gt;
 
-&lt;p&gt;I had some bother achieving this with Rails Turbo Streams. When attempting
+&lt;p&gt;I had some bother achieving this with Rails Turbo Streams while my form
+was inside a &lt;code&gt;turbo_frame_tag&lt;/code&gt;. When attempting
 to redirect I saw the following error:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="js"&gt;  Response has no matching &amp;lt;turbo-frame id=&amp;quot;user_form&amp;quot;&amp;gt; element
@@ -37,8 +37,11 @@ to redirect I saw the following error:&lt;/p&gt;
 and so an error is shown, but I want to do a full page redirect. I don't
 care about the turbo frame tag in this scenario.&lt;/p&gt;
 
-&lt;p&gt;This is the solution I came up with. It feels a bit clunky, so let me
-know if there's a better way.&lt;/p&gt;
+&lt;p&gt;The "right" solution I found was to not use a &lt;code&gt;turbo_frame_tag&lt;/code&gt; and instead
+wrap my form in a normal div. The controller can then either replace the contents
+of this div using a turbo stream, or it can do a full page redirect.&lt;/p&gt;
+
+&lt;p&gt;If we &lt;em&gt;do&lt;/em&gt; need a &lt;code&gt;turbo_frame_tag&lt;/code&gt;, then the following work around seems to do the trick. It feels a bit clunky, but maybe that's because a &lt;code&gt;turbo_frame_tag&lt;/code&gt; isn't best suited to this use case.&lt;/p&gt;
 
 &lt;p&gt;In my example I want to create a user. If the form is successful I want to redirect
 to the root URL, otherwise I want to re-render the user form with validation errors.&lt;/p&gt;
@@ -46,7 +49,7 @@ to the root URL, otherwise I want to re-render the user form with validation err
 &lt;p&gt;Here's my form, you can see it's wrapped in a &lt;code&gt;turbo_frame_tag&lt;/code&gt;:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="ruby"&gt;  # app&amp;#x2F;views&amp;#x2F;users&amp;#x2F;_form.html.erb
-  &amp;lt;%= turbo_frame_tag &amp;#x27;user_form&amp;#x27; do %&amp;gt;
+  &amp;lt;%= turbo_frame_tag dom_id(user) do %&amp;gt;
     &amp;lt;%= form_with(model: user) do |form| %&amp;gt;
       &amp;lt;% if user.errors.any? %&amp;gt;
         &amp;lt;div style=&amp;quot;color: red&amp;quot;&amp;gt;
@@ -79,9 +82,13 @@ to the root URL, otherwise I want to re-render the user form with validation err
     user = User.new(user_params)
 
     if user.save
-      render turbo_stream: turbo_stream.append(&amp;quot;user_form&amp;quot;, template: &amp;quot;users&amp;#x2F;_account_created&amp;quot;)
+      # The following line doesn&amp;#x27;t work as I&amp;#x27;d expect. It results in:
+      #  Response has no matching &amp;lt;turbo-frame id=&amp;quot;new_user&amp;quot;&amp;gt; element
+      #redirect_to root_url
+
+      render turbo_stream: turbo_stream.append(&amp;#x27;new_user&amp;#x27;, template: &amp;quot;users&amp;#x2F;_account_created&amp;quot;)
     else
-      render turbo_stream: turbo_stream.replace(&amp;quot;user_form&amp;quot;, template: &amp;#x27;users&amp;#x2F;_form&amp;#x27;, locals: { user: user})
+      render turbo_stream: turbo_stream.replace(&amp;#x27;new_user&amp;#x27;, template: &amp;#x27;users&amp;#x2F;_form&amp;#x27;, locals: { user: user})
     end
   end
 &lt;/code&gt;&lt;/pre&gt;
@@ -109,10 +116,10 @@ export default class extends Controller {
 &lt;p&gt;This has the desired effect—we re-render the form with validation errors
 if save is unsuccesful, otherwise we redirect to our root page.&lt;/p&gt;
 
-&lt;p&gt;From &lt;a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler"&gt;looking around&lt;/a&gt; it seems like this is an approach others have taken. Feels like Rails Turbo Streams should
-be able to handle either manipulating a turbo frame tag &lt;em&gt;or&lt;/em&gt; redirecting to another page entirely. There's a fairly large chance it already handles this though and I've just missed it!&lt;/p&gt;
+&lt;p&gt;From &lt;a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler"&gt;looking around&lt;/a&gt; it seems like this is an approach others have taken.&lt;/p&gt;
 
-&lt;p&gt;You can find the repo for this &lt;a href="https://github.com/AndyStabler/turbo-redirects/"&gt;here&lt;/a&gt; in case you'd like to play around!&lt;/p&gt;
+&lt;p&gt;You can find the repo for this &lt;a href="https://github.com/AndyStabler/turbo-redirects/"&gt;here&lt;/a&gt;
+in case you'd like to play around. Take a look at the &lt;a href="https://github.com/AndyStabler/turbo-redirects/tree/without-turbo-frame-tag"&gt;without-turbo-frame-tag branch&lt;/a&gt; to see how this can be done without using a &lt;code&gt;turbo-frame-tag&lt;/code&gt;.&lt;/p&gt;
 </content>
   </entry>
   <entry>

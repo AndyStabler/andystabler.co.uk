@@ -35,10 +35,9 @@
       When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.
 
-I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:
-
-  Response...
+I had some bother achieving this with Rails Turbo Streams while my form
+was inside a turbo_frame_tag. When attempting
+to redirect...
       <p><a href="/blog/turbo-stream-redirects/">Continue Reading &rarr;</a></p>
     </div>
   </section>

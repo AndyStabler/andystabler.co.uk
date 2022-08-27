@@ -10,28 +10,24 @@
       <meta content="Turbo Stream Redirects - Blog - Andy Stabler" property="title"></meta><meta content="When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.
 
-I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:
-
-  Response..." property="description"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" itemprop="name"></meta><meta content="When a form is submitted I want to either redirect or, if the
+I had some bother achieving this with Rails Turbo Streams while my form
+was inside a turbo_frame_tag. When attempting
+to redirect..." property="description"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" itemprop="name"></meta><meta content="When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.
 
-I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:
-
-  Response..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" itemprop="image"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" property="og:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
+I had some bother achieving this with Rails Turbo Streams while my form
+was inside a turbo_frame_tag. When attempting
+to redirect..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" itemprop="image"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" property="og:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.
 
-I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:
-
-  Response..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/turbo-stream-redirects/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" name="twitter:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
+I had some bother achieving this with Rails Turbo Streams while my form
+was inside a turbo_frame_tag. When attempting
+to redirect..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/turbo-stream-redirects/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" name="twitter:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.
 
-I had some bother achieving this with Rails Turbo Streams. When attempting
-to redirect I saw the following error:
-
-  Response..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" name="twitter:image"></meta>
+I had some bother achieving this with Rails Turbo Streams while my form
+was inside a turbo_frame_tag. When attempting
+to redirect..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" name="twitter:image"></meta>
 
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
@@ -60,7 +56,8 @@ to redirect I saw the following error:
       <p>When a form is submitted I want to either redirect or, if the
 data submitted was invalid, re-render the form with errors.</p>
 
-<p>I had some bother achieving this with Rails Turbo Streams. When attempting
+<p>I had some bother achieving this with Rails Turbo Streams while my form
+was inside a <code>turbo_frame_tag</code>. When attempting
 to redirect I saw the following error:</p>
 
 <pre><code class="js">  Response has no matching &lt;turbo-frame id=&quot;user_form&quot;&gt; element
@@ -69,8 +66,11 @@ to redirect I saw the following error:</p>
 and so an error is shown, but I want to do a full page redirect. I don't
 care about the turbo frame tag in this scenario.</p>
 
-<p>This is the solution I came up with. It feels a bit clunky, so let me
-know if there's a better way.</p>
+<p>The "right" solution I found was to not use a <code>turbo_frame_tag</code> and instead
+wrap my form in a normal div. The controller can then either replace the contents
+of this div using a turbo stream, or it can do a full page redirect.</p>
+
+<p>If we <em>do</em> need a <code>turbo_frame_tag</code>, then the following work around seems to do the trick. It feels a bit clunky, but maybe that's because a <code>turbo_frame_tag</code> isn't best suited to this use case.</p>
 
 <p>In my example I want to create a user. If the form is successful I want to redirect
 to the root URL, otherwise I want to re-render the user form with validation errors.</p>
@@ -78,7 +78,7 @@ to the root URL, otherwise I want to re-render the user form with validation err
 <p>Here's my form, you can see it's wrapped in a <code>turbo_frame_tag</code>:</p>
 
 <pre><code class="ruby">  # app&#x2F;views&#x2F;users&#x2F;_form.html.erb
-  &lt;%= turbo_frame_tag &#x27;user_form&#x27; do %&gt;
+  &lt;%= turbo_frame_tag dom_id(user) do %&gt;
     &lt;%= form_with(model: user) do |form| %&gt;
       &lt;% if user.errors.any? %&gt;
         &lt;div style=&quot;color: red&quot;&gt;
@@ -111,9 +111,13 @@ to the root URL, otherwise I want to re-render the user form with validation err
     user = User.new(user_params)
 
     if user.save
-      render turbo_stream: turbo_stream.append(&quot;user_form&quot;, template: &quot;users&#x2F;_account_created&quot;)
+      # The following line doesn&#x27;t work as I&#x27;d expect. It results in:
+      #  Response has no matching &lt;turbo-frame id=&quot;new_user&quot;&gt; element
+      #redirect_to root_url
+
+      render turbo_stream: turbo_stream.append(&#x27;new_user&#x27;, template: &quot;users&#x2F;_account_created&quot;)
     else
-      render turbo_stream: turbo_stream.replace(&quot;user_form&quot;, template: &#x27;users&#x2F;_form&#x27;, locals: { user: user})
+      render turbo_stream: turbo_stream.replace(&#x27;new_user&#x27;, template: &#x27;users&#x2F;_form&#x27;, locals: { user: user})
     end
   end
 </code></pre>
@@ -141,10 +145,10 @@ export default class extends Controller {
 <p>This has the desired effect—we re-render the form with validation errors
 if save is unsuccesful, otherwise we redirect to our root page.</p>
 
-<p>From <a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler">looking around</a> it seems like this is an approach others have taken. Feels like Rails Turbo Streams should
-be able to handle either manipulating a turbo frame tag <em>or</em> redirecting to another page entirely. There's a fairly large chance it already handles this though and I've just missed it!</p>
+<p>From <a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler">looking around</a> it seems like this is an approach others have taken.</p>
 
-<p>You can find the repo for this <a href="https://github.com/AndyStabler/turbo-redirects/">here</a> in case you'd like to play around!</p>
+<p>You can find the repo for this <a href="https://github.com/AndyStabler/turbo-redirects/">here</a>
+in case you'd like to play around. Take a look at the <a href="https://github.com/AndyStabler/turbo-redirects/tree/without-turbo-frame-tag">without-turbo-frame-tag branch</a> to see how this can be done without using a <code>turbo-frame-tag</code>.</p>
 
     </section>
     <section class="blog-post-navigation">
