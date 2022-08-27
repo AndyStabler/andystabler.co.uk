@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Turbo Stream Redirects - Blog - Andy Stabler</title>
+      <meta content="Turbo Stream Redirects - Blog - Andy Stabler" property="title"></meta><meta content="When a form is submitted I want to either redirect or, if the
+data submitted was invalid, re-render the form with errors.
+
+I had some bother achieving this with Rails Turbo Streams. When attempting
+to redirect I saw the following error:
+
+  Response..." property="description"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" itemprop="name"></meta><meta content="When a form is submitted I want to either redirect or, if the
+data submitted was invalid, re-render the form with errors.
+
+I had some bother achieving this with Rails Turbo Streams. When attempting
+to redirect I saw the following error:
+
+  Response..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" itemprop="image"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" property="og:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
+data submitted was invalid, re-render the form with errors.
+
+I had some bother achieving this with Rails Turbo Streams. When attempting
+to redirect I saw the following error:
+
+  Response..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/turbo-stream-redirects/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Turbo Stream Redirects - Blog - Andy Stabler" name="twitter:title"></meta><meta content="When a form is submitted I want to either redirect or, if the
+data submitted was invalid, re-render the form with errors.
+
+I had some bother achieving this with Rails Turbo Streams. When attempting
+to redirect I saw the following error:
+
+  Response..." name="twitter:description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" name="twitter:image"></meta>
+
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/atom-one-dark.min.css">
+    <link href="/stylesheets/site-83c9d434.css" rel="stylesheet" />
+    
+    <script src="/javascripts/site-954757c2.js"></script>
+    <script src="https://kit.fontawesome.com/7616acbfe0.js"></script>
+    
+  </head>
+  <body>
+    <section class="header">
+<a href="/">    <img src="/images/icons/andy_icon_3_small.JPG" width="128px" height="128px" class="bio-pic--small" alt="" />
+</a>  <ul class="nav">
+    <li><a href="/">Blog</a></li>
+    <li><a href="/about/">About</a></li>
+  </ul>
+</section>
+
+    <section class="content">
+        <section class="blog-post">
+    <section class="blog-post-header">
+      <h1>Turbo Stream Redirects</h1>
+      <p class="article-published-on">27 Aug 2022</p>
+    </section>
+    <section class="blog-post-content">
+      <p>When a form is submitted I want to either redirect or, if the
+data submitted was invalid, re-render the form with errors.</p>
+
+<p>I had some bother achieving this with Rails Turbo Streams. When attempting
+to redirect I saw the following error:</p>
+
+<pre><code class="js">  Response has no matching &lt;turbo-frame id=&quot;user_form&quot;&gt; element
+</code></pre>
+<p>The new page we're redirecting to doesn't have a matching <code>turbo_frame_tag</code>
+and so an error is shown, but I want to do a full page redirect. I don't
+care about the turbo frame tag in this scenario.</p>
+
+<p>This is the solution I came up with. It feels a bit clunky, so let me
+know if there's a better way.</p>
+
+<p>In my example I want to create a user. If the form is successful I want to redirect
+to the root URL, otherwise I want to re-render the user form with validation errors.</p>
+
+<p>Here's my form, you can see it's wrapped in a <code>turbo_frame_tag</code>:</p>
+
+<pre><code class="ruby">  # app&#x2F;views&#x2F;users&#x2F;_form.html.erb
+  &lt;%= turbo_frame_tag &#x27;user_form&#x27; do %&gt;
+    &lt;%= form_with(model: user) do |form| %&gt;
+      &lt;% if user.errors.any? %&gt;
+        &lt;div style=&quot;color: red&quot;&gt;
+          &lt;h2&gt;&lt;%= pluralize(user.errors.count, &quot;error&quot;) %&gt; prohibited this user from being saved:&lt;&#x2F;h2&gt;
+
+          &lt;ul&gt;
+            &lt;% user.errors.each do |error| %&gt;
+              &lt;li&gt;&lt;%= error.full_message %&gt;&lt;&#x2F;li&gt;
+            &lt;% end %&gt;
+          &lt;&#x2F;ul&gt;
+        &lt;&#x2F;div&gt;
+      &lt;% end %&gt;
+
+      &lt;div&gt;
+        &lt;%= form.label :name, style: &quot;display: block&quot; %&gt;
+        &lt;%= form.text_field :name %&gt;
+      &lt;&#x2F;div&gt;
+
+      &lt;div&gt;
+        &lt;%= form.submit %&gt;
+      &lt;&#x2F;div&gt;
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+</code></pre>
+<p>And here's my controller:</p>
+
+<pre><code class="ruby">  # app&#x2F;controllers&#x2F;users_controller.rb
+  # POST &#x2F;users
+  def create
+    user = User.new(user_params)
+
+    if user.save
+      render turbo_stream: turbo_stream.append(&quot;user_form&quot;, template: &quot;users&#x2F;_account_created&quot;)
+    else
+      render turbo_stream: turbo_stream.replace(&quot;user_form&quot;, template: &#x27;users&#x2F;_form&#x27;, locals: { user: user})
+    end
+  end
+</code></pre>
+<p>If the save is successful, then we append the <code>users/_account_created</code> template to the <code>turbo_frame_tag</code>.</p>
+
+<p>The <code>_account_created</code> partial sets a redirect url value that a stimulus controller detects and redirects the browser to. Here's what <code>users/_account_created</code> looks like:</p>
+
+<pre><code class="ruby">&lt;div data-controller=&quot;redirect&quot; data-redirect-url-value=&quot;&lt;%= root_url %&gt;&quot;&gt;&lt;&#x2F;div&gt;
+</code></pre>
+<p>Our stimulus controller looks like this:</p>
+
+<pre><code class="js">&#x2F;&#x2F; app&#x2F;javascript&#x2F;controllers&#x2F;redirect_controller.js
+import { Controller } from &quot;@hotwired&#x2F;stimulus&quot;
+
+export default class extends Controller {
+  static values = {
+    url: String
+  }
+
+  connect () {
+    window.location.href = this.urlValue
+  }
+}
+</code></pre>
+<p>This has the desired effect—we re-render the form with validation errors
+if save is unsuccesful, otherwise we redirect to our root page.</p>
+
+<p>From <a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler">looking around</a> it seems like this is an approach others have taken. Feels like Rails Turbo Streams should
+be able to handle either manipulating a turbo frame tag <em>or</em> redirecting to another page entirely. There's a fairly large chance it already handles this though and I've just missed it!</p>
+
+<p>You can find the repo for this <a href="https://github.com/AndyStabler/turbo-redirects/">here</a> in case you'd like to play around!</p>
+
+    </section>
+    <section class="blog-post-navigation">
+        <p class="prev-post">
+          Previous post: <a href="/blog/being-honest/">Being Honest</a>
+        </p>
+    </section>
+
+    <section class="links">
+      <a href="/feed.xml"><img src="/images/rss-a018aa79.png" width="20px" height="20px" alt="" /> RSS feed (Atom)</a>
+    </section>
+    <section class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function () {
+        this.page.url = 'http://www.andystabler.co.uk/blog/turbo-stream-redirects/';
+    };
+    (function() {  // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+
+        s.src = '//andystabler.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+    </section>
+  </section>
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
+      <script type="text/javascript"
+     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </section>
+  </body>
+</html>
