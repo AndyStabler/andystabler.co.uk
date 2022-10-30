@@ -5,123 +5,10 @@
   <id>https://andystabler.co.uk/</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
-  <updated>2022-08-27T01:00:00+01:00</updated>
+  <updated>2022-07-02T01:00:00+01:00</updated>
   <author>
     <name>Andy Stabler</name>
   </author>
-  <entry>
-    <title>Turbo Stream Redirects</title>
-    <link rel="alternate" href="/blog/turbo-stream-redirects/"/>
-    <id>http://www.andystabler.co.uk/blog/turbo-stream-redirects/</id>
-    <published>2022-08-27T01:00:00+01:00</published>
-    <updated>2022-08-27T01:00:00+01:00</updated>
-    <author>
-      <name>Andy Stabler</name>
-    </author>
-    <summary type="html">&lt;p&gt;When a form is submitted I want to either redirect or, if the
-data submitted was invalid, re-render the form with errors.&lt;/p&gt;
-
-&lt;p&gt;I had some bother achieving this with Rails Turbo Streams while my form
-was inside a &lt;code&gt;turbo_frame_tag&lt;/code&gt;. When attempting
-to redirect...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;When a form is submitted I want to either redirect or, if the
-data submitted was invalid, re-render the form with errors.&lt;/p&gt;
-
-&lt;p&gt;I had some bother achieving this with Rails Turbo Streams while my form
-was inside a &lt;code&gt;turbo_frame_tag&lt;/code&gt;. When attempting
-to redirect I saw the following error:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  Response has no matching &amp;lt;turbo-frame id=&amp;quot;user_form&amp;quot;&amp;gt; element
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The new page we're redirecting to doesn't have a matching &lt;code&gt;turbo_frame_tag&lt;/code&gt;
-and so an error is shown, but I want to do a full page redirect. I don't
-care about the turbo frame tag in this scenario.&lt;/p&gt;
-
-&lt;p&gt;The "right" solution I found was to not use a &lt;code&gt;turbo_frame_tag&lt;/code&gt; and instead
-wrap my form in a normal div. The controller can then either replace the contents
-of this div using a turbo stream, or it can do a full page redirect.&lt;/p&gt;
-
-&lt;p&gt;If we &lt;em&gt;do&lt;/em&gt; need a &lt;code&gt;turbo_frame_tag&lt;/code&gt;, then the following work around seems to do the trick. It feels a bit clunky, but maybe that's because a &lt;code&gt;turbo_frame_tag&lt;/code&gt; isn't best suited to this use case.&lt;/p&gt;
-
-&lt;p&gt;In my example I want to create a user. If the form is successful I want to redirect
-to the root URL, otherwise I want to re-render the user form with validation errors.&lt;/p&gt;
-
-&lt;p&gt;Here's my form, you can see it's wrapped in a &lt;code&gt;turbo_frame_tag&lt;/code&gt;:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="ruby"&gt;  # app&amp;#x2F;views&amp;#x2F;users&amp;#x2F;_form.html.erb
-  &amp;lt;%= turbo_frame_tag dom_id(user) do %&amp;gt;
-    &amp;lt;%= form_with(model: user) do |form| %&amp;gt;
-      &amp;lt;% if user.errors.any? %&amp;gt;
-        &amp;lt;div style=&amp;quot;color: red&amp;quot;&amp;gt;
-          &amp;lt;h2&amp;gt;&amp;lt;%= pluralize(user.errors.count, &amp;quot;error&amp;quot;) %&amp;gt; prohibited this user from being saved:&amp;lt;&amp;#x2F;h2&amp;gt;
-
-          &amp;lt;ul&amp;gt;
-            &amp;lt;% user.errors.each do |error| %&amp;gt;
-              &amp;lt;li&amp;gt;&amp;lt;%= error.full_message %&amp;gt;&amp;lt;&amp;#x2F;li&amp;gt;
-            &amp;lt;% end %&amp;gt;
-          &amp;lt;&amp;#x2F;ul&amp;gt;
-        &amp;lt;&amp;#x2F;div&amp;gt;
-      &amp;lt;% end %&amp;gt;
-
-      &amp;lt;div&amp;gt;
-        &amp;lt;%= form.label :name, style: &amp;quot;display: block&amp;quot; %&amp;gt;
-        &amp;lt;%= form.text_field :name %&amp;gt;
-      &amp;lt;&amp;#x2F;div&amp;gt;
-
-      &amp;lt;div&amp;gt;
-        &amp;lt;%= form.submit %&amp;gt;
-      &amp;lt;&amp;#x2F;div&amp;gt;
-    &amp;lt;% end %&amp;gt;
-  &amp;lt;% end %&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;And here's my controller:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="ruby"&gt;  # app&amp;#x2F;controllers&amp;#x2F;users_controller.rb
-  # POST &amp;#x2F;users
-  def create
-    user = User.new(user_params)
-
-    if user.save
-      # The following line doesn&amp;#x27;t work as I&amp;#x27;d expect. It results in:
-      #  Response has no matching &amp;lt;turbo-frame id=&amp;quot;new_user&amp;quot;&amp;gt; element
-      #redirect_to root_url
-
-      render turbo_stream: turbo_stream.append(&amp;#x27;new_user&amp;#x27;, template: &amp;quot;users&amp;#x2F;_account_created&amp;quot;)
-    else
-      render turbo_stream: turbo_stream.replace(&amp;#x27;new_user&amp;#x27;, template: &amp;#x27;users&amp;#x2F;_form&amp;#x27;, locals: { user: user})
-    end
-  end
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If the save is successful, then we append the &lt;code&gt;users/_account_created&lt;/code&gt; template to the &lt;code&gt;turbo_frame_tag&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The &lt;code&gt;_account_created&lt;/code&gt; partial sets a redirect url value that a stimulus controller detects and redirects the browser to. Here's what &lt;code&gt;users/_account_created&lt;/code&gt; looks like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="ruby"&gt;&amp;lt;div data-controller=&amp;quot;redirect&amp;quot; data-redirect-url-value=&amp;quot;&amp;lt;%= root_url %&amp;gt;&amp;quot;&amp;gt;&amp;lt;&amp;#x2F;div&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Our stimulus controller looks like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;&amp;#x2F;&amp;#x2F; app&amp;#x2F;javascript&amp;#x2F;controllers&amp;#x2F;redirect_controller.js
-import { Controller } from &amp;quot;@hotwired&amp;#x2F;stimulus&amp;quot;
-
-export default class extends Controller {
-  static values = {
-    url: String
-  }
-
-  connect () {
-    window.location.href = this.urlValue
-  }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This has the desired effect—we re-render the form with validation errors
-if save is unsuccesful, otherwise we redirect to our root page.&lt;/p&gt;
-
-&lt;p&gt;From &lt;a href="https://discuss.hotwired.dev/t/redirect-after-turbo-stream-response/2303/3?u=andystabler"&gt;looking around&lt;/a&gt; it seems like this is an approach others have taken.&lt;/p&gt;
-
-&lt;p&gt;You can find the repo for this &lt;a href="https://github.com/AndyStabler/turbo-redirects/"&gt;here&lt;/a&gt;
-in case you'd like to play around. Take a look at the &lt;a href="https://github.com/AndyStabler/turbo-redirects/pull/1/files"&gt;without-turbo-frame-tag branch&lt;/a&gt; to see how this can be done without using a &lt;code&gt;turbo-frame-tag&lt;/code&gt;.&lt;/p&gt;
-</content>
-  </entry>
   <entry>
     <title>Being Honest</title>
     <link rel="alternate" href="/blog/being-honest/"/>
@@ -1370,6 +1257,1000 @@ follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target
   &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" target="_blank"&gt;The MDN web docs&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="https://www.ecma-international.org/ecma-262/#sec-typedarray-objects" target="_blank"&gt;The ECMAScript specification&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Test Driven Development</title>
+    <link rel="alternate" href="/blog/tdd/"/>
+    <id>http://www.andystabler.co.uk/blog/tdd/</id>
+    <published>2017-04-18T01:00:00+01:00</published>
+    <updated>2017-04-18T01:00:00+01:00</updated>
+    <author>
+      <name>Andy Stabler</name>
+    </author>
+    <summary type="html">&lt;p&gt;Welcome to &lt;em&gt;Container Industries Ltd&lt;/em&gt;. As the new engineer here you've been assigned the job of developing the company's container functionality.&lt;/p&gt;
+
+&lt;p&gt;The following requirements have made there way over to your desk:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Items can be added to a container&lt;/li&gt;
+&lt;/ol&gt;</summary>
+    <content type="html">&lt;p&gt;Welcome to &lt;em&gt;Container Industries Ltd&lt;/em&gt;. As the new engineer here you've been assigned the job of developing the company's container functionality.&lt;/p&gt;
+
+&lt;p&gt;The following requirements have made there way over to your desk:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Items can be added to a container&lt;/li&gt;
+  &lt;li&gt;Items are not added to a container if doing so would exceed the container's weight limit.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Seems nice and simple. Let's use this as an excuse to explore the world of Test Driven Development (TDD) together. There's a really nice rhythm I want to get across in the this post:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Write the tests first&lt;/li&gt;
+  &lt;li&gt;Run the tests often&lt;/li&gt;
+  &lt;li&gt;Only start adding new functionality when the tests are passing&lt;/li&gt;
+  &lt;li&gt;When the tests are failing, your sole intention should be to get them to a passing state. Sometimes this means fudging the code, but that's OK; it's all about taking tiny steps and iterating frequently to meet the requirements&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id="items-can-be-added-to-a-container"&gt;1. Items can be added to a container&lt;/h2&gt;
+
+&lt;p&gt;Here's the initial test.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# container_spec.rb
+describe Container do
+  it &amp;quot;can add items&amp;quot; do
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After running it we get:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+&amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;dev&amp;#x2F;Ruby&amp;#x2F;tdd&amp;#x2F;container_spec.rb:2:in `&amp;lt;top (required)&amp;gt;&amp;#x27;: uninitialized constant Container (NameError)
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;configuration.rb:1435:in `load&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;configuration.rb:1435:in `block in load_spec_files&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;configuration.rb:1433:in `each&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;configuration.rb:1433:in `load_spec_files&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;runner.rb:100:in `setup&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;runner.rb:86:in `run&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;runner.rb:71:in `run&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;lib&amp;#x2F;rspec&amp;#x2F;core&amp;#x2F;runner.rb:45:in `invoke&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;gems&amp;#x2F;rspec-core-3.5.4&amp;#x2F;exe&amp;#x2F;rspec:4:in `&amp;lt;top (required)&amp;gt;&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;bin&amp;#x2F;rspec:22:in `load&amp;#x27;
+  from &amp;#x2F;Users&amp;#x2F;andy&amp;#x2F;.gem&amp;#x2F;ruby&amp;#x2F;2.4.0&amp;#x2F;bin&amp;#x2F;rspec:22:in `&amp;lt;main&amp;gt;&amp;#x27;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Looks like we need to create the &lt;code&gt;Container&lt;/code&gt; definition. We are going to be iterating frequently, so let's do the simplest thing we can right now to get the tests to pass. We'll add the &lt;code&gt;Container&lt;/code&gt; definition right at the top of the spec file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+end
+describe Container do
+  it &amp;quot;can add items&amp;quot; do
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+.
+
+Finished in 0.00091 seconds (files took 0.66202 seconds to load)
+1 example, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our first passing test! &lt;em&gt;Yess&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://media.giphy.com/media/nXxOjZrbnbRxS/giphy.gif" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;It isn't actually asserting anything though, so let's start adding &lt;em&gt;real&lt;/em&gt; tests.&lt;/p&gt;
+
+&lt;p&gt;How about we work backwards, writing the test under the assumption that all the variables we need already exist?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+end
+describe Container do
+  it &amp;quot;can add items&amp;quot; do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+F
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: container.add pasta
+
+     NameError:
+       undefined local variable or method `container&amp;#x27; for #&amp;lt;RSpec::ExampleGroups::Container:0x007fcafe150f60&amp;gt;
+       Did you mean?  contain_exactly
+     # .&amp;#x2F;container_spec.rb:5:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00065 seconds (files took 1.28 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:4 # Container can add items
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Alright, looks like we need to define the &lt;code&gt;container&lt;/code&gt; attribute in the test.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+end
+describe Container do
+  let(:container) { Container.new }
+
+  it &amp;quot;can add items&amp;quot; do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+F
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: container.add pasta
+
+     NameError:
+       undefined local variable or method `pasta&amp;#x27; for #&amp;lt;RSpec::ExampleGroups::Container:0x007fd3a1974d58&amp;gt;
+     # .&amp;#x2F;container_spec.rb:7:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00071 seconds (files took 0.27835 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:6 # Container can add items
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;…and we need to define &lt;code&gt;pasta&lt;/code&gt; and &lt;code&gt;cake&lt;/code&gt; too.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+describe Container do
+  let(:container) { Container.new }
+  let(:pasta) { &amp;quot;pasta&amp;quot; }
+  let(:cake) { &amp;quot;cake&amp;quot; }
+
+  it &amp;quot;can add items&amp;quot; do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+F
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: container.add pasta
+
+     NoMethodError:
+       undefined method `add&amp;#x27; for #&amp;lt;Container:0x007f969fa0ba58&amp;gt;
+     # .&amp;#x2F;container_spec.rb:9:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00078 seconds (files took 0.27569 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:8 # Container can add items
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The test is failing because we haven't implemented the &lt;code&gt;add&lt;/code&gt; method. So let's add that next.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  def add(item)
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+F
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: expect(container.items).to include pasta
+
+     NoMethodError:
+       undefined method `items&amp;#x27; for #&amp;lt;Container:0x007fce65a16b08&amp;gt;
+     # .&amp;#x2F;container_spec.rb:13:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00068 seconds (files took 0.25235 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:10 # Container can add items
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, it's time to tell &lt;code&gt;Container&lt;/code&gt; that it has some items&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+  def add(item)
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+F
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: expect(container.items).to include pasta
+       expected nil to include &amp;quot;pasta&amp;quot;, but it does not respond to `include?`
+     # .&amp;#x2F;container_spec.rb:14:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.25862 seconds (files took 0.32494 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:11 # Container can add items
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This test is failing because our &lt;code&gt;add&lt;/code&gt; method isn't implemented yet. So let's tackle that next.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+.
+
+Finished in 0.00198 seconds (files took 0.22488 seconds to load)
+1 example, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here's what &lt;code&gt;container_spec.rb&lt;/code&gt; looks like so far:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item
+  end
+end
+describe Container do
+  let(:container) { Container.new }
+  let(:pasta) { &amp;quot;pasta&amp;quot; }
+  let(:cake) { &amp;quot;cake&amp;quot; }
+
+  it &amp;quot;can add items&amp;quot; do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id="items-are-not-added-to-a-container-if-doing-so-would-exceed-the-containers-weight-limit"&gt;2. Items are not added to a container if doing so would exceed the container's weight limit&lt;/h2&gt;
+
+&lt;p&gt;OK, here's my test:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;  # ...
+  it &amp;quot;does not add items that would exceed the weight limit&amp;quot; do
+    container.add pasta
+    container.add house
+    expect(container.items).to include pasta
+    expect(container.items).to_not include house
+  end
+  # ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+.F
+
+Failures:
+
+  1) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error: container.add house
+
+     NameError:
+       undefined local variable or method `house&amp;#x27; for #&amp;lt;RSpec::ExampleGroups::Container:0x007fe2a68d2cd8&amp;gt;
+     # .&amp;#x2F;container_spec.rb:26:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00256 seconds (files took 0.24082 seconds to load)
+2 examples, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:24 # Container does not add items that would exceed the weight limit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This fails because we haven't told the test what a house is.&lt;/p&gt;
+
+&lt;p&gt;What does it mean to be a house? Let's say it means a string with the value "house" for now.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;describe Container do
+  let(:container) { Container.new }
+  let(:pasta) { &amp;quot;pasta&amp;quot; }
+  let(:cake) { &amp;quot;cake&amp;quot; }
+  let(:house) { &amp;quot;house&amp;quot; }
+
+  # ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+.F
+
+Failures:
+
+  1) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error: expect(container.items).to_not include house
+       expected [&amp;quot;pasta&amp;quot;, &amp;quot;house&amp;quot;] not to include &amp;quot;house&amp;quot;
+     # .&amp;#x2F;container_spec.rb:29:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.1118 seconds (files took 0.44737 seconds to load)
+2 examples, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:25 # Container does not add items that would exceed the weight limit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cool, a proper failure! The house &lt;em&gt;was&lt;/em&gt; added to the container, when instead we should have cast it asunder.&lt;/p&gt;
+
+&lt;p&gt;What's the quickest way we can get the test to pass? Before we figure out the logic for deciding if we should add an item based on its weight, let's get the tests green by only adding the item if it isn't equal to "house".&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item == &amp;quot;house&amp;quot;
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+..
+
+Finished in 0.00256 seconds (files took 0.21494 seconds to load)
+2 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Whoa, the tests pass!&lt;/p&gt;
+
+&lt;p&gt;That's a bit weird, right? We fudged the code to make the tests pass. The key thing here is that we have a really tight red, green, refactor cycle; we write the tests, do the bear minimum to get them passing, then refactor to clean things up. We're doing the smallest thing we can to get to a "safe" (tests passing) state, before adding more code. That way we don't stray too far away from the safety of passing tests and don't get sidetracked implementing everything at once.&lt;/p&gt;
+
+&lt;p&gt;Now that the tests are passing we can refactor our &lt;code&gt;add&lt;/code&gt; method to take into account an &lt;code&gt;item&lt;/code&gt;'s weight.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+  end
+
+  private
+
+  def item_too_heavy? item
+    item == &amp;quot;house&amp;quot;
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+..
+
+Finished in 0.00367 seconds (files took 0.24654 seconds to load)
+2 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We've extracted the logic that checks if an item is too heavy into its own method. The tests pass, but we don't really have any way to define how heavy an item is. Let's amend the tests to specify the weights of items.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+describe Container do
+  let(:container) { Container.new }
+  let(:pasta) { Item.new(5) }
+  let(:cake) { Item.new(5) }
+  let(:house) { Item.new(20) }
+
+  # ...
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+FF
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: let(:pasta) { Item.new(5) }
+
+     NameError:
+       uninitialized constant Item
+     # .&amp;#x2F;container_spec.rb:20:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:25:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+  2) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error: let(:pasta) { Item.new(5) }
+
+     NameError:
+       uninitialized constant Item
+     # .&amp;#x2F;container_spec.rb:20:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:32:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00088 seconds (files took 0.23031 seconds to load)
+2 examples, 2 failures
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:24 # Container can add items
+rspec .&amp;#x2F;container_spec.rb:31 # Container does not add items that would exceed the weight limit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The tests fail because we haven't defined &lt;code&gt;Item&lt;/code&gt; yet. Let's do that now (still inside &lt;code&gt;container_spec.rb&lt;/code&gt; for now):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+class Item
+  attr_reader :weight
+  def initialize(weight)
+    @weight = weight
+  end
+end
+describe Container do
+  let(:container) { Container.new }
+  let(:pasta) { Item.new(5) }
+  let(:cake) { Item.new(5) }
+  let(:house) { Item.new(20) }
+
+  # ...
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+.F
+
+Failures:
+
+  1) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error: expect(container.items).to_not include house
+
+       expected [#&amp;lt;Item:0x007fa7481ab5e8 @weight=5&amp;gt;, #&amp;lt;Item:0x007fa7481ab138 @weight=20&amp;gt;] not to include #&amp;lt;Item:0x007fa7481ab138 @weight=20&amp;gt;
+       Diff:
+       @@ -1,2 +1,2 @@
+       -[#&amp;lt;Item:0x007fa7481ab138 @weight=20&amp;gt;]
+       +[#&amp;lt;Item:0x007fa7481ab5e8 @weight=5&amp;gt;, #&amp;lt;Item:0x007fa7481ab138 @weight=20&amp;gt;]
+     # .&amp;#x2F;container_spec.rb:41:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.1253 seconds (files took 0.26481 seconds to load)
+2 examples, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:37 # Container does not add items that would exceed the weight limit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Our implementation of the &lt;code&gt;item_too_heavy?&lt;/code&gt; method only checks if an &lt;code&gt;item&lt;/code&gt; is equal to "house". Since we're now using &lt;code&gt;Items&lt;/code&gt;, and not strings, this test fails! Let's perform a similar check, but this time look for an &lt;code&gt;item&lt;/code&gt;'s weight being equal to 20 (the same as the house).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+  end
+
+  private
+
+  def item_too_heavy? item
+    item.weight == 20
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+..
+
+Finished in 0.00213 seconds (files took 0.22381 seconds to load)
+2 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we have some passing tests we can refactor our &lt;code&gt;item_too_heavy?&lt;/code&gt; method. The container needs to know about its weight limit to check if an item is too heavy.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items
+
+  def initialize
+    @items = []
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight_limit = 19
+    item.weight &amp;gt; weight_limit
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec test.rb
+..
+
+Finished in 0.00234 seconds (files took 0.22688 seconds to load)
+2 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cool, we have our &lt;code&gt;item_too_heavy?&lt;/code&gt; method taking in to account the container's weight limit.
+Since the tests are passing, we can look into cleaning this method up. One thing that jumps out here is that we aren't storing what the container's current weight is. That's important, so let's write a test for it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+describe Container do
+  # ...
+
+  it &amp;quot;updates the weight when an item is added&amp;quot; do
+    container.add pasta
+    expect(container.weight).to eq pasta.weight
+    container.add cake
+    expect(container.weight).to eq pasta.weight + cake.weight
+  end
+end
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+..F
+
+Failures:
+
+  1) Container updates the weight when an item is added
+     Failure&amp;#x2F;Error: expect(container.weight).to eq pasta.weight
+
+     NoMethodError:
+       undefined method `weight&amp;#x27; for #&amp;lt;Container:0x007fae3f1764d0&amp;gt;
+     # .&amp;#x2F;container_spec.rb:47:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.0026 seconds (files took 0.23364 seconds to load)
+3 examples, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:45 # Container updates the weight when an item is added
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;Container&lt;/code&gt; class doesn't know about its current weight, so the test is failing. Let's add a &lt;code&gt;weight&lt;/code&gt; attribute to the &lt;code&gt;Container&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items, :weight
+
+  def initialize
+    @items = []
+    @weight = 0
+  end
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight_limit = 19
+    weight + item.weight &amp;gt; weight_limit
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+..F
+
+Failures:
+
+  1) Container updates the weight when an item is added
+     Failure&amp;#x2F;Error: expect(container.weight).to eq pasta.weight
+
+       expected: 5
+            got: 0
+
+       (compared using ==)
+     # .&amp;#x2F;container_spec.rb:48:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.16023 seconds (files took 0.26932 seconds to load)
+3 examples, 1 failure
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:46 # Container updates the weight when an item is added
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Although we're storing the weight on the container, we're never updating the value when we add items. This is why we expected a weight of 5 when it was actually 0.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  # ...
+
+  def add(item)
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+    @weight += item.weight
+  end
+
+  # ...
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.00337 seconds (files took 0.26162 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point our &lt;code&gt;add&lt;/code&gt; method is looking OK, and I'm happy to move on. We can now look into refactoring other parts of the class. I think &lt;code&gt;item_too_heavy?&lt;/code&gt; would be a good next step. It breaks the &lt;a href="https://en.wikipedia.org/wiki/Single_responsibility_principle" target="_blank"&gt;Single Responsibilty Principle&lt;/a&gt; in that it's responsible for setting the weight limit of the container &lt;em&gt;and&lt;/em&gt; checking if an item is too heavy. By extracting this assignment into the constructor we are ensuring that &lt;code&gt;item_too_heavy?&lt;/code&gt; only has one reason to change.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items, :weight
+
+  def initialize
+    @items = []
+    @weight = 0
+    @weight_limit = 19
+  end
+
+  def add item
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+    @weight += item.weight
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight + item.weight &amp;gt; @weight_limit
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.00394 seconds (files took 0.21574 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That's a bit nicer, but I'm still not really happy. We're hard coding the weight limit of our containers, which introduces a reason for the class to change in the future. Say Barry wants to update the weight limit to 15, he might be tempted to dive into the class and change the value. This introduces a risk that he'll accidentally break something while he's in there (you &lt;em&gt;know&lt;/em&gt; what he's like). A more robust approach would be to inject the value of the container weight limit, that way Barry can have containers of varying weight limits without having to modify the &lt;code&gt;Container&lt;/code&gt; class. Score!&lt;/p&gt;
+
+&lt;p&gt;Let's update the tests to inject the weight limit into the &lt;code&gt;container&lt;/code&gt; when we instantiate it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;describe Container do
+  let(:container) { Container.new(weight_limit: 19) }
+  let(:pasta) { Item.new(5) }
+  let(:cake) { Item.new(5) }
+  let(:house) { Item.new(20) }
+
+  # ...
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+FFF
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error:
+       def initialize
+         @items = []
+         @weight = 0
+         @weight_limit = 19
+       end
+
+     ArgumentError:
+       wrong number of arguments (given 1, expected 0)
+     # .&amp;#x2F;container_spec.rb:4:in `initialize&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `new&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:34:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+  2) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error:
+       def initialize
+         @items = []
+         @weight = 0
+         @weight_limit = 19
+       end
+
+     ArgumentError:
+       wrong number of arguments (given 1, expected 0)
+     # .&amp;#x2F;container_spec.rb:4:in `initialize&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `new&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:41:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+  3) Container updates the weight when an item is added
+     Failure&amp;#x2F;Error:
+       def initialize
+         @items = []
+         @weight = 0
+         @weight_limit = 19
+       end
+
+     ArgumentError:
+       wrong number of arguments (given 1, expected 0)
+     # .&amp;#x2F;container_spec.rb:4:in `initialize&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `new&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:28:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:48:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00117 seconds (files took 0.21716 seconds to load)
+3 examples, 3 failures
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:33 # Container can add items
+rspec .&amp;#x2F;container_spec.rb:40 # Container does not add items that would exceed the weight limit
+rspec .&amp;#x2F;container_spec.rb:47 # Container updates the weight when an item is added
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Cool, we broke everything. Let's update the &lt;code&gt;initialize&lt;/code&gt; method in &lt;code&gt;Container&lt;/code&gt; to accept the weight limit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items, :weight
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  # ...
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.01101 seconds (files took 0.24302 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now that the tests are passing, we can perform more clean up. For example, we used a named argument for &lt;code&gt;weight_limit&lt;/code&gt; in &lt;code&gt;Container&lt;/code&gt;. Let's do the same thing for &lt;code&gt;Item&lt;/code&gt; and its &lt;code&gt;weight&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;First, the tests…&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+describe Container do
+  let(:container) { Container.new(weight_limit: 19) }
+  let(:pasta) { Item.new(weight: 5) }
+  let(:cake) { Item.new(weight: 5) }
+  let(:house) { Item.new(weight: 20) }
+
+  # ...
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+FFF
+
+Failures:
+
+  1) Container can add items
+     Failure&amp;#x2F;Error: weight + item.weight &amp;gt; @weight_limit
+
+     TypeError:
+       Hash can&amp;#x27;t be coerced into Integer
+     # .&amp;#x2F;container_spec.rb:18:in `+&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:18:in `item_too_heavy?&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:11:in `add&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:34:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+  2) Container does not add items that would exceed the weight limit
+     Failure&amp;#x2F;Error: weight + item.weight &amp;gt; @weight_limit
+
+     TypeError:
+       Hash can&amp;#x27;t be coerced into Integer
+     # .&amp;#x2F;container_spec.rb:18:in `+&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:18:in `item_too_heavy?&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:11:in `add&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:41:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+  3) Container updates the weight when an item is added
+     Failure&amp;#x2F;Error: weight + item.weight &amp;gt; @weight_limit
+
+     TypeError:
+       Hash can&amp;#x27;t be coerced into Integer
+     # .&amp;#x2F;container_spec.rb:18:in `+&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:18:in `item_too_heavy?&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:11:in `add&amp;#x27;
+     # .&amp;#x2F;container_spec.rb:48:in `block (2 levels) in &amp;lt;top (required)&amp;gt;&amp;#x27;
+
+Finished in 0.00106 seconds (files took 0.29553 seconds to load)
+3 examples, 3 failures
+
+Failed examples:
+
+rspec .&amp;#x2F;container_spec.rb:33 # Container can add items
+rspec .&amp;#x2F;container_spec.rb:40 # Container does not add items that would exceed the weight limit
+rspec .&amp;#x2F;container_spec.rb:47 # Container updates the weight when an item is added
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can fix up the &lt;code&gt;Item&lt;/code&gt; class by updating the &lt;code&gt;initialize&lt;/code&gt; method, just like we did for the &lt;code&gt;Container&lt;/code&gt; class.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# ...
+class Item
+  attr_reader :weight
+  def initialize(weight:)
+    @weight = weight
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.01256 seconds (files took 0.25995 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="time-to-refactor"&gt;Time to refactor!&lt;/h3&gt;
+
+&lt;p&gt;This is what our &lt;code&gt;Container&lt;/code&gt;'s &lt;code&gt;item_too_heavy?&lt;/code&gt; method currently looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;def item_too_heavy? item
+  weight + item.weight &amp;gt; @weight_limit
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Notice that we aren't using an accessor method to get the weight limit; we are calling &lt;code&gt;@weight_limit&lt;/code&gt; to access it directly. Although this is &lt;em&gt;fine&lt;/em&gt; here, it's generally best to use an accessor because it changes the statement from calling data (&lt;code&gt;@weight_limit&lt;/code&gt;) to calling behaviour (&lt;code&gt;weight_limit&lt;/code&gt;, the &lt;code&gt;attr_reader&lt;/code&gt; method). This is useful because it means there is one place in our code that defines what it means to be a &lt;code&gt;weight_limit&lt;/code&gt;. This perhaps sounds pedantic, but what if (for safety reasons) there was an update to weight limits, which meant that they were reduced by 5 when the inspectors were around. We would need to find everywhere we were calling the data &lt;code&gt;@weight_limit&lt;/code&gt; and subtract 5 if the inspectors were near. We'd be duplicating behaviour and it'd be likely that something would break. By using an accessor method we could simply override the &lt;code&gt;weight_limit&lt;/code&gt; method to include the suitable logic, and our other methods that relied on the accessor would not need to change.&lt;/p&gt;
+
+&lt;p&gt;Let's make use of Ruby's accessor methods to get the weight limit.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items, :weight, :weight_limit
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  def add item
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+    @weight += item.weight
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight + item.weight &amp;gt; weight_limit
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.00201 seconds (files took 0.13739 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While we're on removing unnecessary direct calls to instance variables, how about we clean up the &lt;code&gt;add&lt;/code&gt; method by replacing&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;@weight += item.weight
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;with a call to an accessor method too?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;class Container
+  attr_reader :items, :weight, :weight_limit
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  def add item
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+    self.weight += item.weight
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight + item.weight &amp;gt; weight_limit
+  end
+
+  def weight=(value)
+    @weight = value
+  end
+end
+# ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.00586 seconds (files took 0.28069 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At this point, our &lt;code&gt;container_spec.rb&lt;/code&gt; file is getting pretty &lt;em&gt;hefty&lt;/em&gt;, so let's extract out the classes into their own files.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="ruby"&gt;# container.rb
+class Container
+  attr_reader :items, :weight, :weight_limit
+
+  def initialize(weight_limit:)
+    @items = []
+    @weight = 0
+    @weight_limit = weight_limit
+  end
+
+  def add item
+    items &amp;lt;&amp;lt; item unless item_too_heavy? item
+    self.weight += item.weight
+  end
+
+  private
+
+  def item_too_heavy? item
+    weight + item.weight &amp;gt; weight_limit
+  end
+
+  def weight=(value)
+    @weight = value
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="ruby"&gt;# item.rb
+class Item
+  attr_reader :weight
+  def initialize(weight:)
+    @weight = weight
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="ruby"&gt;# container_spec.rb
+require &amp;quot;.&amp;#x2F;container&amp;quot;
+require &amp;quot;.&amp;#x2F;item&amp;quot;
+
+describe Container do
+  let(:container) { Container.new(weight_limit: 19) }
+  let(:pasta) { Item.new(weight: 5) }
+  let(:cake) { Item.new(weight: 5) }
+  let(:house) { Item.new(weight: 20) }
+
+  it &amp;quot;can add items&amp;quot; do
+    container.add pasta
+    container.add cake
+    expect(container.items).to include pasta
+    expect(container.items).to include cake
+  end
+
+  it &amp;quot;does not add items that would exceed the weight limit&amp;quot; do
+    container.add pasta
+    container.add house
+    expect(container.items).to include pasta
+    expect(container.items).to_not include house
+  end
+
+  it &amp;quot;updates the weight when an item is added&amp;quot; do
+    container.add pasta
+    expect(container.weight).to eq pasta.weight
+    container.add cake
+    expect(container.weight).to eq (pasta.weight + cake.weight)
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class="sh"&gt;$ rspec container_spec.rb
+...
+
+Finished in 0.00203 seconds (files took 0.11261 seconds to load)
+3 examples, 0 failures
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;Amazing&lt;/em&gt;, the tests still pass! Container Industries Ltd are proud of your hard work and you've been rewarded with an almost &lt;em&gt;brand new&lt;/em&gt; tupperware container.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="/images/tdd/tupperware-885f2d36.jpg" class="blog-post-image" width="200px" alt="" /&gt;&lt;/p&gt;
+
+&lt;p&gt;I really enjoy the TDD approach. In the past I've found myself trying to implement all the features at once and getting in too deep quite early on. In the end the code coverage was usually not as high and the code quality was  lower than when I used TDD.&lt;/p&gt;
+
+&lt;p&gt;Do you use TDD regularly? What do you think of it? Do you use an alternative approach?&lt;/p&gt;
 </content>
   </entry>
 </feed>
