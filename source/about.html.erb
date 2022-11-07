@@ -14,24 +14,6 @@ title: "Andy Stabler"
       I'm also an engineering mentor. I have limited slots available, but please get in touch if you would like advice
     or help in progressing your career in software engineering.
     </p>
-    <nav class="social-links">
-      <ul>
-        <li>
-          <% link_to "https://github.com/AndyStabler", class: "github" do %>
-            <i class="fab fa-github"></i>
-          <% end %>
-        </li>
-        <li>
-          <% link_to "https://twitter.com/andy_stabler", class: "twitter" do %>
-            <i class="fab fa-twitter"></i>
-          <% end %>
-        </li>
-        <li>
-          <% link_to "mailto:sdolta@gmail.com?Subject=Hey!", class: "email", target: "_blank" do %>
-            <i class="far fa-envelope"></i>
-          <% end %>
-        </li>
-      </ul>
-    </nav>
+    <%= partial "partials/social_links" %>
   </section>
 </section>
