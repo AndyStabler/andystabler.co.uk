@@ -5,10 +5,46 @@
   <id>https://andystabler.co.uk/</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
-  <updated>2023-04-22T01:00:00+01:00</updated>
+  <updated>2024-01-04T00:00:00+00:00</updated>
   <author>
     <name>Andy Stabler</name>
   </author>
+  <entry>
+    <title>2024 Intentions</title>
+    <link rel="alternate" href="/blog/2024-intentions/"/>
+    <id>http://www.andystabler.co.uk/blog/2024-intentions/</id>
+    <published>2024-01-04T00:00:00+00:00</published>
+    <updated>2024-01-04T00:00:00+00:00</updated>
+    <author>
+      <name>Andy Stabler</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;img src="/images/2024-intentions/pup-4283391a.jpg" class="blog-post-image" alt="An image of Pup, the Jack Russell Terrier. She's quite old and lumpy now. She is fast asleep on the floor and looks a bit like a loaf of bread."&gt;&lt;/p&gt;
+
+&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you'd like to make. On the other hand, it’s very cold and dark outside (up here in the northern...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;img src="/images/2024-intentions/pup-4283391a.jpg" class="blog-post-image" alt="An image of Pup, the Jack Russell Terrier. She's quite old and lumpy now. She is fast asleep on the floor and looks a bit like a loaf of bread." /&gt;&lt;/p&gt;
+
+&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you'd like to make. On the other hand, it’s very cold and dark outside (up here in the northern hemisphere) and it feels unfair to expect anything other than to continue overeating and napping. On the other hand, (I have three hands in this analogy) it’s easy to get in a rut during winter and having a reset right in the middle can be useful in getting out of it.&lt;/p&gt;
+
+&lt;p&gt;With all this in mind, and with my three hands firmly in my pockets, I’ve decided on an intention for 2024 that is to be more direct with people. I’m absolutely dreadful at having awkward conversations and most of the time I end up telling people what they want to hear. I’m a classic People Pleaser. It’s not always a bad thing, but there have been many occasions where not being direct has resulted in me being frustrated and led to an outcome that isn’t useful for anybody. Here’s a made up example:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;I hired someone to come out and paint my fence. They said they’d be here at 2pm on Tuesday&lt;/li&gt;
+  &lt;li&gt;They did not show up&lt;/li&gt;
+  &lt;li&gt;I waited a week to send them a message saying “Hi, do you think you would have time to come out and look at the fence this week? No worries if not!”&lt;/li&gt;
+  &lt;li&gt;When they eventually turned up, they didn’t do a great job (just one coat of paint)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The outcome is that I feel REALLY ANGRY, but I say “That’s great, thank you!” to the painter. I’m grumpy for a few weeks and then end up having to paint the fence myself. I can imagine someone similar to me (but perhaps more feisty), venting their anger by leaving a negative review, which wouldn’t really be fair since the painter wasn’t told about the issue and not given a chance to fix it.&lt;/p&gt;
+
+&lt;p&gt;What if, instead, I had called the painter when they didn’t show up and said “Hi, Paul The Painter, what time are you getting here today? Tomorrow works fine. Please give me notice if you can’t make it.”? And when they had just done one coat of paint, what if I’d said “You’ve done one coat of paint, but quoted for two. When will you be back to finish it?”&lt;/p&gt;
+
+&lt;p&gt;Those are two direct comments for me to make that would prevent resentment and frustration bubbling away inside. I think that’s what I’d like to focus on. You can be direct while being perfectly polite and friendly.&lt;/p&gt;
+
+&lt;p&gt;Like I say, I’m naff at being direct and I’m going to get it wrong lots of times before it becomes something I’m comfortable with, but I think it will help me to develop more meaningful relationships, which is something I’m quite excited by.&lt;/p&gt;
+
+&lt;p&gt;Happy New Year and please remember that it’s still winter and you should be focusing on staying soft and warm for a couple more months. No worries if not though!&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Forgetting To Think</title>
     <link rel="alternate" href="/blog/forgetting-to-think/"/>
@@ -1111,184 +1147,6 @@ follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target
   &lt;/li&gt;
   &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" target="_blank"&gt;The MDN web docs&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="https://www.ecma-international.org/ecma-262/#sec-proxy-object-internal-methods-and-internal-slots" target="_blank"&gt;The ECMAScript specification&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Typed Arrays in ECMAScript</title>
-    <link rel="alternate" href="/blog/typed-arrays/"/>
-    <id>http://www.andystabler.co.uk/blog/typed-arrays/</id>
-    <published>2018-02-28T00:00:00+00:00</published>
-    <updated>2018-02-28T00:00:00+00:00</updated>
-    <author>
-      <name>Andy Stabler</name>
-    </author>
-    <summary type="html">&lt;h2 id="what-are-they"&gt;What are they?&lt;/h2&gt;
-
-&lt;p&gt;Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
-is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
-we'll...&lt;/p&gt;</summary>
-    <content type="html">&lt;h2 id="what-are-they"&gt;What are they?&lt;/h2&gt;
-
-&lt;p&gt;Typed arrays provide a way to quickly and easily manipulate the raw data stored inside a binary data buffer. This
-is really useful for processing audio and video data. They're similar to arrays, but with some subtle differences
-we'll cover in the &lt;a href="#how-are-they-different-from-normal-arrays"&gt;How are they different from normal arrays?&lt;/a&gt; section.&lt;/p&gt;
-
-&lt;h2 id="how-do-they-work"&gt;How do they work?&lt;/h2&gt;
-
-&lt;p&gt;To get an understanding of typed arrays, let's look at the following areas:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href="#numeric-data-types"&gt;Numeric data types&lt;/a&gt; - a way of representing the data stored in an array buffer&lt;/li&gt;
-  &lt;li&gt;&lt;a href="#array-buffers"&gt;Array Buffers&lt;/a&gt; – where the data is stored&lt;/li&gt;
-  &lt;li&gt;&lt;a href="#data-views"&gt;Data Views&lt;/a&gt; – reading and writing the data in a typed array&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id="numeric-data-types"&gt;Numeric data types&lt;/h3&gt;
-
-&lt;p&gt;Numbers are stored in a 64-bit floating point format in JavaScript, which isn't particularly efficient if you only
-need to represent an 8-bit integer (you're wasting 56 bits!).&lt;/p&gt;
-
-&lt;p&gt;Numeric types give us the ability to allocate only the memory we need, which makes mathematical operations on the
-data a lot more speedy. For example, if you use an &lt;code&gt;int8&lt;/code&gt; typed array, then each element in the
-array will take up 8 bits.&lt;/p&gt;
-
-&lt;p&gt;The following 8 numeric types are available:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;int8&lt;/li&gt;
-  &lt;li&gt;uint8&lt;/li&gt;
-  &lt;li&gt;int16&lt;/li&gt;
-  &lt;li&gt;uint16&lt;/li&gt;
-  &lt;li&gt;int32&lt;/li&gt;
-  &lt;li&gt;uint32&lt;/li&gt;
-  &lt;li&gt;float32&lt;/li&gt;
-  &lt;li&gt;float64&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id="array-buffers"&gt;Array Buffers&lt;/h3&gt;
-
-&lt;p&gt;An array buffer is an object that represents the raw binary data of the typed array. Their contents can't be
-manipulated directly, so to do so you'll need to make use of a &lt;a href="#data-views"&gt;data view&lt;/a&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;let arrayBuffer = new ArrayBuffer(5); &amp;#x2F;&amp;#x2F; allocates 5 bytes for this buffer
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h3 id="data-views"&gt;Data Views&lt;/h3&gt;
-
-&lt;p&gt;Data views are the means by which the data stored in an array buffer can be accessed and manipulated.&lt;/p&gt;
-
-&lt;p&gt;There are type specific views for each of the different numeric types and also a generic &lt;code&gt;DataView&lt;/code&gt; object.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;let arrayBuffer = new ArrayBuffer(10); &amp;#x2F;&amp;#x2F; allocates 10 bytes for this buffer
-
-&amp;#x2F;&amp;#x2F; creates a generic Data View object with access to all 10 bytes
-let dataView = new DataView(arrayBuffer);
-
-dataView.setInt8(0, 5); &amp;#x2F;&amp;#x2F; stores the number 5 in the first byte
-dataView.getInt8(0); &amp;#x2F;&amp;#x2F; returns the number 5
-
-&amp;#x2F;&amp;#x2F; be careful here – we assigned an int8 to the first location, but we
-&amp;#x2F;&amp;#x2F; can ask for an int16
-&amp;#x2F;&amp;#x2F; (byte 1) 00000101 (byte 2 ) 00000000 together they make 0000010100000000
-&amp;#x2F;&amp;#x2F; (or 1280 in base 10)
-dataView.getInt16(0); &amp;#x2F;&amp;#x2F; 1280
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;As you can see in the above example, with a generic data view object you can access the data in any of the
-available formats. If this is not what you want, then use the type-specific data views.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;let arrayBuffer = new ArrayBuffer(10); &amp;#x2F;&amp;#x2F; allocates 10 bytes for this buffer
-
-&amp;#x2F;&amp;#x2F; access to 6 8-bit ints starting from the 1st byte (index 0)
-let int8Array = new Int8Array(arrayBuffer, 0, 6);
-
-&amp;#x2F;&amp;#x2F; access to 2 16-bit ints starting from the 7th byte (index 6)
-let int16Array = new Int16Array(arrayBuffer, 6, 2)
-
-int8Array.length; &amp;#x2F;&amp;#x2F; 6
-int16Array.length; &amp;#x2F;&amp;#x2F; 2
-
-int8Array[0] = 127;
-int8Array[0]; &amp;#x2F;&amp;#x2F; 127
-&amp;#x2F;&amp;#x2F; assigning a number larger than can be represented with a signed byte
-int8Array[1] = 128;
-
-&amp;#x2F;&amp;#x2F; binary overflow means the number flips around to -128
-&amp;#x2F;&amp;#x2F; 128 is 10000000 in binary and since we are using signed
-&amp;#x2F;&amp;#x2F; integers the first bit (1) indicates this is a negative
-&amp;#x2F;&amp;#x2F; number. The maximum positive number we can store
-&amp;#x2F;&amp;#x2F; is 01111111 (127)
-int8Array[1]; &amp;#x2F;&amp;#x2F; -128
-
-int16Array[0] = 128;
-int16Array[0]; &amp;#x2F;&amp;#x2F; 128 – no binary overflow here!
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Note&lt;/strong&gt;: with the unsigned int arrays (&lt;code&gt;Uint8Array&lt;/code&gt;, &lt;code&gt;Uint16Array&lt;/code&gt;, &lt;code&gt;Uint32Array&lt;/code&gt;) any value below 0 will loop back
-around to the maximum value available and any value above the maximum value will loop back around to 0. However,
-there is a special &lt;code&gt;Uint8ClampedArray&lt;/code&gt; for unsigned 8-bit integers. In this case, any value below 0
-will be capped at 0 and any value above 255 will be capped at 255.&lt;/em&gt;&lt;/p&gt;
-
-&lt;h2 id="how-are-they-different-from-normal-arrays"&gt;How are they different from normal arrays?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Typed arrays aren't &lt;code&gt;Array&lt;/code&gt;s– they don't inherit from &lt;code&gt;Array&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;Array.isArray(new Int8Array()); &amp;#x2F;&amp;#x2F; false
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-  &lt;li&gt;A typed array's size can't be altered once it's been created. Any attempt at setting a value at a
-non-existent index will be ignored:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;let int8Array = Int8Array.of(1, 2, 3);
-int8Array[5] = 10;
-int8Array; &amp;#x2F;&amp;#x2F; Int8Array [ 1, 2, 3 ]
-&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-  &lt;li&gt;The following methods are not available for typed arrays as they could result in a typed array that has a
-different size:
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code&gt;concat&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;shift&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;pop&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;splice&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;push&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code&gt;unshift&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;The &lt;code&gt;set&lt;/code&gt; and &lt;code&gt;subarray&lt;/code&gt; methods are available on typed arrays, but not on normal arrays. &lt;code&gt;set&lt;/code&gt; is used for
-setting multiple values in a typed array, and &lt;code&gt;subarray&lt;/code&gt; is used for extracting a new typed array containing some
-of the elements of another typed array.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;let ints = new Int8Array(4);
-
-ints.set([2,3]); &amp;#x2F;&amp;#x2F; sets the first element to 2 and the second to 3
-
-&amp;#x2F;&amp;#x2F; 2 is used as an offset index. The 3rd element is set to 5 and the
-&amp;#x2F;&amp;#x2F; 4th element is set to 8
-ints.set([5, 8], 2);
-ints; &amp;#x2F;&amp;#x2F; Int8Array [ 2, 3, 5, 8 ]
-
-let moreInts = Int8Array.of(1, 3, 5, 8, 13);
-let clone = moreInts.subarray(); &amp;#x2F;&amp;#x2F; Int8Array [ 1, 3, 5, 8, 13 ]
-clone === moreInts; &amp;#x2F;&amp;#x2F; false - subarray() creates a new typed array
-moreInts.subarray(2); &amp;#x2F;&amp;#x2F; Int8Array [ 5, 8, 13] – 2 is used as the offset index
-moreInts.subarray(2, 3); &amp;#x2F;&amp;#x2F; Int8Array [ 5 ] – the end index is exclusive
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id="where-can-i-learn-more"&gt;Where can I learn more?&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="//amzn.eu/6mexKCK" target="_blank"&gt;Understanding ECMAScript 6&lt;/a&gt; is my favourite book right now. Give it a read.
-    &lt;ul&gt;
-      &lt;li&gt;I'm making notes as I go through the book. Nicholas was kind enough to let me make these public, so you can
-follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target="_blank"&gt;here&lt;/a&gt;.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray" target="_blank"&gt;The MDN web docs&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.ecma-international.org/ecma-262/#sec-typedarray-objects" target="_blank"&gt;The ECMAScript specification&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </content>
   </entry>
