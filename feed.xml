@@ -5,10 +5,52 @@
   <id>https://andystabler.co.uk/</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
-  <updated>2024-01-04T00:00:00+00:00</updated>
+  <updated>2024-02-06T00:00:00+00:00</updated>
   <author>
     <name>Andy Stabler</name>
   </author>
+  <entry>
+    <title>Engineering Processes</title>
+    <link rel="alternate" href="/blog/engineering-processes/"/>
+    <id>http://www.andystabler.co.uk/blog/engineering-processes/</id>
+    <published>2024-02-06T00:00:00+00:00</published>
+    <updated>2024-02-06T00:00:00+00:00</updated>
+    <author>
+      <name>Andy Stabler</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;img src="/images/engineering-processes/engineering-processes-838fbff7.jpg" class="blog-post-image" alt="An illustration of 6 frogs that have arranged themselves into a pyramid. The frog at the top has a bluebell for a hat."&gt;&lt;/p&gt;
+
+&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I'm being honest, I don't feel too excited by...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;img src="/images/engineering-processes/engineering-processes-838fbff7.jpg" class="blog-post-image" alt="An illustration of 6 frogs that have arranged themselves into a pyramid. The frog at the top has a bluebell for a hat." /&gt;&lt;/p&gt;
+
+&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I'm being honest, I don't feel too excited by the idea of more process—I usually think "Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?".&lt;/p&gt;
+
+&lt;p&gt;Very occasionally, however, I'll come across a process that I find genuinely valuable and I'll suggest it to the teams I work with, only to hear them say "Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?".&lt;/p&gt;
+
+&lt;p&gt;Finding the processes that work for your team, and those that don't, can take a bit of time to figure out. Your suggestions might not always be chosen. But, it can be worthwhile from a team-health point of view to push through and establish what works best for the team you're in.&lt;/p&gt;
+
+&lt;p&gt;Something that took me too long to figure it out is that we can have personal processes too. Hooray! I would even say it's our responsibility to have them if we want to take our careers seriously. These are the ones we follow because they're valuable to us even when the team we're in doesn't necessarily embrace them.&lt;/p&gt;
+
+&lt;p&gt;Take personal development, for example. A few years ago, I wrote about what it means to me and how I approach it on the &lt;a href="https://engineering.freeagent.com/2020/06/17/how-i-made-personal-development-work-for-me/" target="blank"&gt;FreeAgent engineering blog&lt;/a&gt;. It's something I value, but not every company I work with is going to be OK with me spending an hour a week working on myself. It's still important to me though, so I make time for it out of hours.&lt;/p&gt;
+
+&lt;p&gt;When I worked at FreeAgent we were big on our incident response process. When the proverbial shit hit the fan we had a well thought through procedure to follow, which boiled down to:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Get those involved on a call&lt;/li&gt;
+  &lt;li&gt;Write everything down in an incident doc so others can catch up&lt;/li&gt;
+  &lt;li&gt;Fix the problem&lt;/li&gt;
+  &lt;li&gt;What can we do to prevent this from happening again?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Not all companies, especially smaller ones, have this figured out and I've seen varying levels of chaos because of it. Having an incident response process is now something that I really value personally. I follow it even if I'm working on my own or if the team I'm working with don't want one. Documenting what went wrong and how it was fixed has been invaluable.&lt;/p&gt;
+
+&lt;p&gt;Your career is going to be much bigger than the place you're working at right now and I think it's very easy to forget that. You don't need to read all the books on engineering processes (they're very dry), but what I would recommend is taking a minute to think about your team's current processes. Which of them will you take with you when you leave? Which ones will you try and introduce to the other teams you join?&lt;/p&gt;
+
+&lt;p&gt;We talk a lot about ownership in engineering, and we usually mean owning the code we write or the project we're leading, but taking ownership of our career is the foundation of being a happy team member. I think part of that ownership is deciding what we value as individuals.&lt;/p&gt;
+
+&lt;p&gt;I've been involved in a lot of different engineering processes over the years. There's no one size that fits all and I've had problems with some of them, but others I've liked. When I come across processes that work for me, I pick them up and I pop them in my pocket for later.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>2024 Intentions</title>
     <link rel="alternate" href="/blog/2024-intentions/"/>
@@ -935,219 +977,6 @@ opposite—figuring things out with just Google).&lt;/p&gt;
 &lt;p&gt;If you're interested you can find my original OAuth 2 toy project &lt;a href="https://github.com/AndyStabler/oauth-playground" target="_blank"&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Thanks for reading!&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Proxies in ECMAScript</title>
-    <link rel="alternate" href="/blog/proxies-in-ecmascript/"/>
-    <id>http://www.andystabler.co.uk/blog/proxies-in-ecmascript/</id>
-    <published>2018-03-31T01:00:00+01:00</published>
-    <updated>2018-03-31T01:00:00+01:00</updated>
-    <author>
-      <name>Andy Stabler</name>
-    </author>
-    <summary type="html">&lt;h2 id="what-are-they"&gt;What are they?&lt;/h2&gt;
-
-&lt;p&gt;Proxies give us greater control over what happens when we interact with objects. They wrap a &lt;code&gt;target&lt;/code&gt; object and
-expose some of the internal operations on it. This means we can customise what happens when we get or set a
-property, create...&lt;/p&gt;</summary>
-    <content type="html">&lt;h2 id="what-are-they"&gt;What are they?&lt;/h2&gt;
-
-&lt;p&gt;Proxies give us greater control over what happens when we interact with objects. They wrap a &lt;code&gt;target&lt;/code&gt; object and
-expose some of the internal operations on it. This means we can customise what happens when we get or set a
-property, create a new instance of an object, call a function, and more (see the full list of the low-level
-operations we can intercept
-&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object" target="_blank"&gt;here&lt;/a&gt;).&lt;/p&gt;
-
-&lt;h3 id="some-layman-definitions"&gt;Some layman definitions:&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Proxy&lt;/strong&gt;: A wrapper object that exposes internal operations of a target object&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Target&lt;/strong&gt;: The object the proxy is wrapping&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Handler&lt;/strong&gt;: The proxy looks in this object for any trap methods you may have provided&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Trap&lt;/strong&gt;: A function added to a handler object that tells the proxy what to do when a specific method on the
-target is called&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id="example"&gt;Example&lt;/h2&gt;
-
-&lt;p&gt;Here's an example of a proxy that adds logging for getting and setting a property on a target object.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  &amp;#x2F;&amp;#x2F; this is our target object
-  let friend = {
-    name: &amp;quot;Luna Lovegood&amp;quot;,
-    house: &amp;quot;Ravenclaw&amp;quot;,
-    patronus: &amp;quot;Hare&amp;quot;
-  };
-
-  &amp;#x2F;&amp;#x2F; the handler for the proxy
-  let handler = {
-    &amp;#x2F;&amp;#x2F; trap method
-    &amp;#x2F;&amp;#x2F; this method will be called when we read a property on the proxy object
-    get(trapTarget, key, receiver) {
-      console.log(`Getting property &amp;quot;${key}&amp;quot;`);
-      &amp;#x2F;&amp;#x2F; The Reflect object provides us with the default implementation
-      &amp;#x2F;&amp;#x2F; There&amp;#x27;s a Reflect method for all proxy trap methods
-      return Reflect.get(trapTarget, key, receiver);
-    },
-    &amp;#x2F;&amp;#x2F; trap method
-    &amp;#x2F;&amp;#x2F; this method will be called when we set a property on the proxy object
-    set(trapTarget, key, value, receiver) {
-      console.log(`Setting property &amp;quot;${key}&amp;quot;`);
-      return Reflect.set(trapTarget, key, value, receiver);
-    }
-  };
-
-  &amp;#x2F;&amp;#x2F; creating the proxy– we pass in the friend (target) and the handler
-  let friendProxy = new Proxy(friend, handler);
-
-  friendProxy.name;
-  &amp;#x2F;&amp;#x2F; Getting property &amp;quot;name&amp;quot;
-  &amp;#x2F;&amp;#x2F; &amp;#x27;Luna Lovegood&amp;#x27;
-
-  friendProxy.hobby = &amp;quot;Painting&amp;quot;;
-  &amp;#x2F;&amp;#x2F; Setting property &amp;quot;hobby&amp;quot;
-  &amp;#x2F;&amp;#x2F; &amp;#x27;Painting&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We used the &lt;code&gt;get()&lt;/code&gt; and &lt;code&gt;set()&lt;/code&gt; trap methods there to intercept calls that get and set properties on the target
-object through the proxy. Since the proxy &lt;em&gt;virtualises&lt;/em&gt; the target object, any operation available on the target
-object can be called from the proxy.&lt;/p&gt;
-
-&lt;h2 id="using-proxies-for-validation"&gt;Using proxies for validation&lt;/h2&gt;
-
-&lt;p&gt;Proxies can be used to add validation to objects. I'll cover two use cases here– checking the arguments passed
-into a function match some validation criteria, and checking for typos in property names.&lt;/p&gt;
-
-&lt;h3 id="parameter-validation"&gt;Parameter validation&lt;/h3&gt;
-
-&lt;p&gt;Since there is an &lt;code&gt;apply()&lt;/code&gt; trap method available to us, we can add validation to make sure that the
-arguments we pass into a function are what we would expect.&lt;/p&gt;
-
-&lt;p&gt;Let's create a &lt;code&gt;speak()&lt;/code&gt; function with the following requirements:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;We don't want to say more than one thing at a time&lt;/li&gt;
-  &lt;li&gt;We only want to speak in strings&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  &amp;#x2F;&amp;#x2F; this is our target object
-  function speak(message) {
-    console.log(`Raising your head, you declare to the room &amp;quot;${message}&amp;quot;`);
-  }
-
-  let speakProxy = new Proxy(speak, {
-    &amp;#x2F;&amp;#x2F; trap method
-    apply(trapTarget, thisArg, argumentsList) {
-      if (argumentsList.length !== 1) {
-        throw new Error(&amp;quot;Please say one thing at a time&amp;quot;);
-      }
-      if (typeof argumentsList[0] !== &amp;quot;string&amp;quot;) {
-        throw new TypeError(&amp;quot;Please use your words&amp;quot;);
-      }
-      &amp;#x2F;&amp;#x2F; call the apply method on the Reflect object to get the default
-      &amp;#x2F;&amp;#x2F; behaviour
-      return Reflect.apply(trapTarget, thisArg, argumentsList);
-    }
-  });
-
-  speakProxy(&amp;quot;Wingardium Leviosa&amp;quot;);
-  &amp;#x2F;&amp;#x2F; Raising your head, you declare to the room &amp;quot;Wingardium Leviosa&amp;quot;
-  speakProxy(&amp;quot;Wingardium Leviosa&amp;quot;, &amp;quot;Accio Firebolt!&amp;quot;);
-  &amp;#x2F;&amp;#x2F; Error: Please say one thing at a time
-  speakProxy(42); &amp;#x2F;&amp;#x2F; TypeError: Please use your words
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Here we have defined a &lt;code&gt;speak()&lt;/code&gt; method that prints out a given message.
-Firstly, we added the &lt;code&gt;apply()&lt;/code&gt; trap method to the handler object. This method is executed when we call any
-function on the proxy object.&lt;/p&gt;
-
-&lt;p&gt;Next, we added two conditions– the first checks that there is exactly 1 argument passed into
-the function, the other checks that the type of the argument is a string. If we're happy that the argument
-satisfies our validation criteria, then we call &lt;code&gt;Reflect.apply()&lt;/code&gt; to execute the default implementation.&lt;/p&gt;
-
-&lt;h3 id="checking-for-typos-in-property-names"&gt;Checking for typos in property names&lt;/h3&gt;
-
-&lt;p&gt;When a property cannot be found on an object, the default behaviour is to return &lt;code&gt;undefined&lt;/code&gt;. This behaviour can
-sometimes lead to hard to track down bugs, especially in larger in projects. We can guard against this using
-proxies.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  let friend = {
-    name: &amp;quot;Luna Lovegood&amp;quot;,
-    house: &amp;quot;Ravenclaw&amp;quot;,
-    patronus: &amp;quot;Hare&amp;quot;
-  };
-
-  friend.house; &amp;#x2F;&amp;#x2F; Ravenclaw
-  friend.hoose; &amp;#x2F;&amp;#x2F; undefined
-
-  let friendProxy = new Proxy(friend, {
-    get(trapTarget, key, receiver) {
-      if (!(key in receiver))
-        throw new TypeError(&amp;quot;Property not recognised&amp;quot;);
-      return Reflect.get(trapTarget, key, receiver);
-    }
-  });
-
-  friend.house; &amp;#x2F;&amp;#x2F; Ravenclaw
-  friend.hoose; &amp;#x2F;&amp;#x2F; undefined (the validation exists on the proxy, not the target)
-
-  friendProxy.house; &amp;#x2F;&amp;#x2F; Ravenclaw
-  friendProxy.hoose; &amp;#x2F;&amp;#x2F; TypeError: Property not recognised.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We can add similar validation to make sure we are only ever setting a property that already exists. This isn't
-always what we want, but it's still an interesting example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="js"&gt;  let friend = {
-    name: &amp;quot;Andy Stabler&amp;quot;,
-    house: &amp;quot;Hufflepuff&amp;quot;,
-    patronus: undefined
-  };
-
-  friend.patronus = &amp;quot;Salmon&amp;quot;;
-  friend.patroonus = &amp;quot;Stag&amp;quot;;
-  friend;
-  &amp;#x2F;&amp;#x2F; { name: &amp;#x27;Andy Stabler&amp;#x27;,
-  &amp;#x2F;&amp;#x2F;  house: &amp;#x27;Hufflepuff&amp;#x27;,
-  &amp;#x2F;&amp;#x2F;  patronus: &amp;#x27;Salmon&amp;#x27;,
-  &amp;#x2F;&amp;#x2F;  patroonus: &amp;#x27;Stag&amp;#x27; }
-  &amp;#x2F;&amp;#x2F; Whoopsy! We accidentally set a patroonus property!
-
-  let friendProxy = new Proxy(friend, {
-    get(trapTarget, key, receiver) {
-      if (!(key in receiver))
-        throw new TypeError(&amp;quot;Property not recognised.&amp;quot;);
-      return Reflect.get(trapTarget, key, receiver);
-    },
-    set(trapTarget, key, value, receiver) {
-      if (!(key in receiver))
-        throw new TypeError(&amp;quot;Property not recognised.&amp;quot;);
-      return Reflect.set(trapTarget, key, value, receiver);
-    }
-  });
-
-  delete friend.patroonus;
-  friendProxy.patronus = &amp;quot;Stag&amp;quot;;
-  friendProxy.patroonus = &amp;quot;Wolf&amp;quot;; &amp;#x2F;&amp;#x2F; TypeError: Property not recognised.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In both the &lt;code&gt;get()&lt;/code&gt; and &lt;code&gt;set()&lt;/code&gt; trap methods we performed a check to make sure that the &lt;code&gt;key&lt;/code&gt; was &lt;code&gt;in&lt;/code&gt; the receiver
-object. The &lt;code&gt;in&lt;/code&gt; operator looks in the object and its prototype chain for a property with a matching key. If the
-property is not found, then a &lt;code&gt;TypeError&lt;/code&gt; is raised.&lt;/p&gt;
-
-&lt;h2 id="where-can-i-learn-more"&gt;Where can I learn more?&lt;/h2&gt;
-
-&lt;p&gt;I've only scratched the surface of proxies and their many uses in ECMAScript. You can find out a lot more using
-the following resources:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href="//amzn.eu/6mexKCK" target="_blank"&gt;Understanding ECMAScript 6&lt;/a&gt; is my favourite book right now. It has a very
-thorough chapter on proxies which is  worth reading.
-    &lt;ul&gt;
-      &lt;li&gt;I'm making notes as I go through the book. Nicholas kindly let me make them public, so you can
-follow along &lt;a href="https://github.com/AndyStabler/ECMAScript6Notes" target="_blank"&gt;here&lt;/a&gt;.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy" target="_blank"&gt;The MDN web docs&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.ecma-international.org/ecma-262/#sec-proxy-object-internal-methods-and-internal-slots" target="_blank"&gt;The ECMAScript specification&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 </content>
   </entry>
 </feed>
