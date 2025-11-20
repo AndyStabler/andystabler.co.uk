@@ -5,16 +5,56 @@
   <id>https://andystabler.co.uk/</id>
   <link href="https://andystabler.co.uk"/>
   <link href="https://andystabler.co.uk/feed.xml" rel="self"/>
-  <updated>2024-04-05T01:00:00+01:00</updated>
+  <updated>2025-11-20T00:00:00+00:00</updated>
   <author>
     <name>Andy Stabler</name>
   </author>
   <entry>
+    <title>Reclaiming The Internet</title>
+    <link rel="alternate" href="/blog/reclaiming-the-internet/"/>
+    <id>http://www.andystabler.co.uk/blog/reclaiming-the-internet/</id>
+    <published>2025-11-20T00:00:00+00:00</published>
+    <updated>2025-11-20T00:00:00+00:00</updated>
+    <author>
+      <name>Andy Stabler</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;img src="/images/reclaiming-the-internet/weekly-notes-581ed08c.jpg" class="blog-post-image" alt="An image of my hand-written Japanese weekly notes."&gt;&lt;/p&gt;
+&lt;p class="blog-post-image-text"&gt;A photo of my Japanese weekly notes&lt;/p&gt;
+
+&lt;p&gt;Social media companies advertise themselves with a heavy emphasis on the “social” side. They show people having the most hilarious of times with friends, outside, enjoying parties, festivals, and generally having...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;img src="/images/reclaiming-the-internet/weekly-notes-581ed08c.jpg" class="blog-post-image" alt="An image of my hand-written Japanese weekly notes." /&gt;&lt;/p&gt;
+&lt;p class="blog-post-image-text"&gt;A photo of my Japanese weekly notes&lt;/p&gt;
+
+&lt;p&gt;Social media companies advertise themselves with a heavy emphasis on the “social” side. They show people having the most hilarious of times with friends, outside, enjoying parties, festivals, and generally having a jolly good time. The reality, though, for lots of people couldn’t be further from that. At least in my experience, social media usage involves slouching on the couch, with a posture growing more prawn-like by the minute, until I’m slack-jawed and half on the floor. I eventually come around, feeling confused, wondering what on earth happened to the last hour. I got lost in the scroll. There was nothing social about it, I was just being hammered with advertisements and content designed to give me a dopamine spike. I hate it, but I find that it continues to pull me in.&lt;/p&gt;
+
+&lt;p&gt;This isn’t what I imagined the internet would be like. I think I imagined something closer to the advertisements these social media companies show. A way to create genuine connections with other humans. A way to learn more about other cultures and languages. I remember having such excitement at the possibility of talking to people on the other side of the world.&lt;/p&gt;
+
+&lt;p&gt;But the internet is the same internet we’ve had all along. It’s being mis-used by money hungry pigs, yes, but the underlying technology is there for us to do all the things we were excited about when we were young(er). I don’t know why it took me so long to realise this.&lt;/p&gt;
+
+&lt;p&gt;And so about a year ago I started to reclaim the internet in my own way. It’s not perfect. I still use Instagram and still get barraged by algorithmically-selected slop, but I made some changes. The main change is that I removed one-way communication. Celebrities are not interested in me and were never going to reply to that “Happy birthday” message anyway. Instead of celebrities, I started to follow small accounts with similar interests to me. I’ve always wanted to learn Japanese, and so whenever I unfollowed a celebrity, I followed a Japanese dog account with a few hundred followers instead. I started taking Japanese lessons and tried my best to engage with interesting people.&lt;/p&gt;
+
+&lt;p&gt;Before long I was creating friendships with real humans on the other side of the world, which is everything I wanted from the internet when I was younger. I’ve learned some really interesting things too, like in Japan when a dog pees in the street, the owner will pour some water on the path to clean it up. They also love dressing their dogs up and often push them around in little buggies. Sometimes they even have the dog’s name printed on a big sign that’s attached to the buggy. It’s both very cute and fascinating to me.&lt;/p&gt;
+
+&lt;p&gt;Every week I share an image of my (very badly written) Japanese notes and Japanese people take the time to read it and chat with me about it. This year we’re even exchanging Christmas cards! It’s a completely different experience to the one I had previously sleepwalked into and I’m really glad I decided to shake things up.&lt;/p&gt;
+
+&lt;p&gt;Because I’m using Instagram though I find that I’m still susceptible to Doom Scrolling. For this I’ve started using Opal to control my screen time. I give myself strict times of day that I’m allowed to open social media apps, which I’m finding helps me a lot.&lt;/p&gt;
+
+&lt;p&gt;And so to summarise, I’m reclaiming the internet by:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Favouring two-way communication over one-way communication&lt;/li&gt;
+  &lt;li&gt;Controlling screen time&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Maybe you’re not interested in following random Japanese dog accounts, but perhaps there’s another way for you to have a more intentional experience that would help you reclaim the internet in your own way. I’d be curious to hear what your version looks like!&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
     <title>Particulars Pertaining To Pair Programming</title>
     <link rel="alternate" href="/blog/pair-programming/"/>
     <id>http://www.andystabler.co.uk/blog/pair-programming/</id>
-    <published>2024-04-05T01:00:00+01:00</published>
-    <updated>2024-04-05T01:00:00+01:00</updated>
+    <published>2024-04-05T00:00:00+00:00</published>
+    <updated>2024-04-05T00:00:00+00:00</updated>
     <author>
       <name>Andy Stabler</name>
     </author>
@@ -68,19 +108,19 @@
     <summary type="html">&lt;p&gt;&lt;img src="/images/engineering-processes/engineering-processes-838fbff7.jpg" class="blog-post-image" alt="An illustration of 6 frogs that have arranged themselves into a pyramid. The frog at the top has a bluebell for a hat."&gt;&lt;/p&gt;
 &lt;p class="blog-post-image-text"&gt;Illustration by &lt;a href="https://fionastabler.co.uk"&gt;Fiona Stabler&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I'm being honest...&lt;/p&gt;</summary>
+&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I’m being honest...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;&lt;img src="/images/engineering-processes/engineering-processes-838fbff7.jpg" class="blog-post-image" alt="An illustration of 6 frogs that have arranged themselves into a pyramid. The frog at the top has a bluebell for a hat." /&gt;&lt;/p&gt;
 &lt;p class="blog-post-image-text"&gt;Illustration by &lt;a href="https://fionastabler.co.uk"&gt;Fiona Stabler&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I'm being honest, I don't feel too excited by the idea of more process—I usually think "Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?".&lt;/p&gt;
+&lt;p&gt;Engineering teams can have any number of processes. They have those rituals like stand-ups, retrospectives, planning meetings, and sometimes there are specific steps for raising a bug or fixing one. If I’m being honest, I don’t feel too excited by the idea of more process—I usually think “Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?”.&lt;/p&gt;
 
-&lt;p&gt;Very occasionally, however, I'll come across a process that I find genuinely valuable and I'll suggest it to the teams I work with, only to hear them say "Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?".&lt;/p&gt;
+&lt;p&gt;Very occasionally, however, I’ll come across a process that I find genuinely valuable and I’ll suggest it to the teams I work with, only to hear them say “Here we go. Someone at a cool company said this is so hot right now so we have to do it too. When can I get back to work?”.&lt;/p&gt;
 
-&lt;p&gt;Finding the processes that work for your team, and those that don't, can take a bit of time to figure out. Your suggestions might not always be chosen. But, it can be worthwhile from a team-health point of view to push through and establish what works best for the team you're in.&lt;/p&gt;
+&lt;p&gt;Finding the processes that work for your team, and those that don’t, can take a bit of time to figure out. Your suggestions might not always be chosen. But, it can be worthwhile from a team-health point of view to push through and establish what works best for the team you’re in.&lt;/p&gt;
 
-&lt;p&gt;Something that took me too long to figure it out is that we can have personal processes too. Hooray! I would even say it's our responsibility to have them if we want to take our careers seriously. These are the ones we follow because they're valuable to us even when the team we're in doesn't necessarily embrace them.&lt;/p&gt;
+&lt;p&gt;Something that took me too long to figure it out is that we can have personal processes too. Hooray! I would even say it’s our responsibility to have them if we want to take our careers seriously. These are the ones we follow because they’re valuable to us even when the team we’re in doesn’t necessarily embrace them.&lt;/p&gt;
 
-&lt;p&gt;Take personal development, for example. A few years ago, I wrote about what it means to me and how I approach it on the &lt;a href="https://engineering.freeagent.com/2020/06/17/how-i-made-personal-development-work-for-me/" target="blank"&gt;FreeAgent engineering blog&lt;/a&gt;. It's something I value, but not every company I work with is going to be OK with me spending an hour a week working on myself. It's still important to me though, so I make time for it out of hours.&lt;/p&gt;
+&lt;p&gt;Take personal development, for example. A few years ago, I wrote about what it means to me and how I approach it on the &lt;a href="https://engineering.freeagent.com/2020/06/17/how-i-made-personal-development-work-for-me/" target="blank"&gt;FreeAgent engineering blog&lt;/a&gt;. It’s something I value, but not every company I work with is going to be OK with me spending an hour a week working on myself. It’s still important to me though, so I make time for it out of hours.&lt;/p&gt;
 
 &lt;p&gt;When I worked at FreeAgent we were big on our incident response process. When the proverbial shit hit the fan we had a well thought through procedure to follow, which boiled down to:&lt;/p&gt;
 
@@ -91,13 +131,13 @@
   &lt;li&gt;What can we do to prevent this from happening again?&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Not all companies, especially smaller ones, have this figured out and I've seen varying levels of chaos because of it. Having an incident response process is now something that I really value personally. I follow it even if I'm working on my own or if the team I'm working with don't want one. Documenting what went wrong and how it was fixed has been invaluable.&lt;/p&gt;
+&lt;p&gt;Not all companies, especially smaller ones, have this figured out and I’ve seen varying levels of chaos because of it. Having an incident response process is now something that I really value personally. I follow it even if I’m working on my own or if the team I’m working with don’t want one. Documenting what went wrong and how it was fixed has been invaluable.&lt;/p&gt;
 
-&lt;p&gt;Your career is going to be much bigger than the place you're working at right now and I think it's very easy to forget that. You don't need to read all the books on engineering processes (they're very dry), but what I would recommend is taking a minute to think about your team's current processes. Which of them will you take with you when you leave? Which ones will you try and introduce to the other teams you join?&lt;/p&gt;
+&lt;p&gt;Your career is going to be much bigger than the place you’re working at right now and I think it’s very easy to forget that. You don’t need to read all the books on engineering processes (they’re very dry), but what I would recommend is taking a minute to think about your team’s current processes. Which of them will you take with you when you leave? Which ones will you try and introduce to the other teams you join?&lt;/p&gt;
 
-&lt;p&gt;We talk a lot about ownership in engineering, and we usually mean owning the code we write or the project we're leading, but taking ownership of our career is the foundation of being a happy team member. I think part of that ownership is deciding what we value as individuals.&lt;/p&gt;
+&lt;p&gt;We talk a lot about ownership in engineering, and we usually mean owning the code we write or the project we’re leading, but taking ownership of our career is the foundation of being a happy team member. I think part of that ownership is deciding what we value as individuals.&lt;/p&gt;
 
-&lt;p&gt;I've been involved in a lot of different engineering processes over the years. There's no one size that fits all and I've had problems with some of them, but others I've liked. When I come across processes that work for me, I pick them up and I pop them in my pocket for later.&lt;/p&gt;
+&lt;p&gt;I’ve been involved in a lot of different engineering processes over the years. There’s no one size that fits all and I’ve had problems with some of them, but others I’ve liked. When I come across processes that work for me, I pick them up and I pop them in my pocket for later.&lt;/p&gt;
 </content>
   </entry>
   <entry>
@@ -111,10 +151,10 @@
     </author>
     <summary type="html">&lt;p&gt;&lt;img src="/images/2024-intentions/pup-4283391a.jpg" class="blog-post-image" alt="An image of Pup, the Jack Russell Terrier. She's quite old and lumpy now. She is fast asleep on the floor and looks a bit like a loaf of bread."&gt;&lt;/p&gt;
 
-&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you'd like to make. On the other hand, it’s very cold and dark outside (up here in the northern...&lt;/p&gt;</summary>
+&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you’d like to make. On the other hand, it’s very cold and dark outside (up here in the northern...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;&lt;img src="/images/2024-intentions/pup-4283391a.jpg" class="blog-post-image" alt="An image of Pup, the Jack Russell Terrier. She's quite old and lumpy now. She is fast asleep on the floor and looks a bit like a loaf of bread." /&gt;&lt;/p&gt;
 
-&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you'd like to make. On the other hand, it’s very cold and dark outside (up here in the northern hemisphere) and it feels unfair to expect anything from ourselves other than to continue overeating and napping. On the other hand, (I have three hands in this analogy) it’s easy to get in a rut during winter and having a reset right in the middle can be useful in getting out of it.&lt;/p&gt;
+&lt;p&gt;I have conflicting feelings about New Year’s resolutions. On one hand, it’s nice to reflect on the year that has passed and to think about the changes you’d like to make. On the other hand, it’s very cold and dark outside (up here in the northern hemisphere) and it feels unfair to expect anything from ourselves other than to continue overeating and napping. On the other hand, (I have three hands in this analogy) it’s easy to get in a rut during winter and having a reset right in the middle can be useful in getting out of it.&lt;/p&gt;
 
 &lt;p&gt;With all this in mind, and with my three hands firmly in my pockets, I’ve decided on an intention for 2024 that is to be more direct with people. I’m absolutely dreadful at having awkward conversations and most of the time I end up telling people what they want to hear. I’m a classic People Pleaser. It’s not always a bad thing, but there have been many occasions where not being direct has resulted in me being frustrated and led to an outcome that isn’t useful for anybody. Here’s a made up example:&lt;/p&gt;
 
@@ -140,41 +180,41 @@
     <title>Forgetting To Think</title>
     <link rel="alternate" href="/blog/forgetting-to-think/"/>
     <id>http://www.andystabler.co.uk/blog/forgetting-to-think/</id>
-    <published>2023-04-22T01:00:00+01:00</published>
-    <updated>2023-04-22T01:00:00+01:00</updated>
+    <published>2023-04-22T00:00:00+00:00</published>
+    <updated>2023-04-22T00:00:00+00:00</updated>
     <author>
       <name>Andy Stabler</name>
     </author>
     <summary type="html">&lt;p&gt;&lt;img src="/images/forgetting-to-think/thinking-7a75e1ec.jpg" class="blog-post-image" alt="An illustration on a whiteboard that shows my wife and I riding on top of our dog, Rolo. It's not really related to this article, but I liked it so I included it"&gt;&lt;/p&gt;
 
-&lt;p&gt;My wife asked me if we should watch a movie called The Menu recently, and I Googled "Should I watch The Menu?". After we watched it she asked me what I thought, and I Googled "The Menu reviews". She laughed and said "I'm not asking Google, I'm asking...&lt;/p&gt;</summary>
+&lt;p&gt;My wife asked me if we should watch a movie called The Menu recently, and I Googled “Should I watch The Menu?”. After we watched it she asked me what I thought, and I Googled “The Menu reviews”. She laughed and said “I’m not asking Google, I’m asking...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;&lt;img src="/images/forgetting-to-think/thinking-7a75e1ec.jpg" class="blog-post-image" alt="An illustration on a whiteboard that shows my wife and I riding on top of our dog, Rolo. It's not really related to this article, but I liked it so I included it" /&gt;&lt;/p&gt;
 
-&lt;p&gt;My wife asked me if we should watch a movie called The Menu recently, and I Googled "Should I watch The Menu?". After we watched it she asked me what I thought, and I Googled "The Menu reviews". She laughed and said "I'm not asking Google, I'm asking you!". I realised I've become a bit lazy when it comes to having my own thoughts. Like, why should I bother thinking when someone else has already done that for me?&lt;/p&gt;
+&lt;p&gt;My wife asked me if we should watch a movie called The Menu recently, and I Googled “Should I watch The Menu?”. After we watched it she asked me what I thought, and I Googled “The Menu reviews”. She laughed and said “I’m not asking Google, I’m asking you!”. I realised I’ve become a bit lazy when it comes to having my own thoughts. Like, why should I bother thinking when someone else has already done that for me?&lt;/p&gt;
 
-&lt;p&gt;There was a time not so long ago when it wasn't like this. If I didn't know something I'd have to think about it. If I wanted to know how a hair dryer worked I'd have to take one apart. Pondering for a little while is a lovely thing to do and it's a real shame I'm doing less of it. Figuring things out is very human, and becoming more reliant on Google for my thoughts is making me feel very not-human.&lt;/p&gt;
+&lt;p&gt;There was a time not so long ago when it wasn’t like this. If I didn’t know something I’d have to think about it. If I wanted to know how a hair dryer worked I’d have to take one apart. Pondering for a little while is a lovely thing to do and it’s a real shame I’m doing less of it. Figuring things out is very human, and becoming more reliant on Google for my thoughts is making me feel very not-human.&lt;/p&gt;
 
-&lt;p&gt;The other day I was spooning some olives out of a jar, something I've done many, many times before, when I noticed one of them still had its stone. It made me wonder how the pits are removed at scale and in a generally reliable way. I reached for my phone, ready to ask Google, but I stopped. Wouldn't it be interesting to just think about it first? I'm not a mechanical engineer, but if I had to design one of these pitting machines, what would it look like? It would likely be an over-complicated &lt;a href="https://en.wikipedia.org/wiki/W._Heath_Robinson" target="_blank"&gt;Heath Robinson-esque&lt;/a&gt; creation, but wouldn't it be fun to just give it a go?&lt;/p&gt;
+&lt;p&gt;The other day I was spooning some olives out of a jar, something I’ve done many, many times before, when I noticed one of them still had its stone. It made me wonder how the pits are removed at scale and in a generally reliable way. I reached for my phone, ready to ask Google, but I stopped. Wouldn’t it be interesting to just think about it first? I’m not a mechanical engineer, but if I had to design one of these pitting machines, what would it look like? It would likely be an over-complicated &lt;a href="https://en.wikipedia.org/wiki/W._Heath_Robinson" target="_blank"&gt;Heath Robinson-esque&lt;/a&gt; creation, but wouldn’t it be fun to just give it a go?&lt;/p&gt;
 
-&lt;p&gt;I eventually moved on and started to prepare my lunch, but when I went to bed that night it came up again. There's a great big pile of olives, how on earth do you reliably remove the pit from each one?&lt;/p&gt;
+&lt;p&gt;I eventually moved on and started to prepare my lunch, but when I went to bed that night it came up again. There’s a great big pile of olives, how on earth do you reliably remove the pit from each one?&lt;/p&gt;
 
-&lt;p&gt;The next day I began doodling some designs down and (I'm genuinely serious when I say this) it gave me such a rush. It's like my brain had become flabby and by exercising it I was rewarded with a dose of happy chemicals.&lt;/p&gt;
+&lt;p&gt;The next day I began doodling some designs down and (I’m genuinely serious when I say this) it gave me such a rush. It’s like my brain had become flabby and by exercising it I was rewarded with a dose of happy chemicals.&lt;/p&gt;
 
-&lt;p&gt;Having instant access to all human knowledge in our pockets is amazing—the idea of it would be unfathomable to humans even just a few decades ago. I would consider it a good thing overall, but like any sharp tool I think we should be treating with care. It's been far too easy for me to become dependent on the internet for everything in my life, even with my adult brain. I can't imagine how children can be expected to function as normal humans when companies are pouring billions of dollars into exploitative technologies designed to steal their attention.&lt;/p&gt;
+&lt;p&gt;Having instant access to all human knowledge in our pockets is amazing—the idea of it would be unfathomable to humans even just a few decades ago. I would consider it a good thing overall, but like any sharp tool I think we should be treating with care. It’s been far too easy for me to become dependent on the internet for everything in my life, even with my adult brain. I can’t imagine how children can be expected to function as normal humans when companies are pouring billions of dollars into exploitative technologies designed to steal their attention.&lt;/p&gt;
 
-&lt;p&gt;It's all a bit depressing really. Before I go full "Old man yells at cloud", let me share with you my designs on the olive pitting machine (there's probably a word for it, but I didn't want to Google it). Everyone should try this thinking malarkey, it's great fun!&lt;/p&gt;
+&lt;p&gt;It’s all a bit depressing really. Before I go full “Old man yells at cloud”, let me share with you my designs on the olive pitting machine (there’s probably a word for it, but I didn’t want to Google it). Everyone should try this thinking malarkey, it’s great fun!&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="/images/forgetting-to-think/olive-pitting-machine-66523b37.jpg" class="blog-post-image" alt="My doodle of how I think an olive pitting machine works. It shows a bit pot of olives with a hole at the bottom. The olives fall out of this hole and roll along a convery belt, giving them a consistent orientation so a device can punch out the pits." /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;If you're interested in how they're actually removed there's a video &lt;a href="https://www.youtube.com/watch?v=SeJlUDNqUtY" target="_blank"&gt;here&lt;/a&gt;. It's way better than my version, but maybe the real olives are the friends we made along the way?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;If you’re interested in how they’re actually removed there’s a video &lt;a href="https://www.youtube.com/watch?v=SeJlUDNqUtY" target="_blank"&gt;here&lt;/a&gt;. It’s way better than my version, but maybe the real olives are the friends we made along the way?&lt;/em&gt;&lt;/p&gt;
 </content>
   </entry>
   <entry>
     <title>Being Honest</title>
     <link rel="alternate" href="/blog/being-honest/"/>
     <id>http://www.andystabler.co.uk/blog/being-honest/</id>
-    <published>2022-07-02T01:00:00+01:00</published>
-    <updated>2022-07-02T01:00:00+01:00</updated>
+    <published>2022-07-02T00:00:00+00:00</published>
+    <updated>2022-07-02T00:00:00+00:00</updated>
     <author>
       <name>Andy Stabler</name>
     </author>
@@ -209,8 +249,8 @@
     <title>We should draw more</title>
     <link rel="alternate" href="/blog/draw-more/"/>
     <id>http://www.andystabler.co.uk/blog/draw-more/</id>
-    <published>2022-05-23T01:00:00+01:00</published>
-    <updated>2022-05-23T01:00:00+01:00</updated>
+    <published>2022-05-23T00:00:00+00:00</published>
+    <updated>2022-05-23T00:00:00+00:00</updated>
     <author>
       <name>Andy Stabler</name>
     </author>
@@ -257,14 +297,14 @@
     </author>
     <summary type="html">&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" class="blog-post-image" alt=""&gt;&lt;/p&gt;
 
-&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.&lt;/p&gt;
+&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it’s a really simple and fun way to learn about TCP.&lt;/p&gt;
 
 &lt;p&gt;Before we go any further I need to just point out that you can get...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/rob-curran-sUXXO3xPBYo-unsplash-a1b3e3b8.jpg" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it's a really simple and fun way to learn about TCP.&lt;/p&gt;
+&lt;p&gt;Last week I performed a Denial of Service attack against my Raspberry Pi. I used something called a SYN flood attack because it’s a really simple and fun way to learn about TCP.&lt;/p&gt;
 
-&lt;p&gt;Before we go any further I need to just point out that you can get into serious trouble if you execute an attack on a computer you're not authorised to mess with. Here's what the NCA has to say:&lt;/p&gt;
+&lt;p&gt;Before we go any further I need to just point out that you can get into serious trouble if you execute an attack on a computer you’re not authorised to mess with. Here’s what the NCA has to say:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;&lt;a href="https://www.nationalcrimeagency.gov.uk/?view=article&amp;amp;id=243"&gt;&lt;em&gt;The Computer Misuse Act 1990 makes it illegal to intentionally impair the operation of a computer or prevent or hinder access to a program/data on a computer unless you are authorised to do so.&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
@@ -272,17 +312,17 @@
 
 &lt;p&gt;The laws could be different in your country so please do your research and behave responsibly :)&lt;/p&gt;
 
-&lt;h2 id="whats-a-syn-flood-attack"&gt;What's a SYN Flood attack?&lt;/h2&gt;
+&lt;h2 id="whats-a-syn-flood-attack"&gt;What’s a SYN Flood attack?&lt;/h2&gt;
 
 &lt;p&gt;When a server (website) and a client (your browser) want to talk to each other they need to first establish a connection. This is done by something called the TCP 3-way handshake. The handshake is essentially:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Client says to server "Hey, wanna chat?" (the SYN flag is set in the TCP header)&lt;/li&gt;
-  &lt;li&gt;Server responds with "Yeah" (both the SYN and ACK flag would be set in the response)&lt;/li&gt;
-  &lt;li&gt;Client responds with "Cool" (just the ACK flag would be set)&lt;/li&gt;
+  &lt;li&gt;Client says to server “Hey, wanna chat?” (the SYN flag is set in the TCP header)&lt;/li&gt;
+  &lt;li&gt;Server responds with “Yeah” (both the SYN and ACK flag would be set in the response)&lt;/li&gt;
+  &lt;li&gt;Client responds with “Cool” (just the ACK flag would be set)&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Here's a picture from Wikipedia that shows the handshake:&lt;/p&gt;
+&lt;p&gt;Here’s a picture from Wikipedia that shows the handshake:&lt;/p&gt;
 
 &lt;p&gt;[1]&lt;img src="/images/syn-flood-denial-of-service-attack/Tcp_normal.svg-4f2dae97.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
@@ -292,32 +332,32 @@
 
 &lt;h2 id="the-attack"&gt;The Attack&lt;/h2&gt;
 
-&lt;p&gt;The plan is to start a server on my Raspberry Pi and then trigger a SYN flood attack from another machine. I'm going to use a Raspberry Pi as my victim because it helps me visualise the client and server, but a virtual machine would work just as well!&lt;/p&gt;
+&lt;p&gt;The plan is to start a server on my Raspberry Pi and then trigger a SYN flood attack from another machine. I’m going to use a Raspberry Pi as my victim because it helps me visualise the client and server, but a virtual machine would work just as well!&lt;/p&gt;
 
 &lt;h3 id="step-1---starting-the-web-server-on-the-raspberry-pi"&gt;Step 1 - Starting the web server on the Raspberry Pi&lt;/h3&gt;
 
-&lt;p&gt;I'm too lazy to connect the Raspberry Pi up to a keyboard/monitor so I'm going to control it from my macbook. The following nmap command scans the machines on the local network and tells us their IP address:&lt;/p&gt;
+&lt;p&gt;I’m too lazy to connect the Raspberry Pi up to a keyboard/monitor so I’m going to control it from my macbook. The following nmap command scans the machines on the local network and tells us their IP address:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class="bash"&gt; $ nmap --script smb-os-discovery -p 445 192.168.1.0&amp;#x2F;24
+&lt;pre&gt;&lt;code class="bash"&gt; $ nmap --script smb-os-discovery -p 445 192.168.1.0/24
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/nmap-results-f62551ce.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;Now we know the IP address is 192.168.1.227, let's SSH into the Raspbery Pi and start the server.&lt;/p&gt;
+&lt;p&gt;Now we know the IP address is 192.168.1.227, let’s SSH into the Raspbery Pi and start the server.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="bash"&gt;  $ ssh pi@192.168.1.227
-  pi@raspberrypi:~ $ cd ~&amp;#x2F;dev&amp;#x2F;my_site
-  pi@raspberrypi:~ $ echo &amp;quot;&amp;lt;h1&amp;gt;Hello, World&amp;lt;&amp;#x2F;h1&amp;gt;&amp;quot; &amp;gt; index.html
+  pi@raspberrypi:~ $ cd ~/dev/my_site
+  pi@raspberrypi:~ $ echo &amp;quot;&amp;lt;h1&amp;gt;Hello, World&amp;lt;/h1&amp;gt;&amp;quot; &amp;gt; index.html
   pi@raspberrypi:~ $ ruby -run -ehttpd . -p8000
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We have a server running on port 8000 of the Raspberry Pi!&lt;/p&gt;
 
 &lt;h3 id="step-2---start-inspecting-traffic-on-the-raspberry-pi"&gt;Step 2 - Start inspecting traffic on the Raspberry Pi&lt;/h3&gt;
 
-&lt;p&gt;Using wireshark we can inspect the packets that the Raspberry Pi is sending and receiving. I'm going to use tshark so I can run it from a terminal, but you might get more out of using the GUI version. The following command will display all traffic that's coming and going on port 8000 (the port our site is using).&lt;/p&gt;
+&lt;p&gt;Using wireshark we can inspect the packets that the Raspberry Pi is sending and receiving. I’m going to use tshark so I can run it from a terminal, but you might get more out of using the GUI version. The following command will display all traffic that’s coming and going on port 8000 (the port our site is using).&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="bash"&gt;  pi@raspberrypi:~ $ tshark -Y &amp;quot;tcp.port == 8000&amp;quot;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now when we visit 192.168.1.227:8000 we can actually see the handshake taking place in tshark's output:&lt;/p&gt;
+&lt;p&gt;Now when we visit 192.168.1.227:8000 we can actually see the handshake taking place in tshark’s output:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-handshake-a0bda610.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
@@ -325,17 +365,17 @@
 
 &lt;h3 id="step-3---perform-the-attack"&gt;Step 3 - Perform the attack&lt;/h3&gt;
 
-&lt;p&gt;I'm using a tool called scapy, but there are various options available (hping3 is a common choice). We just need the ability to construct and manipulate TCP packets.&lt;/p&gt;
+&lt;p&gt;I’m using a tool called scapy, but there are various options available (hping3 is a common choice). We just need the ability to construct and manipulate TCP packets.&lt;/p&gt;
 
 &lt;p&gt;I like how scapy can be used to construct packets, the syntax involves using a &lt;code&gt;/&lt;/code&gt; to stack layers, like so &lt;code&gt;packet = ip/tcp/data&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;On the attacking machine (not the Raspberry Pi), the following commands can be used to start the attack:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="bash"&gt;  $ scapy
-  &amp;gt;ip = IP(dst=&amp;quot;192.168.1.227&amp;quot;) # pass in the Raspberry Pi&amp;#x27;s IP address as the destination
-  &amp;gt;tcp = TCP(dport=8000, flags=&amp;quot;S&amp;quot;) # set the destination port to 8000 and use the &amp;quot;S&amp;quot; flag to say we&amp;#x27;re just interested in SYN requests
+  &amp;gt;ip = IP(dst=&amp;quot;192.168.1.227&amp;quot;) # pass in the Raspberry Pi&amp;#39;s IP address as the destination
+  &amp;gt;tcp = TCP(dport=8000, flags=&amp;quot;S&amp;quot;) # set the destination port to 8000 and use the &amp;quot;S&amp;quot; flag to say we&amp;#39;re just interested in SYN requests
   &amp;gt;data = Raw(&amp;quot;Hello&amp;quot;)
-  &amp;gt;packet = ip&amp;#x2F;tcp&amp;#x2F;data # stack the layers together to get the packet
+  &amp;gt;packet = ip/tcp/data # stack the layers together to get the packet
   &amp;gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -345,40 +385,40 @@
 
 &lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-unsuccessful-syn-flood-1dd8217b.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;The output tells us that our attack isn't very effective. When the Raspberry Pi sends us a SYN/ACK response, our machine is responding with an RST. This means our machine is telling the server to forget about the connection and so our attack is doing no damage at all.&lt;/p&gt;
+&lt;p&gt;The output tells us that our attack isn’t very effective. When the Raspberry Pi sends us a SYN/ACK response, our machine is responding with an RST. This means our machine is telling the server to forget about the connection and so our attack is doing no damage at all.&lt;/p&gt;
 
 &lt;h3 id="step-5---spoofing-the-source"&gt;Step 5 - Spoofing the source&lt;/h3&gt;
 
-&lt;p&gt;Our last attack wasn't so effective because our machine was resetting the connection and the server also detected that the requests were from the same port and labelled them as "TCP Retransmission".&lt;/p&gt;
+&lt;p&gt;Our last attack wasn’t so effective because our machine was resetting the connection and the server also detected that the requests were from the same port and labelled them as “TCP Retransmission”.&lt;/p&gt;
 
-&lt;p&gt;We don't want the attacker to know who we are and so by spoofing the source IP address we get some anonymity. Spoofing the IP also means that we'll no longer get the response. This is fine because we're just interested in sending the SYN requests, we don't care about the response.&lt;/p&gt;
+&lt;p&gt;We don’t want the attacker to know who we are and so by spoofing the source IP address we get some anonymity. Spoofing the IP also means that we’ll no longer get the response. This is fine because we’re just interested in sending the SYN requests, we don’t care about the response.&lt;/p&gt;
 
-&lt;p&gt;You have to be careful here though. It's not a good idea to spoof an IP address you don't own. By doing that you would be involving other networks and machines in your attack.&lt;/p&gt;
+&lt;p&gt;You have to be careful here though. It’s not a good idea to spoof an IP address you don’t own. By doing that you would be involving other networks and machines in your attack.&lt;/p&gt;
 
-&lt;p&gt;It's also worth noting that using any active IP address would result in the RST being sent back to the server, rendering the attack useless. It's best to use an IP address that isn't used and preferably one of the &lt;a href="https://datatracker.ietf.org/doc/html/rfc1918"&gt;RFC1918&lt;/a&gt; private addresses.&lt;/p&gt;
+&lt;p&gt;It’s also worth noting that using any active IP address would result in the RST being sent back to the server, rendering the attack useless. It’s best to use an IP address that isn’t used and preferably one of the &lt;a href="https://datatracker.ietf.org/doc/html/rfc1918"&gt;RFC1918&lt;/a&gt; private addresses.&lt;/p&gt;
 
-&lt;p&gt;Let's try the attack again with a spoofed IP address and port:&lt;/p&gt;
+&lt;p&gt;Let’s try the attack again with a spoofed IP address and port:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="bash"&gt;  $ scapy
   &amp;gt;ip = IP(src=&amp;quot;10.0.0.1&amp;quot;, dst=&amp;quot;192.168.1.227&amp;quot;) # pass in a spoofed, unused, private IP address as the source IP
   &amp;gt;tcp = TCP(sport=RandShort(), dport=8000, flags=&amp;quot;S&amp;quot;) # set the source port to a random value
   &amp;gt;data = Raw(&amp;quot;Hello&amp;quot;)
-  &amp;gt;packet = ip&amp;#x2F;tcp&amp;#x2F;data # stack the layers together to get the packet
+  &amp;gt;packet = ip/tcp/data # stack the layers together to get the packet
   &amp;gt;send(packet, loop=1, verbose=0) # send the syn requests in an infinite loop
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Let that run for about a second and hit Ctrl-C. The results in tshark should reveal a more effective attack:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-syn-flood-1065331d.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;Lots of SYN requests are being sent from our spoofed 10.0.0.1 IP address and lots of SYN/ACK responses are being sent back. I can't see any RSTs in the output, which is also great. Scrolling all the way to the bottom of the output though, shows something even more interesting:&lt;/p&gt;
+&lt;p&gt;Lots of SYN requests are being sent from our spoofed 10.0.0.1 IP address and lots of SYN/ACK responses are being sent back. I can’t see any RSTs in the output, which is also great. Scrolling all the way to the bottom of the output though, shows something even more interesting:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="/images/syn-flood-denial-of-service-attack/tshark-retransmissions-ded1dd03.png" class="blog-post-image" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;Our Raspberry Pi didn't get any ACK responses when it sent the SYN/ACK to 10.0.0.1 and so it's sending the SYN/ACK again. This means it's not only taking up resources for fresh SYN requests, but it's also taking up resources by repeatedly sending the SYN/ACK because it assumed the packet was dropped.&lt;/p&gt;
+&lt;p&gt;Our Raspberry Pi didn’t get any ACK responses when it sent the SYN/ACK to 10.0.0.1 and so it’s sending the SYN/ACK again. This means it’s not only taking up resources for fresh SYN requests, but it’s also taking up resources by repeatedly sending the SYN/ACK because it assumed the packet was dropped.&lt;/p&gt;
 
 &lt;h2 id="final-notes"&gt;Final Notes&lt;/h2&gt;
 
-&lt;p&gt;The SYN flood attack isn't as effective as it used to be in the 80s/90s. Modern Linux doesn't allocate full resources to partially complete handshakes, but even so, if you had a botnet with several hundred machines performing a SYN flood attack I think it could cause some damage.&lt;/p&gt;
+&lt;p&gt;The SYN flood attack isn’t as effective as it used to be in the 80s/90s. Modern Linux doesn’t allocate full resources to partially complete handshakes, but even so, if you had a botnet with several hundred machines performing a SYN flood attack I think it could cause some damage.&lt;/p&gt;
 
 &lt;p&gt;There are various ways to mitigate a SYN flood attack. Some to look at are &lt;a href="https://en.wikipedia.org/wiki/SYN_cookies"&gt;SYN cookies&lt;/a&gt; and blocking the source ip address (10.0.0.1 in our case).&lt;/p&gt;
 
@@ -409,35 +449,35 @@ both in my life and the tech world, and now feels like an appropriate time to sh
 
 &lt;h2 id="loudly-quiet"&gt;Loudly Quiet&lt;/h2&gt;
 
-&lt;p&gt;I'm a quiet person. Always have been and I think I always will be. I like to think things through before I speak, and I find it easier to communicate in smaller groups. For a long time I thought this was a flaw that needed to be fixed, rather than a strength that should be embraced. Can you blame me? Our industry has shaped itself around extroversion—Open plan offices, board rooms, town hall meetings, "let's go round the room and share our thoughts". We have all these processes in place to get things done, but it's like someone suggested them and only asked the loud people what they thought. The result is an industry that works great for certain types of people.&lt;/p&gt;
+&lt;p&gt;I’m a quiet person. Always have been and I think I always will be. I like to think things through before I speak, and I find it easier to communicate in smaller groups. For a long time I thought this was a flaw that needed to be fixed, rather than a strength that should be embraced. Can you blame me? Our industry has shaped itself around extroversion—Open plan offices, board rooms, town hall meetings, “let’s go round the room and share our thoughts”. We have all these processes in place to get things done, but it’s like someone suggested them and only asked the loud people what they thought. The result is an industry that works great for certain types of people.&lt;/p&gt;
 
-&lt;p&gt;But I think there's a place for everybody here. Over the past few years I've been what I call "loudly quiet", loudly defending people's right to be quiet. This means when I see a process that doesn't work well for quiet people I call it out. Not in a rude way, just a polite sort of nudge. Here's a made up, but not so unrealistic, example.&lt;/p&gt;
+&lt;p&gt;But I think there’s a place for everybody here. Over the past few years I’ve been what I call “loudly quiet”, loudly defending people’s right to be quiet. This means when I see a process that doesn’t work well for quiet people I call it out. Not in a rude way, just a polite sort of nudge. Here’s a made up, but not so unrealistic, example.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;"Our criteria for a senior engineer is that they give 3 talks to our engineering department a quarter"&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;“Our criteria for a senior engineer is that they give 3 talks to our engineering department a quarter”&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Someone new to the industry could think this career isn't for them if they don't enjoy public speaking, but that's not necessarily true. Public speaking is a great asset that will benefit your career as a software engineer, but I know from experience that you can be successful while playing into other strengths. I've worked with countless engineers that still do amazing work and earn good money while not speaking publicly.&lt;/p&gt;
+&lt;p&gt;Someone new to the industry could think this career isn’t for them if they don’t enjoy public speaking, but that’s not necessarily true. Public speaking is a great asset that will benefit your career as a software engineer, but I know from experience that you can be successful while playing into other strengths. I’ve worked with countless engineers that still do amazing work and earn good money while not speaking publicly.&lt;/p&gt;
 
-&lt;p&gt;When I hear the above, I ask "what is the job to be done?". What are we actually trying to achieve by making people give 3 talks? Is it knowledge sharing? Is it visibility in the team? Is it something else? When we get to the underlying requirement we often find that there are so many creative and inclusive ways to achieve the same thing. I think that's beautiful. It means we can create an environment where everybody in the team can join in and be happy.&lt;/p&gt;
+&lt;p&gt;When I hear the above, I ask “what is the job to be done?”. What are we actually trying to achieve by making people give 3 talks? Is it knowledge sharing? Is it visibility in the team? Is it something else? When we get to the underlying requirement we often find that there are so many creative and inclusive ways to achieve the same thing. I think that’s beautiful. It means we can create an environment where everybody in the team can join in and be happy.&lt;/p&gt;
 
-&lt;p&gt;Over the next decade, I'll continue to be loudly quiet. I wish I could go back 10 years and tell myself that there's a place for me here. I can't do that, but I can for new people in the industry.&lt;/p&gt;
+&lt;p&gt;Over the next decade, I’ll continue to be loudly quiet. I wish I could go back 10 years and tell myself that there’s a place for me here. I can’t do that, but I can for new people in the industry.&lt;/p&gt;
 
-&lt;h2 id="i-still-dont-know-everything"&gt;I still don't know everything&lt;/h2&gt;
+&lt;h2 id="i-still-dont-know-everything"&gt;I still don’t know everything&lt;/h2&gt;
 
-&lt;p&gt;There's a finite set of things I know and an infinite set of things I don't. Over the past 10 years, both of those have grown.&lt;/p&gt;
+&lt;p&gt;There’s a finite set of things I know and an infinite set of things I don’t. Over the past 10 years, both of those have grown.&lt;/p&gt;
 
-&lt;p&gt;It's very intimidating when you first start out in tech—everybody seems to know so much more than you. Even if you make an effort to learn what someone mentions, you'll have a conversation with someone else who knows even more about a different topic. This doesn't really go away, but over time it becomes less of a concern. The way I see things now is that I don't need to know everything &lt;em&gt;because&lt;/em&gt; somebody else already does (or rather a collection of somebodies). Viewing it as collaborative (there are lots of knowledgeable people ready to help) rather than competitve (why do they know more than me?) is a much healthier mindset for me.&lt;/p&gt;
+&lt;p&gt;It’s very intimidating when you first start out in tech—everybody seems to know so much more than you. Even if you make an effort to learn what someone mentions, you’ll have a conversation with someone else who knows even more about a different topic. This doesn’t really go away, but over time it becomes less of a concern. The way I see things now is that I don’t need to know everything &lt;em&gt;because&lt;/em&gt; somebody else already does (or rather a collection of somebodies). Viewing it as collaborative (there are lots of knowledgeable people ready to help) rather than competitve (why do they know more than me?) is a much healthier mindset for me.&lt;/p&gt;
 
-&lt;h2 id="theres-more-to-life-than-tech"&gt;There's more to life than tech&lt;/h2&gt;
+&lt;h2 id="theres-more-to-life-than-tech"&gt;There’s more to life than tech&lt;/h2&gt;
 
-&lt;p&gt;When I first started out in tech I was ferociously hungry to learn everything. I was always reading or writing code—all day, evenings, weekends etc. With this in mind, you'll be shocked to hear that after about 6 or 7 years I began to burn out. It's not a sustainable way for a human to live a life. Eventually, I started to do other things in my free time and became much happier and healthier. I became more than just a programmer—I was a runner, musician, furniture maker, husband, and (dog) father. Over the next 10 years I'm excited to be an engineer, but I'm also excited to play a lot of guitar and run some marathons.&lt;/p&gt;
+&lt;p&gt;When I first started out in tech I was ferociously hungry to learn everything. I was always reading or writing code—all day, evenings, weekends etc. With this in mind, you’ll be shocked to hear that after about 6 or 7 years I began to burn out. It’s not a sustainable way for a human to live a life. Eventually, I started to do other things in my free time and became much happier and healthier. I became more than just a programmer—I was a runner, musician, furniture maker, husband, and (dog) father. Over the next 10 years I’m excited to be an engineer, but I’m also excited to play a lot of guitar and run some marathons.&lt;/p&gt;
 
 &lt;h2 id="mentoring"&gt;Mentoring&lt;/h2&gt;
 
-&lt;p&gt;I've been fortunate enough to work with some really wonderful people over the years. People that have taken me under their wing and been genuinenly invested in helping me progress my career. I could never begin to repay everyone for this, but I can pay it forward. I've been mentoring engineers for several years now and I intend to make it a priority over the next decade.&lt;/p&gt;
+&lt;p&gt;I’ve been fortunate enough to work with some really wonderful people over the years. People that have taken me under their wing and been genuinenly invested in helping me progress my career. I could never begin to repay everyone for this, but I can pay it forward. I’ve been mentoring engineers for several years now and I intend to make it a priority over the next decade.&lt;/p&gt;
 
 &lt;hr /&gt;
 
-&lt;p&gt;I have absolutely no idea what the tech world will look like in 10 years from now, but I hope it's a more inclusive and happy place where it's easy to center a div.&lt;/p&gt;
+&lt;p&gt;I have absolutely no idea what the tech world will look like in 10 years from now, but I hope it’s a more inclusive and happy place where it’s easy to center a div.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Thanks for reading and Happy New Year!&lt;/em&gt;&lt;/p&gt;
 </content>
@@ -446,8 +486,8 @@ both in my life and the tech world, and now feels like an appropriate time to sh
     <title>On Measuring Engineers</title>
     <link rel="alternate" href="/blog/on-measuring-engineers/"/>
     <id>http://www.andystabler.co.uk/blog/on-measuring-engineers/</id>
-    <published>2021-07-21T01:00:00+01:00</published>
-    <updated>2021-07-21T01:00:00+01:00</updated>
+    <published>2021-07-21T00:00:00+00:00</published>
+    <updated>2021-07-21T00:00:00+00:00</updated>
     <author>
       <name>Andy Stabler</name>
     </author>
@@ -483,13 +523,13 @@ both in my life and the tech world, and now feels like an appropriate time to sh
     <author>
       <name>Andy Stabler</name>
     </author>
-    <summary type="html">&lt;p&gt;I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I spent a lot of time figuring out what the right approach is. Here's what I ended up with and you can tell me if it's a good or bad idea.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I spent a lot of time figuring out what the right approach is. Here’s what I ended up with and you can tell me if it’s a good or bad idea.&lt;/p&gt;
 
 &lt;p&gt;Users...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I spent a lot of time figuring out what the right approach is. Here's what I ended up with and you can tell me if it's a good or bad idea.&lt;/p&gt;
+    <content type="html">&lt;p&gt;I had a JavaScript class that I wanted to make use of in my Rails view. Sounded like a 5 minute job, but I spent a lot of time figuring out what the right approach is. Here’s what I ended up with and you can tell me if it’s a good or bad idea.&lt;/p&gt;
 
 &lt;p&gt;Users can upload an image as part of an edit form on my site and I want them to preview the image before hitting save.
-This is the JavaScript that's responsible for loading the preview image:&lt;/p&gt;
+This is the JavaScript that’s responsible for loading the preview image:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="javascript"&gt;class ImagePreview {
   constructor(inputButton) {
@@ -497,8 +537,8 @@ This is the JavaScript that's responsible for loading the preview image:&lt;/p&g
     this.imageElement = this.findImageElement(inputButton);
   }
 
-  &amp;#x2F;&amp;#x2F; The file input button has a data attribute that contains the id of the corresponding image preview element
-  &amp;#x2F;&amp;#x2F; This method is responsible for finding the image preview element based on that data attribute
+  // The file input button has a data attribute that contains the id of the corresponding image preview element
+  // This method is responsible for finding the image preview element based on that data attribute
   findImageElement() {
     let imageElementId = this.inputButton.dataset[&amp;quot;imagePreviewId&amp;quot;]
     return document.getElementById(imageElementId);
@@ -521,19 +561,19 @@ This is the JavaScript that's responsible for loading the preview image:&lt;/p&g
 &lt;p&gt;I wanted to call this JavaScript in my view like so:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class="ruby"&gt;  f.file_field :image,
-    accept: &amp;quot;image&amp;#x2F;png,image&amp;#x2F;gif,image&amp;#x2F;jpeg&amp;quot;,
+    accept: &amp;quot;image/png,image/gif,image/jpeg&amp;quot;,
     onchange: &amp;quot;new ImagePreview(event.target).loadImage()&amp;quot;,
     data: { image_preview_id: &amp;quot;TheIdOfThePreviewImage&amp;quot; }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I first just shoved the JS inside a &lt;code&gt;&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; tag on the page it was needed but that didn't feel great. By doing that
+&lt;p&gt;I first just shoved the JS inside a &lt;code&gt;&amp;lt;script&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt; tag on the page it was needed but that didn’t feel great. By doing that
 I avoided all the good stuff that Rails Webpacker offers.&lt;/p&gt;
 
 &lt;p&gt;With a lot of trial and error, this is the solution I eventually came up with that makes use of webpack.&lt;/p&gt;
 
 &lt;p&gt;I added an &lt;code&gt;image_preview.js&lt;/code&gt; file inside the &lt;code&gt;packs/&lt;/code&gt; directory (inside was a copy and paste of the JavaScript class above):&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class="shell"&gt;tree app&amp;#x2F;javascript
-app&amp;#x2F;javascript
+&lt;pre&gt;&lt;code class="shell"&gt;tree app/javascript
+app/javascript
 ├── channels
 │   ├── consumer.js
 │   └── index.js
@@ -548,345 +588,20 @@ app&amp;#x2F;javascript
 &lt;p&gt;I then imported the code inside my &lt;code&gt;application.js&lt;/code&gt; file and attached the &lt;code&gt;ImagePreview&lt;/code&gt; object to the window. This
 is what my &lt;code&gt;application.js&lt;/code&gt; file looked like afterwards:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class="javascript"&gt;require(&amp;quot;@rails&amp;#x2F;ujs&amp;quot;).start()
+&lt;pre&gt;&lt;code class="javascript"&gt;require(&amp;quot;@rails/ujs&amp;quot;).start()
 require(&amp;quot;turbolinks&amp;quot;).start()
-require(&amp;quot;@rails&amp;#x2F;activestorage&amp;quot;).start()
+require(&amp;quot;@rails/activestorage&amp;quot;).start()
 require(&amp;quot;channels&amp;quot;)
 
-import ImagePreview from &amp;quot;.&amp;#x2F;image_preview&amp;quot;
+import ImagePreview from &amp;quot;./image_preview&amp;quot;
 window.ImagePreview = ImagePreview
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Here it is in action:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src="/images/custom-js-in-rails-6/image_preview-209ab320.gif" alt="" /&gt;&lt;/p&gt;
 
-&lt;p&gt;I had  a really confusing time trying to figure this out and I'm still not sure if this approach is correct.
-It works and I think that's enough for my use-case, but if you know of a better way please let me know!&lt;/p&gt;
-</content>
-  </entry>
-  <entry>
-    <title>Awk Notes</title>
-    <link rel="alternate" href="/blog/awk-notes/"/>
-    <id>http://www.andystabler.co.uk/blog/awk-notes/</id>
-    <published>2019-07-19T01:00:00+01:00</published>
-    <updated>2019-07-19T01:00:00+01:00</updated>
-    <author>
-      <name>Andy Stabler</name>
-    </author>
-    <summary type="html">&lt;p&gt;The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂&lt;/p&gt;
-
-&lt;h2 id="example-1-tabulating-data"&gt;Example 1: Tabulating Data&lt;/h2&gt;
-
-&lt;p&gt;Below are some fruits...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂&lt;/p&gt;
-
-&lt;h2 id="example-1-tabulating-data"&gt;Example 1: Tabulating Data&lt;/h2&gt;
-
-&lt;p&gt;Below are some fruits and their prices.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ cat fruits.txt
-Apple £2.00
-Banana £1.50
-Kumquat £2.00
-Peach £1.50
-Strawberry £2.00
-Raspberry £2.00
-Kiwi £1.00
-Pear £1.00
-Tomato £1.50
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;It'd be really useful if I could take that list and print it in a tabulated way:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; fruits.txt
-£2.00   Apple
-£1.50   Banana
-£2.00   Kumquat
-£1.50   Peach
-£2.00   Strawberry
-£2.00   Raspberry
-£1.00   Kiwi
-£1.00   Pear
-£1.50   Tomato
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Might be nice to sort them by price too:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; fruits | sort
-£1.00   Kiwi
-£1.00   Pear
-£1.50   Banana
-£1.50   Peach
-£1.50   Tomato
-£2.00   Apple
-£2.00   Kumquat
-£2.00   Raspberry
-£2.00   Strawberry
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let's just not print it:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1 }&amp;#x27; fruits.txt |
-sort |
-awk &amp;#x27;{
-  price = $1
-  name = $2
-  if (price == previous_price) {
-    print &amp;quot;\t&amp;quot; name
-  } else {
-    previous_price = price
-    print price &amp;quot;\t&amp;quot; name
-  }
-}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You'll notice that's a bit of a mouthful to write all in one go. At this point we could move that to an executable file called &lt;code&gt;fruit_formatting&lt;/code&gt; if we want:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ ls -la fruit_formatting
--rwxr--r--  1 andy  staff  190  7 Jul 22:29 fruit_formatting
-$ cat fruit_formatting
-awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1 }&amp;#x27; fruits.txt |
-sort |
-awk &amp;#x27;{
-  price = $1
-  name = $2
-  if (price == previous_price) {
-    print &amp;quot;\t&amp;quot; name
-  } else {
-    previous_price = price
-    print price &amp;quot;\t&amp;quot; name
-  }
-}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;$ .&amp;#x2F;fruit_formatting
-
-£1.00   Kiwi
-        Pear
-£1.50   Banana
-        Peach
-        Tomato
-£2.00   Apple
-        Kumquat
-        Raspberry
-        Strawberry
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Nice, we did it!&lt;/p&gt;
-
-&lt;h2 id="example-2-filtering"&gt;Example 2: Filtering&lt;/h2&gt;
-
-&lt;p&gt;OK, here's a new problem. I'd like to find the 5 slowest response times on my site with a 200 status code.&lt;/p&gt;
-
-&lt;p&gt;Here's what my log file looks like:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ tail -20 logfile
-Started GET &amp;quot;&amp;#x2F;balance_forecasts&amp;#x2F;97?date=18-12-2016&amp;quot; for ::1 at 2017-05-21 13:33:12 +0100
-Processing by BalanceForecastsController#show as *&amp;#x2F;*
-  Parameters: {&amp;quot;date&amp;quot;=&amp;gt;&amp;quot;18-12-2016&amp;quot;, &amp;quot;id&amp;quot;=&amp;gt;&amp;quot;97&amp;quot;}
-  User Load (0.2ms)  SELECT  &amp;quot;users&amp;quot;.* FROM &amp;quot;users&amp;quot; WHERE &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; = ?  ORDER BY &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; ASC LIMIT 1  [[&amp;quot;id&amp;quot;, 97]]
-  Balance Load (0.2ms)  SELECT  &amp;quot;balances&amp;quot;.* FROM &amp;quot;balances&amp;quot; WHERE &amp;quot;balances&amp;quot;.&amp;quot;user_id&amp;quot; = ?  ORDER BY &amp;quot;balances&amp;quot;.&amp;quot;on&amp;quot; DESC LIMIT 1  [[&amp;quot;user_id&amp;quot;, 97]]
-  Transfer Load (0.1ms)  SELECT &amp;quot;transfers&amp;quot;.* FROM &amp;quot;transfers&amp;quot; WHERE &amp;quot;transfers&amp;quot;.&amp;quot;user_id&amp;quot; = ?  [[&amp;quot;user_id&amp;quot;, 97]]
-  CACHE (0.0ms)  SELECT  &amp;quot;balances&amp;quot;.* FROM &amp;quot;balances&amp;quot; WHERE &amp;quot;balances&amp;quot;.&amp;quot;user_id&amp;quot; = ?  ORDER BY &amp;quot;balances&amp;quot;.&amp;quot;on&amp;quot; DESC LIMIT 1  [[&amp;quot;user_id&amp;quot;, 97]]
-  Rendered balance_forecasts&amp;#x2F;_blank_slate.html.erb (0.1ms)
-Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
-
-
-Started GET &amp;quot;&amp;#x2F;balance_forecasts&amp;#x2F;97?date=26-6-2017&amp;quot; for ::1 at 2017-05-21 13:33:14 +0100
-Processing by BalanceForecastsController#show as *&amp;#x2F;*
-  Parameters: {&amp;quot;date&amp;quot;=&amp;gt;&amp;quot;26-6-2017&amp;quot;, &amp;quot;id&amp;quot;=&amp;gt;&amp;quot;97&amp;quot;}
-  User Load (0.1ms)  SELECT  &amp;quot;users&amp;quot;.* FROM &amp;quot;users&amp;quot; WHERE &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; = ?  ORDER BY &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; ASC LIMIT 1  [[&amp;quot;id&amp;quot;, 97]]
-  Balance Load (0.3ms)  SELECT  &amp;quot;balances&amp;quot;.* FROM &amp;quot;balances&amp;quot; WHERE &amp;quot;balances&amp;quot;.&amp;quot;user_id&amp;quot; = ?  ORDER BY &amp;quot;balances&amp;quot;.&amp;quot;on&amp;quot; DESC LIMIT 1  [[&amp;quot;user_id&amp;quot;, 97]]
-  Transfer Load (0.1ms)  SELECT &amp;quot;transfers&amp;quot;.* FROM &amp;quot;transfers&amp;quot; WHERE &amp;quot;transfers&amp;quot;.&amp;quot;user_id&amp;quot; = ?  [[&amp;quot;user_id&amp;quot;, 97]]
-  CACHE (0.0ms)  SELECT  &amp;quot;balances&amp;quot;.* FROM &amp;quot;balances&amp;quot; WHERE &amp;quot;balances&amp;quot;.&amp;quot;user_id&amp;quot; = ?  ORDER BY &amp;quot;balances&amp;quot;.&amp;quot;on&amp;quot; DESC LIMIT 1  [[&amp;quot;user_id&amp;quot;, 97]]
-  Rendered balance_forecasts&amp;#x2F;_show.html.erb (1.2ms)
-Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;First, let's see if we can find all of the &lt;code&gt;Completed 200 OK&lt;/code&gt; rows:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ tail -50 logfile | awk &amp;#x27;&amp;#x2F;Completed 200 OK&amp;#x2F;&amp;#x27;
-Completed 200 OK in 490ms (Views: 12.4ms | ActiveRecord: 0.6ms)
-Completed 200 OK in 388ms (Views: 11.7ms | ActiveRecord: 0.4ms)
-Completed 200 OK in 32ms (Views: 15.3ms | ActiveRecord: 0.5ms)
-Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
-Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Next up is extracting the time in ms from those rows. Since the times are always in column 5 we can use &lt;code&gt;$5&lt;/code&gt; to get the values.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ tail -50 logfile | awk &amp;#x27;&amp;#x2F;Completed 200 OK&amp;#x2F;{print $5}&amp;#x27;
-490ms
-388ms
-32ms
-22ms
-261ms
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now let's sort them in descending order to see the slowest values at the top&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ tail -50 logfile | awk &amp;#x27;&amp;#x2F;Completed 200 OK&amp;#x2F;{print $5}&amp;#x27; | sort -nr
-490ms
-388ms
-261ms
-32ms
-22ms
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I used &lt;code&gt;sort -nr&lt;/code&gt; there to sort by numerical value and reverse the order.&lt;/p&gt;
-
-&lt;p&gt;That's looking quite useful, but if I run that over a much larger log file I'd get a lot of text printed to my terminal. I'll run this script over 5000 rows and then use the &lt;code&gt;head&lt;/code&gt; command to only look at the top 5 slowest times.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ tail -5000 logfile | awk &amp;#x27;&amp;#x2F;Completed 200 OK&amp;#x2F;{print $5}&amp;#x27; | sort -nr | head -5
-8140ms
-6257ms
-5409ms
-5382ms
-5118ms
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h2 id="example-3-more-tabulation"&gt;Example 3: More tabulation&lt;/h2&gt;
-
-&lt;p&gt;Back to food again (naturally). I have a new price list:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ cat foods.txt
-Item name, Price
-Rice pudding, £1.20
-Jam sandwich, £1.75
-Coffee, £1.00
-Crisps, £1.00
-Custard tart, £1.75
-Red grapes, £1.20
-Green grapes, £1.20
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I'd like to format it in the same way as the fruits in &lt;a href="#example-1-tabulating-data"&gt;example 1&lt;/a&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;£1.00   Kiwi
-        Pear
-£1.50   Banana
-        Peach
-        Tomato
-£2.00   Apple
-        Kumquat
-        Raspberry
-        Strawberry
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There's a slight problem here though. You'll notice that the top row of this file contains &lt;code&gt;Item name&lt;/code&gt; and &lt;code&gt;Price&lt;/code&gt;. We don't want this in our report, so we'll need a way to remove it. There's another issue here however, and it isn't immediately obvious. In our original &lt;code&gt;fruit_formatting&lt;/code&gt; script we said&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This printed the price followed by the name of the fruit. Unfortunately, this won't work here because some of our food names span two words, for example &lt;code&gt;Jam sandwich&lt;/code&gt;. This script would print &lt;code&gt;sandwich&lt;/code&gt; followed by a tab, followed by &lt;code&gt;jam&lt;/code&gt;. Let's run it to find out.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;awk &amp;#x27;{print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; foods.txt
-name,   Item
-pudding,        Rice
-sandwich,       Jam
-£1.00   Coffee,
-£1.00   Crisps,
-tart,   Custard
-grapes, Red
-grapes, Green
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;First, let's look at ignoring the top line of the file:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ awk &amp;#x27;NR != 1 {print $0}&amp;#x27; foods.txt
-Rice pudding, £1.20
-Jam sandwich, £1.75
-Coffee, £1.00
-Crisps, £1.00
-Custard tart, £1.75
-Red grapes, £1.20
-Green grapes, £1.20
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;NR&lt;/code&gt; here tells us the number of the current record. In our script we are saying "if the current record is not the first record in the file, then print the full record".&lt;/p&gt;
-
-&lt;p&gt;Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let's use a comma.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ awk -F &amp;quot;, &amp;quot; &amp;#x27;NR != 1 {print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; foods.txt
-£1.20   Rice pudding
-£1.75   Jam sandwich
-£1.00   Coffee
-£1.00   Crisps
-£1.75   Custard tart
-£1.20   Red grapes
-£1.20   Green grapes
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Putting all this together with our original &lt;code&gt;fruit_formatting&lt;/code&gt; script, we get the following:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ cat food_formatting
-awk -F &amp;quot;, &amp;quot; &amp;#x27;NR != 1 {print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; foods.txt |
-sort |
-awk &amp;#x27;{
-  price = $1
-  name = $2
-  if (price == previous_price) {
-    print &amp;quot;\t&amp;quot; name
-  } else {
-    previous_price = price
-    print price &amp;quot;\t&amp;quot; name
-  }
-}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;$ .&amp;#x2F;food_formatting
-£1.00   Coffee
-        Crisps
-£1.20   Green
-        Red
-        Rice
-£1.75   Custard
-        Jam
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Almost there, but it still looks like we're cutting off the &lt;code&gt;sandwich&lt;/code&gt; part of &lt;code&gt;Jam sandwich&lt;/code&gt;. This is because our awk script&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;awk &amp;#x27;{
-  price = $1
-  name = $2
-  if (price == previous_price) {
-    print &amp;quot;\t&amp;quot; name
-  } else {
-    previous_price = price
-    print price &amp;quot;\t&amp;quot; name
-  }
-}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;is given this input:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;awk -F &amp;quot;, &amp;quot; &amp;#x27;NR != 1 {print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; foods.txt | sort
-£1.00 Coffee
-£1.00 Crisps
-£1.20 Green grapes
-£1.20 Red grapes
-£1.20 Rice pudding
-£1.75 Custard tart
-£1.75 Jam sandwich
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;and the &lt;code&gt;print "\t" name&lt;/code&gt; part is going to only look at the second column of text (&lt;code&gt;Jam&lt;/code&gt;), but not the remaining line since we set &lt;code&gt;name&lt;/code&gt; to &lt;code&gt;$2&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Let's set &lt;code&gt;$1&lt;/code&gt; (the price) to the empty string and then use &lt;code&gt;$0&lt;/code&gt;, which gives us the full record, to print the full food name:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class="bash"&gt;$ cat food_formatting
-awk -F &amp;quot;, &amp;quot; &amp;#x27;NR != 1 {print $2 &amp;quot;\t&amp;quot; $1}&amp;#x27; foods.txt |
-sort |
-awk &amp;#x27;{
-  price = $1
-  name = $2
-  if (price == current_price) {
-    $1 = &amp;quot;&amp;quot;
-    print &amp;quot;\t&amp;quot; $0
-  } else {
-    current_price = price
-    $1 = &amp;quot;&amp;quot;
-    print price &amp;quot;\t&amp;quot; $0
-  }
-}&amp;#x27;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code class="bash"&gt;$ .&amp;#x2F;food_formatting
-£1.00    Coffee
-         Crisps
-£1.20    Green grapes
-         Red grapes
-         Rice pudding
-£1.75    Custard tart
-         Jam sandwich
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;There you have it. We just used some simple parts of Awk to do some nifty text processing. If
-you'd like to know more things, like how to write detailed pattern matching, functions, loops, arrays, etc. then check out the
-&lt;a href="https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255" target="_blank"&gt;sed &amp;amp; awk&lt;/a&gt;
-book. This has the added bonus of being written by someone that actually knows this stuff 😅&lt;/p&gt;
-
-&lt;p&gt;If you've got any awk scripts you use regularly that make your life easier I'd love to hear about them.&lt;/p&gt;
-
-&lt;p&gt;👋&lt;/p&gt;
+&lt;p&gt;I had  a really confusing time trying to figure this out and I’m still not sure if this approach is correct.
+It works and I think that’s enough for my use-case, but if you know of a better way please let me know!&lt;/p&gt;
 </content>
   </entry>
 </feed>

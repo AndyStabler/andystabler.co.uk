@@ -47,20 +47,20 @@ flight, I decided to pop out my laptop anyway and do some development—what hap
 
 <p>Without the helping hand of The Google or colleagues to pester with my questions I had to (wait for it) think for
 myself. It sounds a little bit ridiculous, but having to only use what little I keep in my head is something I
-haven't done in a very long time—and rightly so really, almost everything I need to know in my day–to–day life can be
-acquired with a few tap–a–tap–taps on my phone. I decided to just have some fun with it and see how far I'd get.
+haven’t done in a very long time—and rightly so really, almost everything I need to know in my day–to–day life can be
+acquired with a few tap–a–tap–taps on my phone. I decided to just have some fun with it and see how far I’d get.
 Between you and I, it took me about 2 minutes before I realised just how little I knew (the time it took to get my
 laptop out of overhead storage, log in, sip tea, and open up a terminal).</p>
 
-<p>Here's what I was working on.</p>
+<p>Here’s what I was working on.</p>
 
-<p>I've recently been doing some API work and wanted to see how much of the OAuth 2 protocol I could remember. I wanted
+<p>I’ve recently been doing some API work and wanted to see how much of the OAuth 2 protocol I could remember. I wanted
 to make a simple Ruby program where I had models for an authorisation server and a resource server. I could then
 make a call to get an authorisation grant, swap it for a token, and then use that token to access a resource.</p>
 
-<p>The first thing I wanted to do was have my tests run frequently. Usually, I'd use Guard for this (Guard runs the
-tests whenever a file is modified), but here's the thing—Guard is usually set up on projects I work on, and if it's
-not I'd just Google how to configure it. So what do? I wrote the following down on the back of a boomerang pillow
+<p>The first thing I wanted to do was have my tests run frequently. Usually, I’d use Guard for this (Guard runs the
+tests whenever a file is modified), but here’s the thing—Guard is usually set up on projects I work on, and if it’s
+not I’d just Google how to configure it. So what do? I wrote the following down on the back of a boomerang pillow
 receipt:</p>
 
 <blockquote>
@@ -79,8 +79,8 @@ seemed reasonable:</p>
 end
 </code></pre>
 <p>I thought something like that could be quite easily written in bash, so I focused my attention on the terminal and
-to my surprise, my hands didn't start typing—I couldn't remember the syntax for a while loop in bash. Well, no
-matter, I thought to myself, I'll just add it to my list:</p>
+to my surprise, my hands didn’t start typing—I couldn’t remember the syntax for a while loop in bash. Well, no
+matter, I thought to myself, I’ll just add it to my list:</p>
 
 <blockquote>
   <p>Things I don't know:</p>
@@ -95,8 +95,8 @@ multiple times using <code>repeat</code>, so I ended up using the following to g
 
 <pre><code class="shell">repeat 3000 rspec &amp;&amp; sleep 5;
 </code></pre>
-<p>This runs the tests, takes a 5–second nap, then does it all again, 3000 times in total. It's not ideal, but it did
-the job and it meant I identified 2 things I didn't know. That's a win (I think).</p>
+<p>This runs the tests, takes a 5–second nap, then does it all again, 3000 times in total. It’s not ideal, but it did
+the job and it meant I identified 2 things I didn’t know. That’s a win (I think).</p>
 
 <p>Next, I started thinking about what I wanted my project to achieve. Here is my list of requirements:</p>
 
@@ -106,9 +106,9 @@ the job and it meant I identified 2 things I didn't know. That's a win (I think)
   <li>A client program can access some resource if the user has completed authorisation</li>
 </ol>
 
-<p>I couldn't remember what the OAuth 2 spec says about registering applications—something about the client sending
+<p>I couldn’t remember what the OAuth 2 spec says about registering applications—something about the client sending
 a software statement and getting back some client credentials. It was the least known requirement for me, so I
-just added it to my growing list of Things Andy Doesn't Know.</p>
+just added it to my growing list of Things Andy Doesn’t Know.</p>
 
 <blockquote>
   <p>Things I don't know:</p>
@@ -120,7 +120,7 @@ just added it to my growing list of Things Andy Doesn't Know.</p>
 </blockquote>
 
 <p>At this point, I began putting together an authorisation server. This would be a Plain Old Ruby Object that could
-be used to authorise a client's application with mine. I got a bit stumped around generating tokens—is
+be used to authorise a client’s application with mine. I got a bit stumped around generating tokens—is
 there a secure way of achieving this? Is there an insecure way of doing this? I settled on using
 <code>SecureRandom.uuid</code>, but I added an extra item to my list anyway so I could read up on it later.</p>
 
@@ -139,7 +139,7 @@ takes an access token (provided by an authorisation server) and returns some res
 server needed to talk to the authorisation server to verify access tokens. This meant I needed to remember how to
 include one file in another in Ruby. In Rails, you rarely need to think about this kind of thing due to the fancy
 autoloading of classes, so this had me stumped for a while. After some hacking, I found that <code>require_relative</code>
-seemed to do the trick, but I wasn't confident this is what is usually done.</p>
+seemed to do the trick, but I wasn’t confident this is what is usually done.</p>
 
 <p>After wiping the crumbs and spilled tea off the back of my, somewhat crumpled, receipt I updated it once more:</p>
 
@@ -156,14 +156,14 @@ seemed to do the trick, but I wasn't confident this is what is usually done.</p>
 </blockquote>
 
 <p>I continued with the resource server and ended up with a (frankly janky) implementation of OAuth 2, but my tests
-were passing and I'd discovered 6 things I didn't know that, previously, I would have assured you I was au fait with.
+were passing and I’d discovered 6 things I didn’t know that, previously, I would have assured you I was au fait with.
 It was a strangely exciting experience for me (lack of sleep may have played a part).</p>
 
 <p>Have you tried anything like this before? If so, what was your experience? I may try and integrate something similar
 into my work–life by restricting certain pots of knowledge (solving problems by only speaking to people, or the
 opposite—figuring things out with just Google).</p>
 
-<p>If you're interested you can find my original OAuth 2 toy project <a href="https://github.com/AndyStabler/oauth-playground" target="_blank">here</a>.</p>
+<p>If you’re interested you can find my original OAuth 2 toy project <a href="https://github.com/AndyStabler/oauth-playground" target="_blank">here</a>.</p>
 
 <p>Thanks for reading!</p>
 

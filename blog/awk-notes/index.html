@@ -7,19 +7,19 @@
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>Awk Notes - Blog - Andy Stabler</title>
-      <meta content="Awk Notes - Blog - Andy Stabler" property="title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂
+      <meta content="Awk Notes - Blog - Andy Stabler" property="title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I’m still learning this stuff 🙂
 
 Example 1: Tabulating Data
 
-Below are some fruits..." property="description"></meta><meta content="Awk Notes - Blog - Andy Stabler" itemprop="name"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂
+Below are some fruits..." property="description"></meta><meta content="Awk Notes - Blog - Andy Stabler" itemprop="name"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I’m still learning this stuff 🙂
 
 Example 1: Tabulating Data
 
-Below are some fruits..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" itemprop="image"></meta><meta content="Awk Notes - Blog - Andy Stabler" property="og:title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂
+Below are some fruits..." itemprop="description"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" itemprop="image"></meta><meta content="Awk Notes - Blog - Andy Stabler" property="og:title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I’m still learning this stuff 🙂
 
 Example 1: Tabulating Data
 
-Below are some fruits..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/awk-notes/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Awk Notes - Blog - Andy Stabler" name="twitter:title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂
+Below are some fruits..." property="og:description"></meta><meta content="http://www.andystabler.co.uk/blog/awk-notes/" property="og:url"></meta><meta content="http://www.andystabler.co.uk/images/icons/andy_icon_3.JPG" property="og:image"></meta><meta content="@andy_staber" name="twitter:site"></meta><meta content="summary" name="twitter:card"></meta><meta content="Awk Notes - Blog - Andy Stabler" name="twitter:title"></meta><meta content="The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I’m still learning this stuff 🙂
 
 Example 1: Tabulating Data
 
@@ -49,7 +49,7 @@ Below are some fruits..." name="twitter:description"></meta><meta content="http:
       <p class="article-published-on">19 Jul 2019</p>
     </section>
     <section class="blog-post-content">
-      <p>The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I'm still learning this stuff 🙂</p>
+      <p>The notes below are from my initial readings into Awk, and they demonstrate using it (and some other unix tools) to perform simple text processing. Full disclaimer, I’m still learning this stuff 🙂</p>
 
 <h2 id="example-1-tabulating-data">Example 1: Tabulating Data</h2>
 
@@ -66,9 +66,9 @@ Kiwi £1.00
 Pear £1.00
 Tomato £1.50
 </code></pre>
-<p>It'd be really useful if I could take that list and print it in a tabulated way:</p>
+<p>It’d be really useful if I could take that list and print it in a tabulated way:</p>
 
-<pre><code class="bash">$ awk &#x27;{print $2 &quot;\t&quot; $1}&#x27; fruits.txt
+<pre><code class="bash">$ awk &#39;{print $2 &quot;\t&quot; $1}&#39; fruits.txt
 £2.00   Apple
 £1.50   Banana
 £2.00   Kumquat
@@ -81,7 +81,7 @@ Tomato £1.50
 </code></pre>
 <p>Might be nice to sort them by price too:</p>
 
-<pre><code class="bash">$ awk &#x27;{print $2 &quot;\t&quot; $1}&#x27; fruits | sort
+<pre><code class="bash">$ awk &#39;{print $2 &quot;\t&quot; $1}&#39; fruits | sort
 £1.00   Kiwi
 £1.00   Pear
 £1.50   Banana
@@ -92,11 +92,11 @@ Tomato £1.50
 £2.00   Raspberry
 £2.00   Strawberry
 </code></pre>
-<p>That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let's just not print it:</p>
+<p>That looks great, but actually, seeing the duplicated price is making all this data look too noisy. If the price is the same as the previous fruit, let’s just not print it:</p>
 
-<pre><code class="bash">$ awk &#x27;{print $2 &quot;\t&quot; $1 }&#x27; fruits.txt |
+<pre><code class="bash">$ awk &#39;{print $2 &quot;\t&quot; $1 }&#39; fruits.txt |
 sort |
-awk &#x27;{
+awk &#39;{
   price = $1
   name = $2
   if (price == previous_price) {
@@ -105,16 +105,16 @@ awk &#x27;{
     previous_price = price
     print price &quot;\t&quot; name
   }
-}&#x27;
+}&#39;
 </code></pre>
-<p>You'll notice that's a bit of a mouthful to write all in one go. At this point we could move that to an executable file called <code>fruit_formatting</code> if we want:</p>
+<p>You’ll notice that’s a bit of a mouthful to write all in one go. At this point we could move that to an executable file called <code>fruit_formatting</code> if we want:</p>
 
 <pre><code class="bash">$ ls -la fruit_formatting
 -rwxr--r--  1 andy  staff  190  7 Jul 22:29 fruit_formatting
 $ cat fruit_formatting
-awk &#x27;{print $2 &quot;\t&quot; $1 }&#x27; fruits.txt |
+awk &#39;{print $2 &quot;\t&quot; $1 }&#39; fruits.txt |
 sort |
-awk &#x27;{
+awk &#39;{
   price = $1
   name = $2
   if (price == previous_price) {
@@ -123,9 +123,9 @@ awk &#x27;{
     previous_price = price
     print price &quot;\t&quot; name
   }
-}&#x27;
+}&#39;
 </code></pre>
-<pre><code class="bash">$ .&#x2F;fruit_formatting
+<pre><code class="bash">$ ./fruit_formatting
 
 £1.00   Kiwi
         Pear
@@ -141,35 +141,35 @@ awk &#x27;{
 
 <h2 id="example-2-filtering">Example 2: Filtering</h2>
 
-<p>OK, here's a new problem. I'd like to find the 5 slowest response times on my site with a 200 status code.</p>
+<p>OK, here’s a new problem. I’d like to find the 5 slowest response times on my site with a 200 status code.</p>
 
-<p>Here's what my log file looks like:</p>
+<p>Here’s what my log file looks like:</p>
 
 <pre><code class="bash">$ tail -20 logfile
-Started GET &quot;&#x2F;balance_forecasts&#x2F;97?date=18-12-2016&quot; for ::1 at 2017-05-21 13:33:12 +0100
-Processing by BalanceForecastsController#show as *&#x2F;*
+Started GET &quot;/balance_forecasts/97?date=18-12-2016&quot; for ::1 at 2017-05-21 13:33:12 +0100
+Processing by BalanceForecastsController#show as */*
   Parameters: {&quot;date&quot;=&gt;&quot;18-12-2016&quot;, &quot;id&quot;=&gt;&quot;97&quot;}
   User Load (0.2ms)  SELECT  &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;id&quot; = ?  ORDER BY &quot;users&quot;.&quot;id&quot; ASC LIMIT 1  [[&quot;id&quot;, 97]]
   Balance Load (0.2ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
   Transfer Load (0.1ms)  SELECT &quot;transfers&quot;.* FROM &quot;transfers&quot; WHERE &quot;transfers&quot;.&quot;user_id&quot; = ?  [[&quot;user_id&quot;, 97]]
   CACHE (0.0ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
-  Rendered balance_forecasts&#x2F;_blank_slate.html.erb (0.1ms)
+  Rendered balance_forecasts/_blank_slate.html.erb (0.1ms)
 Completed 200 OK in 22ms (Views: 14.2ms | ActiveRecord: 0.5ms)
 
 
-Started GET &quot;&#x2F;balance_forecasts&#x2F;97?date=26-6-2017&quot; for ::1 at 2017-05-21 13:33:14 +0100
-Processing by BalanceForecastsController#show as *&#x2F;*
+Started GET &quot;/balance_forecasts/97?date=26-6-2017&quot; for ::1 at 2017-05-21 13:33:14 +0100
+Processing by BalanceForecastsController#show as */*
   Parameters: {&quot;date&quot;=&gt;&quot;26-6-2017&quot;, &quot;id&quot;=&gt;&quot;97&quot;}
   User Load (0.1ms)  SELECT  &quot;users&quot;.* FROM &quot;users&quot; WHERE &quot;users&quot;.&quot;id&quot; = ?  ORDER BY &quot;users&quot;.&quot;id&quot; ASC LIMIT 1  [[&quot;id&quot;, 97]]
   Balance Load (0.3ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
   Transfer Load (0.1ms)  SELECT &quot;transfers&quot;.* FROM &quot;transfers&quot; WHERE &quot;transfers&quot;.&quot;user_id&quot; = ?  [[&quot;user_id&quot;, 97]]
   CACHE (0.0ms)  SELECT  &quot;balances&quot;.* FROM &quot;balances&quot; WHERE &quot;balances&quot;.&quot;user_id&quot; = ?  ORDER BY &quot;balances&quot;.&quot;on&quot; DESC LIMIT 1  [[&quot;user_id&quot;, 97]]
-  Rendered balance_forecasts&#x2F;_show.html.erb (1.2ms)
+  Rendered balance_forecasts/_show.html.erb (1.2ms)
 Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 </code></pre>
-<p>First, let's see if we can find all of the <code>Completed 200 OK</code> rows:</p>
+<p>First, let’s see if we can find all of the <code>Completed 200 OK</code> rows:</p>
 
-<pre><code class="bash">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;&#x27;
+<pre><code class="bash">$ tail -50 logfile | awk &#39;/Completed 200 OK/&#39;
 Completed 200 OK in 490ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 Completed 200 OK in 388ms (Views: 11.7ms | ActiveRecord: 0.4ms)
 Completed 200 OK in 32ms (Views: 15.3ms | ActiveRecord: 0.5ms)
@@ -178,16 +178,16 @@ Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 </code></pre>
 <p>Next up is extracting the time in ms from those rows. Since the times are always in column 5 we can use <code>$5</code> to get the values.</p>
 
-<pre><code class="bash">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27;
+<pre><code class="bash">$ tail -50 logfile | awk &#39;/Completed 200 OK/{print $5}&#39;
 490ms
 388ms
 32ms
 22ms
 261ms
 </code></pre>
-<p>Now let's sort them in descending order to see the slowest values at the top</p>
+<p>Now let’s sort them in descending order to see the slowest values at the top</p>
 
-<pre><code class="bash">$ tail -50 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27; | sort -nr
+<pre><code class="bash">$ tail -50 logfile | awk &#39;/Completed 200 OK/{print $5}&#39; | sort -nr
 490ms
 388ms
 261ms
@@ -196,9 +196,9 @@ Completed 200 OK in 261ms (Views: 12.4ms | ActiveRecord: 0.6ms)
 </code></pre>
 <p>I used <code>sort -nr</code> there to sort by numerical value and reverse the order.</p>
 
-<p>That's looking quite useful, but if I run that over a much larger log file I'd get a lot of text printed to my terminal. I'll run this script over 5000 rows and then use the <code>head</code> command to only look at the top 5 slowest times.</p>
+<p>That’s looking quite useful, but if I run that over a much larger log file I’d get a lot of text printed to my terminal. I’ll run this script over 5000 rows and then use the <code>head</code> command to only look at the top 5 slowest times.</p>
 
-<pre><code class="bash">$ tail -5000 logfile | awk &#x27;&#x2F;Completed 200 OK&#x2F;{print $5}&#x27; | sort -nr | head -5
+<pre><code class="bash">$ tail -5000 logfile | awk &#39;/Completed 200 OK/{print $5}&#39; | sort -nr | head -5
 8140ms
 6257ms
 5409ms
@@ -220,7 +220,7 @@ Custard tart, £1.75
 Red grapes, £1.20
 Green grapes, £1.20
 </code></pre>
-<p>I'd like to format it in the same way as the fruits in <a href="#example-1-tabulating-data">example 1</a>.</p>
+<p>I’d like to format it in the same way as the fruits in <a href="#example-1-tabulating-data">example 1</a>.</p>
 
 <pre><code class="bash">£1.00   Kiwi
         Pear
@@ -232,13 +232,13 @@ Green grapes, £1.20
         Raspberry
         Strawberry
 </code></pre>
-<p>There's a slight problem here though. You'll notice that the top row of this file contains <code>Item name</code> and <code>Price</code>. We don't want this in our report, so we'll need a way to remove it. There's another issue here however, and it isn't immediately obvious. In our original <code>fruit_formatting</code> script we said</p>
+<p>There’s a slight problem here though. You’ll notice that the top row of this file contains <code>Item name</code> and <code>Price</code>. We don’t want this in our report, so we’ll need a way to remove it. There’s another issue here however, and it isn’t immediately obvious. In our original <code>fruit_formatting</code> script we said</p>
 
-<pre><code class="bash">awk &#x27;{print $2 &quot;\t&quot; $1}&#x27;
+<pre><code class="bash">awk &#39;{print $2 &quot;\t&quot; $1}&#39;
 </code></pre>
-<p>This printed the price followed by the name of the fruit. Unfortunately, this won't work here because some of our food names span two words, for example <code>Jam sandwich</code>. This script would print <code>sandwich</code> followed by a tab, followed by <code>jam</code>. Let's run it to find out.</p>
+<p>This printed the price followed by the name of the fruit. Unfortunately, this won’t work here because some of our food names span two words, for example <code>Jam sandwich</code>. This script would print <code>sandwich</code> followed by a tab, followed by <code>jam</code>. Let’s run it to find out.</p>
 
-<pre><code class="bash">awk &#x27;{print $2 &quot;\t&quot; $1}&#x27; foods.txt
+<pre><code class="bash">awk &#39;{print $2 &quot;\t&quot; $1}&#39; foods.txt
 name,   Item
 pudding,        Rice
 sandwich,       Jam
@@ -248,9 +248,9 @@ tart,   Custard
 grapes, Red
 grapes, Green
 </code></pre>
-<p>First, let's look at ignoring the top line of the file:</p>
+<p>First, let’s look at ignoring the top line of the file:</p>
 
-<pre><code class="bash">$ awk &#x27;NR != 1 {print $0}&#x27; foods.txt
+<pre><code class="bash">$ awk &#39;NR != 1 {print $0}&#39; foods.txt
 Rice pudding, £1.20
 Jam sandwich, £1.75
 Coffee, £1.00
@@ -259,11 +259,11 @@ Custard tart, £1.75
 Red grapes, £1.20
 Green grapes, £1.20
 </code></pre>
-<p><code>NR</code> here tells us the number of the current record. In our script we are saying "if the current record is not the first record in the file, then print the full record".</p>
+<p><code>NR</code> here tells us the number of the current record. In our script we are saying “if the current record is not the first record in the file, then print the full record”.</p>
 
-<p>Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let's use a comma.</p>
+<p>Our next issue of printing the price and full food name correctly can be solved by choosing a new field separator. Instead of using the default character (a space) to delimit words, let’s use a comma.</p>
 
-<pre><code class="bash">$ awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; foods.txt
+<pre><code class="bash">$ awk -F &quot;, &quot; &#39;NR != 1 {print $2 &quot;\t&quot; $1}&#39; foods.txt
 £1.20   Rice pudding
 £1.75   Jam sandwich
 £1.00   Coffee
@@ -275,9 +275,9 @@ Green grapes, £1.20
 <p>Putting all this together with our original <code>fruit_formatting</code> script, we get the following:</p>
 
 <pre><code class="bash">$ cat food_formatting
-awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; foods.txt |
+awk -F &quot;, &quot; &#39;NR != 1 {print $2 &quot;\t&quot; $1}&#39; foods.txt |
 sort |
-awk &#x27;{
+awk &#39;{
   price = $1
   name = $2
   if (price == previous_price) {
@@ -286,9 +286,9 @@ awk &#x27;{
     previous_price = price
     print price &quot;\t&quot; name
   }
-}&#x27;
+}&#39;
 </code></pre>
-<pre><code class="bash">$ .&#x2F;food_formatting
+<pre><code class="bash">$ ./food_formatting
 £1.00   Coffee
         Crisps
 £1.20   Green
@@ -297,9 +297,9 @@ awk &#x27;{
 £1.75   Custard
         Jam
 </code></pre>
-<p>Almost there, but it still looks like we're cutting off the <code>sandwich</code> part of <code>Jam sandwich</code>. This is because our awk script</p>
+<p>Almost there, but it still looks like we’re cutting off the <code>sandwich</code> part of <code>Jam sandwich</code>. This is because our awk script</p>
 
-<pre><code class="bash">awk &#x27;{
+<pre><code class="bash">awk &#39;{
   price = $1
   name = $2
   if (price == previous_price) {
@@ -308,11 +308,11 @@ awk &#x27;{
     previous_price = price
     print price &quot;\t&quot; name
   }
-}&#x27;
+}&#39;
 </code></pre>
 <p>is given this input:</p>
 
-<pre><code class="bash">awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; foods.txt | sort
+<pre><code class="bash">awk -F &quot;, &quot; &#39;NR != 1 {print $2 &quot;\t&quot; $1}&#39; foods.txt | sort
 £1.00 Coffee
 £1.00 Crisps
 £1.20 Green grapes
@@ -323,12 +323,12 @@ awk &#x27;{
 </code></pre>
 <p>and the <code>print "\t" name</code> part is going to only look at the second column of text (<code>Jam</code>), but not the remaining line since we set <code>name</code> to <code>$2</code>.</p>
 
-<p>Let's set <code>$1</code> (the price) to the empty string and then use <code>$0</code>, which gives us the full record, to print the full food name:</p>
+<p>Let’s set <code>$1</code> (the price) to the empty string and then use <code>$0</code>, which gives us the full record, to print the full food name:</p>
 
 <pre><code class="bash">$ cat food_formatting
-awk -F &quot;, &quot; &#x27;NR != 1 {print $2 &quot;\t&quot; $1}&#x27; foods.txt |
+awk -F &quot;, &quot; &#39;NR != 1 {print $2 &quot;\t&quot; $1}&#39; foods.txt |
 sort |
-awk &#x27;{
+awk &#39;{
   price = $1
   name = $2
   if (price == current_price) {
@@ -339,9 +339,9 @@ awk &#x27;{
     $1 = &quot;&quot;
     print price &quot;\t&quot; $0
   }
-}&#x27;
+}&#39;
 </code></pre>
-<pre><code class="bash">$ .&#x2F;food_formatting
+<pre><code class="bash">$ ./food_formatting
 £1.00    Coffee
          Crisps
 £1.20    Green grapes
@@ -351,11 +351,11 @@ awk &#x27;{
          Jam sandwich
 </code></pre>
 <p>There you have it. We just used some simple parts of Awk to do some nifty text processing. If
-you'd like to know more things, like how to write detailed pattern matching, functions, loops, arrays, etc. then check out the
+you’d like to know more things, like how to write detailed pattern matching, functions, loops, arrays, etc. then check out the
 <a href="https://www.amazon.co.uk/Sed-Awk-Arnold-Dougherty/dp/1565922255" target="_blank">sed &amp; awk</a>
 book. This has the added bonus of being written by someone that actually knows this stuff 😅</p>
 
-<p>If you've got any awk scripts you use regularly that make your life easier I'd love to hear about them.</p>
+<p>If you’ve got any awk scripts you use regularly that make your life easier I’d love to hear about them.</p>
 
 <p>👋</p>
 

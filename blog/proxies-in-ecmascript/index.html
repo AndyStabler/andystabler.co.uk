@@ -69,43 +69,43 @@ target is called</li>
 
 <h2 id="example">Example</h2>
 
-<p>Here's an example of a proxy that adds logging for getting and setting a property on a target object.</p>
+<p>Here’s an example of a proxy that adds logging for getting and setting a property on a target object.</p>
 
-<pre><code class="js">  &#x2F;&#x2F; this is our target object
+<pre><code class="js">  // this is our target object
   let friend = {
     name: &quot;Luna Lovegood&quot;,
     house: &quot;Ravenclaw&quot;,
     patronus: &quot;Hare&quot;
   };
 
-  &#x2F;&#x2F; the handler for the proxy
+  // the handler for the proxy
   let handler = {
-    &#x2F;&#x2F; trap method
-    &#x2F;&#x2F; this method will be called when we read a property on the proxy object
+    // trap method
+    // this method will be called when we read a property on the proxy object
     get(trapTarget, key, receiver) {
       console.log(`Getting property &quot;${key}&quot;`);
-      &#x2F;&#x2F; The Reflect object provides us with the default implementation
-      &#x2F;&#x2F; There&#x27;s a Reflect method for all proxy trap methods
+      // The Reflect object provides us with the default implementation
+      // There&#39;s a Reflect method for all proxy trap methods
       return Reflect.get(trapTarget, key, receiver);
     },
-    &#x2F;&#x2F; trap method
-    &#x2F;&#x2F; this method will be called when we set a property on the proxy object
+    // trap method
+    // this method will be called when we set a property on the proxy object
     set(trapTarget, key, value, receiver) {
       console.log(`Setting property &quot;${key}&quot;`);
       return Reflect.set(trapTarget, key, value, receiver);
     }
   };
 
-  &#x2F;&#x2F; creating the proxy– we pass in the friend (target) and the handler
+  // creating the proxy– we pass in the friend (target) and the handler
   let friendProxy = new Proxy(friend, handler);
 
   friendProxy.name;
-  &#x2F;&#x2F; Getting property &quot;name&quot;
-  &#x2F;&#x2F; &#x27;Luna Lovegood&#x27;
+  // Getting property &quot;name&quot;
+  // &#39;Luna Lovegood&#39;
 
   friendProxy.hobby = &quot;Painting&quot;;
-  &#x2F;&#x2F; Setting property &quot;hobby&quot;
-  &#x2F;&#x2F; &#x27;Painting&#x27;
+  // Setting property &quot;hobby&quot;
+  // &#39;Painting&#39;
 </code></pre>
 <p>We used the <code>get()</code> and <code>set()</code> trap methods there to intercept calls that get and set properties on the target
 object through the proxy. Since the proxy <em>virtualises</em> the target object, any operation available on the target
@@ -113,7 +113,7 @@ object can be called from the proxy.</p>
 
 <h2 id="using-proxies-for-validation">Using proxies for validation</h2>
 
-<p>Proxies can be used to add validation to objects. I'll cover two use cases here– checking the arguments passed
+<p>Proxies can be used to add validation to objects. I’ll cover two use cases here– checking the arguments passed
 into a function match some validation criteria, and checking for typos in property names.</p>
 
 <h3 id="parameter-validation">Parameter validation</h3>
@@ -121,20 +121,20 @@ into a function match some validation criteria, and checking for typos in proper
 <p>Since there is an <code>apply()</code> trap method available to us, we can add validation to make sure that the
 arguments we pass into a function are what we would expect.</p>
 
-<p>Let's create a <code>speak()</code> function with the following requirements:</p>
+<p>Let’s create a <code>speak()</code> function with the following requirements:</p>
 
 <ul>
-  <li>We don't want to say more than one thing at a time</li>
+  <li>We don’t want to say more than one thing at a time</li>
   <li>We only want to speak in strings</li>
 </ul>
 
-<pre><code class="js">  &#x2F;&#x2F; this is our target object
+<pre><code class="js">  // this is our target object
   function speak(message) {
     console.log(`Raising your head, you declare to the room &quot;${message}&quot;`);
   }
 
   let speakProxy = new Proxy(speak, {
-    &#x2F;&#x2F; trap method
+    // trap method
     apply(trapTarget, thisArg, argumentsList) {
       if (argumentsList.length !== 1) {
         throw new Error(&quot;Please say one thing at a time&quot;);
@@ -142,24 +142,24 @@ arguments we pass into a function are what we would expect.</p>
       if (typeof argumentsList[0] !== &quot;string&quot;) {
         throw new TypeError(&quot;Please use your words&quot;);
       }
-      &#x2F;&#x2F; call the apply method on the Reflect object to get the default
-      &#x2F;&#x2F; behaviour
+      // call the apply method on the Reflect object to get the default
+      // behaviour
       return Reflect.apply(trapTarget, thisArg, argumentsList);
     }
   });
 
   speakProxy(&quot;Wingardium Leviosa&quot;);
-  &#x2F;&#x2F; Raising your head, you declare to the room &quot;Wingardium Leviosa&quot;
+  // Raising your head, you declare to the room &quot;Wingardium Leviosa&quot;
   speakProxy(&quot;Wingardium Leviosa&quot;, &quot;Accio Firebolt!&quot;);
-  &#x2F;&#x2F; Error: Please say one thing at a time
-  speakProxy(42); &#x2F;&#x2F; TypeError: Please use your words
+  // Error: Please say one thing at a time
+  speakProxy(42); // TypeError: Please use your words
 </code></pre>
 <p>Here we have defined a <code>speak()</code> method that prints out a given message.
 Firstly, we added the <code>apply()</code> trap method to the handler object. This method is executed when we call any
 function on the proxy object.</p>
 
 <p>Next, we added two conditions– the first checks that there is exactly 1 argument passed into
-the function, the other checks that the type of the argument is a string. If we're happy that the argument
+the function, the other checks that the type of the argument is a string. If we’re happy that the argument
 satisfies our validation criteria, then we call <code>Reflect.apply()</code> to execute the default implementation.</p>
 
 <h3 id="checking-for-typos-in-property-names">Checking for typos in property names</h3>
@@ -174,8 +174,8 @@ proxies.</p>
     patronus: &quot;Hare&quot;
   };
 
-  friend.house; &#x2F;&#x2F; Ravenclaw
-  friend.hoose; &#x2F;&#x2F; undefined
+  friend.house; // Ravenclaw
+  friend.hoose; // undefined
 
   let friendProxy = new Proxy(friend, {
     get(trapTarget, key, receiver) {
@@ -185,14 +185,14 @@ proxies.</p>
     }
   });
 
-  friend.house; &#x2F;&#x2F; Ravenclaw
-  friend.hoose; &#x2F;&#x2F; undefined (the validation exists on the proxy, not the target)
+  friend.house; // Ravenclaw
+  friend.hoose; // undefined (the validation exists on the proxy, not the target)
 
-  friendProxy.house; &#x2F;&#x2F; Ravenclaw
-  friendProxy.hoose; &#x2F;&#x2F; TypeError: Property not recognised.
+  friendProxy.house; // Ravenclaw
+  friendProxy.hoose; // TypeError: Property not recognised.
 </code></pre>
-<p>We can add similar validation to make sure we are only ever setting a property that already exists. This isn't
-always what we want, but it's still an interesting example:</p>
+<p>We can add similar validation to make sure we are only ever setting a property that already exists. This isn’t
+always what we want, but it’s still an interesting example:</p>
 
 <pre><code class="js">  let friend = {
     name: &quot;Andy Stabler&quot;,
@@ -203,11 +203,11 @@ always what we want, but it's still an interesting example:</p>
   friend.patronus = &quot;Salmon&quot;;
   friend.patroonus = &quot;Stag&quot;;
   friend;
-  &#x2F;&#x2F; { name: &#x27;Andy Stabler&#x27;,
-  &#x2F;&#x2F;  house: &#x27;Hufflepuff&#x27;,
-  &#x2F;&#x2F;  patronus: &#x27;Salmon&#x27;,
-  &#x2F;&#x2F;  patroonus: &#x27;Stag&#x27; }
-  &#x2F;&#x2F; Whoopsy! We accidentally set a patroonus property!
+  // { name: &#39;Andy Stabler&#39;,
+  //  house: &#39;Hufflepuff&#39;,
+  //  patronus: &#39;Salmon&#39;,
+  //  patroonus: &#39;Stag&#39; }
+  // Whoopsy! We accidentally set a patroonus property!
 
   let friendProxy = new Proxy(friend, {
     get(trapTarget, key, receiver) {
@@ -224,7 +224,7 @@ always what we want, but it's still an interesting example:</p>
 
   delete friend.patroonus;
   friendProxy.patronus = &quot;Stag&quot;;
-  friendProxy.patroonus = &quot;Wolf&quot;; &#x2F;&#x2F; TypeError: Property not recognised.
+  friendProxy.patroonus = &quot;Wolf&quot;; // TypeError: Property not recognised.
 </code></pre>
 <p>In both the <code>get()</code> and <code>set()</code> trap methods we performed a check to make sure that the <code>key</code> was <code>in</code> the receiver
 object. The <code>in</code> operator looks in the object and its prototype chain for a property with a matching key. If the
@@ -232,14 +232,14 @@ property is not found, then a <code>TypeError</code> is raised.</p>
 
 <h2 id="where-can-i-learn-more">Where can I learn more?</h2>
 
-<p>I've only scratched the surface of proxies and their many uses in ECMAScript. You can find out a lot more using
+<p>I’ve only scratched the surface of proxies and their many uses in ECMAScript. You can find out a lot more using
 the following resources:</p>
 
 <ul>
   <li><a href="//amzn.eu/6mexKCK" target="_blank">Understanding ECMAScript 6</a> is my favourite book right now. It has a very
 thorough chapter on proxies which is  worth reading.
     <ul>
-      <li>I'm making notes as I go through the book. Nicholas kindly let me make them public, so you can
+      <li>I’m making notes as I go through the book. Nicholas kindly let me make them public, so you can
 follow along <a href="https://github.com/AndyStabler/ECMAScript6Notes" target="_blank">here</a>.</li>
     </ul>
   </li>
